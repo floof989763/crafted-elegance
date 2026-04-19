@@ -1,0 +1,69 @@
+import { Link } from "@tanstack/react-router";
+import { Instagram, Facebook } from "lucide-react";
+
+export function SiteFooter() {
+  return (
+    <footer className="relative bg-ink text-cream/80 pt-24 pb-10 overflow-hidden grain">
+      <div className="mx-auto max-w-[1480px] px-6 md:px-10">
+        <div className="grid md:grid-cols-12 gap-12 md:gap-8">
+          <div className="md:col-span-5 space-y-6">
+            <h3 className="font-display text-4xl md:text-5xl text-cream leading-[1.05]">
+              Crafted from the<br />
+              <em className="text-brass">forest's quiet.</em>
+            </h3>
+            <p className="text-sm leading-relaxed max-w-md text-cream/60">
+              Heirloom wooden objects, made slowly by a small atelier of carvers in
+              the foothills. Each piece is signed, numbered and meant to age with you.
+            </p>
+          </div>
+
+          <div className="md:col-span-2 space-y-4">
+            <p className="eyebrow">Shop</p>
+            <ul className="space-y-3 text-sm">
+              <li><Link to="/shop" className="hover:text-brass transition-colors">Collection</Link></li>
+              <li><Link to="/shop" search={{ category: "trays" }} className="hover:text-brass transition-colors">Trays</Link></li>
+              <li><Link to="/shop" search={{ category: "decor" }} className="hover:text-brass transition-colors">Decor</Link></li>
+              <li><Link to="/shop" search={{ category: "furniture" }} className="hover:text-brass transition-colors">Furniture</Link></li>
+            </ul>
+          </div>
+
+          <div className="md:col-span-2 space-y-4">
+            <p className="eyebrow">House</p>
+            <ul className="space-y-3 text-sm">
+              <li><Link to="/about" className="hover:text-brass transition-colors">Atelier</Link></li>
+              <li><Link to="/contact" className="hover:text-brass transition-colors">Contact</Link></li>
+              <li><Link to="/admin" className="hover:text-brass transition-colors">Admin</Link></li>
+            </ul>
+          </div>
+
+          <div className="md:col-span-3 space-y-4">
+            <p className="eyebrow">Letters from the workshop</p>
+            <p className="text-sm text-cream/60">
+              A quiet note, four times a year. New pieces, process, the occasional poem.
+            </p>
+            <form className="flex border-b border-cream/20 pb-2">
+              <input
+                type="email"
+                placeholder="your@email.com"
+                className="flex-1 bg-transparent text-sm placeholder:text-cream/40 focus:outline-none"
+              />
+              <button type="submit" className="text-xs uppercase tracking-[0.28em] text-brass hover:text-cream transition-colors">
+                Join
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <div className="hairline mt-20 mb-8" />
+
+        <div className="flex flex-col md:flex-row gap-6 md:items-center md:justify-between text-xs text-cream/40 uppercase tracking-[0.28em]">
+          <p>© {new Date().getFullYear()} The Woods. All work signed by hand.</p>
+          <div className="flex items-center gap-6">
+            <a href="#" aria-label="Instagram" className="hover:text-brass transition-colors"><Instagram className="w-4 h-4" /></a>
+            <a href="#" aria-label="Facebook" className="hover:text-brass transition-colors"><Facebook className="w-4 h-4" /></a>
+          </div>
+        </div>
+      </div>
+    </footer>
+  );
+}

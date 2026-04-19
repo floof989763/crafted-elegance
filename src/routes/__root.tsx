@@ -29,14 +29,12 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "The Woods — Heirloom Wooden Handicraft" },
+      { name: "description", content: "Hand-carved trays, decor, furniture and accessories from a small atelier of wood artisans." },
+      { name: "author", content: "The Woods" },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { property: "og:site_name", content: "The Woods" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       {

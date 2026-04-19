@@ -4,11 +4,11 @@ import { ArrowRight, Award, Hammer, Leaf } from "lucide-react";
 import { SiteShell } from "@/components/site/SiteShell";
 import { supabase } from "@/integrations/supabase/client";
 import { formatPrice } from "@/lib/format";
+import heroCraftVideo from "@/assets/hero-craft.mp4.asset.json";
 
-const HERO_VIDEO =
-  "https://cdn.coverr.co/videos/coverr-a-carpenter-using-a-chisel-on-wood-7838/1080p.mp4";
+const HERO_VIDEO = heroCraftVideo.url;
 const HERO_POSTER =
-  "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=2400&q=80";
+  "https://images.unsplash.com/photo-1517846693594-1adfca870ed4?auto=format&fit=crop&w=2400&q=80";
 
 type Product = {
   id: string;

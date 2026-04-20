@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ShopRouteImport } from './routes/shop'
+import { Route as JournalRouteImport } from './routes/journal'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AdminRouteImport } from './routes/admin'
 import { Route as AboutRouteImport } from './routes/about'
@@ -24,6 +25,11 @@ import { Route as AdminCategoriesRouteImport } from './routes/admin.categories'
 const ShopRoute = ShopRouteImport.update({
   id: '/shop',
   path: '/shop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JournalRoute = JournalRouteImport.update({
+  id: '/journal',
+  path: '/journal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -82,6 +88,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/admin': typeof AdminRouteWithChildren
   '/contact': typeof ContactRoute
+  '/journal': typeof JournalRoute
   '/shop': typeof ShopRouteWithChildren
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
@@ -94,6 +101,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/journal': typeof JournalRoute
   '/shop': typeof ShopRouteWithChildren
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
@@ -108,6 +116,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/admin': typeof AdminRouteWithChildren
   '/contact': typeof ContactRoute
+  '/journal': typeof JournalRoute
   '/shop': typeof ShopRouteWithChildren
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
@@ -123,6 +132,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/admin'
     | '/contact'
+    | '/journal'
     | '/shop'
     | '/admin/categories'
     | '/admin/inquiries'
@@ -135,6 +145,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/journal'
     | '/shop'
     | '/admin/categories'
     | '/admin/inquiries'
@@ -148,6 +159,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/admin'
     | '/contact'
+    | '/journal'
     | '/shop'
     | '/admin/categories'
     | '/admin/inquiries'
@@ -162,6 +174,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   AdminRoute: typeof AdminRouteWithChildren
   ContactRoute: typeof ContactRoute
+  JournalRoute: typeof JournalRoute
   ShopRoute: typeof ShopRouteWithChildren
 }
 
@@ -172,6 +185,13 @@ declare module '@tanstack/react-router' {
       path: '/shop'
       fullPath: '/shop'
       preLoaderRoute: typeof ShopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/journal': {
+      id: '/journal'
+      path: '/journal'
+      fullPath: '/journal'
+      preLoaderRoute: typeof JournalRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -280,6 +300,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   AdminRoute: AdminRouteWithChildren,
   ContactRoute: ContactRoute,
+  JournalRoute: JournalRoute,
   ShopRoute: ShopRouteWithChildren,
 }
 export const routeTree = rootRouteImport

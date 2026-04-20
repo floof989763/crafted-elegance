@@ -1,11 +1,11 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Menu, X, ShoppingBag } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { to: "/", label: "Home" },
   { to: "/shop", label: "Collection" },
   { to: "/about", label: "Atelier" },
+  { to: "/journal", label: "Journal" },
   { to: "/contact", label: "Contact" },
 ];
 
@@ -32,11 +32,15 @@ export function SiteHeader() {
         <div className="flex h-20 md:h-24 items-center justify-between">
           <Link
             to="/"
-            className="font-display text-2xl md:text-3xl tracking-tight text-cream"
+            className="flex items-baseline gap-3 text-cream"
             onClick={() => setOpen(false)}
           >
-            The Woods
-            <span className="text-brass">.</span>
+            <span className="font-display text-2xl md:text-[1.75rem] tracking-tight">
+              The Woods
+            </span>
+            <span className="hidden sm:inline text-[10px] uppercase tracking-[0.32em] text-cream/50">
+              Est. MMXXIV
+            </span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-10">
@@ -44,9 +48,8 @@ export function SiteHeader() {
               <Link
                 key={link.to}
                 to={link.to}
-                className="text-xs uppercase tracking-[0.32em] text-cream/80 hover:text-brass luxe-link transition-colors duration-500"
+                className="text-[11px] uppercase tracking-[0.32em] text-cream/80 hover:text-brass luxe-link transition-colors duration-500"
                 activeProps={{ className: "text-brass" }}
-                activeOptions={{ exact: link.to === "/" }}
               >
                 {link.label}
               </Link>
@@ -56,10 +59,11 @@ export function SiteHeader() {
           <div className="flex items-center gap-4">
             <Link
               to="/shop"
-              className="hidden md:inline-flex items-center gap-2 text-xs uppercase tracking-[0.28em] text-cream/80 hover:text-brass transition-colors duration-500"
+              className="hidden md:inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.32em] text-cream/80 hover:text-brass transition-colors duration-500"
             >
-              <ShoppingBag className="w-4 h-4" />
-              Shop
+              Selection
+              <span className="text-brass">·</span>
+              <span className="text-cream/40">0</span>
             </Link>
             <button
               onClick={() => setOpen((v) => !v)}
@@ -84,7 +88,7 @@ export function SiteHeader() {
               key={link.to}
               to={link.to}
               onClick={() => setOpen(false)}
-              className="py-3 text-sm uppercase tracking-[0.28em] text-cream/80 border-b border-border last:border-0"
+              className="py-3 text-sm uppercase tracking-[0.32em] text-cream/80 border-b border-border last:border-0"
               activeProps={{ className: "text-brass" }}
             >
               {link.label}

@@ -8,12 +8,13 @@ export const Route = createFileRoute("/about")({
       {
         name: "description",
         content:
-          "A small atelier of wood artisans turning fallen walnut, oak and ash into objects meant to last generations.",
+          "The Woods is a Saharanpur-based wooden handicraft atelier, turning fallen walnut, sheesham and teak into heirloom objects in editions of nine.",
       },
       { property: "og:title", content: "The Atelier — The Woods" },
       {
         property: "og:description",
-        content: "Slow craft, three pairs of hands, 80 hours per object.",
+        content:
+          "A Saharanpur-based wooden handicraft brand. Slow craft, one pair of hands, 80 hours per object.",
       },
     ],
   }),
@@ -44,29 +45,31 @@ function AboutPage() {
       <section className="py-32 md:py-48">
         <div className="mx-auto max-w-3xl px-6 md:px-10 space-y-10 font-display text-2xl md:text-3xl text-cream/90 leading-[1.4]">
           <p>
-            The Woods began in 2014 in a converted barn at the edge of a beech forest.
-            We were three: a carver, a turner, a finisher. We are now seven.
+            The Woods is a Saharanpur-based wooden handicraft brand, founded in a
+            converted granary at the edge of the old timber market — where India&rsquo;s
+            finest woodcarvers have worked for generations.
           </p>
           <p className="text-brass italic">
-            "A piece of furniture should last longer than the person who buys it."
+            "We would rather make one bowl that outlives us, than a hundred that do not."
           </p>
           <p>
-            We use only fallen wood from within a hundred miles of the workshop —
-            walnut from old orchards, oak from storm-felled hedgerows, ash before the
-            disease takes the rest. Every plank is dated, traced, and remembered.
+            We source only from fallen and reclaimed timber — sheesham from family groves,
+            walnut from the Kashmir valley, teak rescued from century-old havelis. Every
+            billet is dated, traced, and remembered.
           </p>
           <p>
-            We do not use CNC. We do not finish in batches of more than six. The objects
-            you find here have passed through the hands of every member of the atelier.
+            We do not use CNC. We work in editions of nine. Each object passes through a
+            single pair of hands — from the first cut of the gouge to the seventeenth
+            coat of beeswax.
           </p>
         </div>
       </section>
 
       <section className="py-24 bg-walnut">
         <div className="mx-auto max-w-[1480px] px-6 md:px-10 grid md:grid-cols-3 gap-12 text-center">
-          <Stat value="11" label="Years of practice" />
-          <Stat value="312" label="Trees catalogued" />
-          <Stat value="∞" label="Hours of patience" />
+          <Stat value="09" label="Per edition" />
+          <Stat value="80h" label="Per object" />
+          <Stat value="01" label="Maker, by hand" />
         </div>
       </section>
 

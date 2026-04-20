@@ -11,7 +11,7 @@ const entries = [
     excerpt:
       "A walnut tree felled by storm in the Saharanpur foothills waits seven years before it is ready to be turned. We trace the slow arc from forest floor to finished vessel.",
     date: "March, MMXXV",
-    img: "/images/products/tabletop-hero.jpg",
+    img: "/images/editorial/timber-stack.jpg",
   },
   {
     chapter: "Chapter 02",
@@ -21,7 +21,7 @@ const entries = [
     excerpt:
       "Our maker keeps only twelve carving tools — most older than he is. A meditation on the discipline of working with less, and why a sharp edge is half the design.",
     date: "February, MMXXV",
-    img: "/images/products/candle-stands-angle.jpg",
+    img: "/images/editorial/atelier-hands.jpg",
   },
   {
     chapter: "Chapter 03",
@@ -31,7 +31,7 @@ const entries = [
     excerpt:
       "We never lacquer. We never spray. The story of our seventeen-coat hand-rubbed finish, and why a piece of The Woods continues to deepen for decades after it leaves the atelier.",
     date: "January, MMXXV",
-    img: "/images/products/photo-frame-story.jpg",
+    img: "/images/editorial/beeswax-finish.jpg",
   },
   {
     chapter: "Chapter 04",
@@ -41,7 +41,7 @@ const entries = [
     excerpt:
       "Notes from collectors in Kyoto, Antwerp and Mumbai on what it means to live with a single, considered object — and the quiet it brings to a room.",
     date: "December, MMXXIV",
-    img: "/images/products/photo-frame-hero.jpg",
+    img: "/images/products/center-01-walnut-scallop.jpg",
   },
   {
     chapter: "Chapter 05",
@@ -51,7 +51,7 @@ const entries = [
     excerpt:
       "Every billet tells the maker how it wants to be shaped. A study of figure, flame and burl — and the small ritual of standing still before the chisel meets the wood.",
     date: "November, MMXXIV",
-    img: "/images/products/candle-stands-story.jpg",
+    img: "/images/products/bowl-01-walnut.jpg",
   },
   {
     chapter: "Chapter 06",
@@ -61,7 +61,7 @@ const entries = [
     excerpt:
       "Each form is released in an edition of nine — then the templates are burned. A short essay on scarcity, signature, and the brass plate stamped into every base.",
     date: "October, MMXXIV",
-    img: "/images/products/photo-frame-angle.jpg",
+    img: "/images/products/candle-06-three-branch.jpg",
   },
 ];
 

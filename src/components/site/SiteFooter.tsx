@@ -3,15 +3,15 @@ import { Instagram, Facebook } from "lucide-react";
 
 export function SiteFooter() {
   return (
-    <footer className="relative bg-ink text-cream/80 pt-24 pb-10 overflow-hidden grain">
+    <footer className="relative bg-walnut text-ink/80 pt-24 pb-10 overflow-hidden grain border-t border-border">
       <div className="mx-auto max-w-[1480px] px-6 md:px-10">
         <div className="grid md:grid-cols-12 gap-12 md:gap-8">
           <div className="md:col-span-5 space-y-6">
-            <h3 className="font-display text-4xl md:text-5xl text-cream leading-[1.05]">
+            <h3 className="font-display text-4xl md:text-5xl text-ink leading-[1.05]">
               Crafted from the<br />
               <em className="text-brass">forest's quiet.</em>
             </h3>
-            <p className="text-sm leading-relaxed max-w-md text-cream/60">
+            <p className="text-sm leading-relaxed max-w-md text-ink/65">
               The Woods is a Saharanpur-based wooden handicraft brand. Heirloom objects,
               made slowly by a single pair of hands. Each piece is signed, numbered, and
               meant to age with you.
@@ -40,16 +40,16 @@ export function SiteFooter() {
 
           <div className="md:col-span-3 space-y-4">
             <p className="eyebrow">Letters from the workshop</p>
-            <p className="text-sm text-cream/60">
+            <p className="text-sm text-ink/65">
               A quiet note, four times a year. New pieces, process, the occasional poem.
             </p>
-            <form className="flex border-b border-cream/20 pb-2">
+            <form className="flex border-b border-ink/20 pb-2">
               <input
                 type="email"
                 placeholder="your@email.com"
-                className="flex-1 bg-transparent text-sm placeholder:text-cream/40 focus:outline-none"
+                className="flex-1 bg-transparent text-sm placeholder:text-ink/40 focus:outline-none text-ink"
               />
-              <button type="submit" className="text-xs uppercase tracking-[0.28em] text-brass hover:text-cream transition-colors">
+              <button type="submit" className="text-xs uppercase tracking-[0.28em] text-brass hover:text-ink transition-colors">
                 Join
               </button>
             </form>
@@ -58,7 +58,7 @@ export function SiteFooter() {
 
         <div className="hairline mt-20 mb-8" />
 
-        <div className="flex flex-col md:flex-row gap-6 md:items-center md:justify-between text-xs text-cream/40 uppercase tracking-[0.28em]">
+        <div className="flex flex-col md:flex-row gap-6 md:items-center md:justify-between text-xs text-ink/50 uppercase tracking-[0.28em]">
           <p>© {new Date().getFullYear()} The Woods. All work signed by hand.</p>
           <div className="flex items-center gap-6">
             <a href="#" aria-label="Instagram" className="hover:text-brass transition-colors"><Instagram className="w-4 h-4" /></a>

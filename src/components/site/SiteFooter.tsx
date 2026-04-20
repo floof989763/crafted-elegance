@@ -16,6 +16,12 @@ export function SiteFooter() {
               made slowly by a single pair of hands. Each piece is signed, numbered, and
               meant to age with you.
             </p>
+            <div className="text-sm text-ink/65 space-y-1 pt-2">
+              <p>Nakhasa Bazar, Saharanpur</p>
+              <p>Uttar Pradesh, India</p>
+              <p><a href="tel:+917055762173" className="hover:text-brass transition-colors">+91 70557 62173</a></p>
+              <p><a href="mailto:mohumar20052004@gmail.com" className="hover:text-brass transition-colors">mohumar20052004@gmail.com</a></p>
+            </div>
           </div>
 
           <div className="md:col-span-2 space-y-4">

@@ -195,7 +195,7 @@ function Manifesto() {
 
         <div className="md:col-span-6 md:col-start-7 space-y-8">
           <p className="eyebrow">— Vol. 01 · The Quiet Collection · MMXXIV</p>
-          <h2 className="font-display text-5xl md:text-7xl leading-[0.95] text-cream">
+          <h2 className="font-display text-5xl md:text-7xl leading-[0.95] text-ink">
             Objects shaped <em className="text-brass">slowly,</em>
             <br />
             for the room <em>that listens.</em>
@@ -241,7 +241,7 @@ function Manifesto() {
                 <span className="text-[10px] uppercase tracking-[0.32em] text-brass">
                   0{i + 1}
                 </span>
-                <p className="text-sm text-cream/85 leading-snug">{line}</p>
+                <p className="text-sm text-ink/85 leading-snug">{line}</p>
               </li>
             ))}
           </ul>
@@ -276,7 +276,7 @@ function Collection({
       <div className="mx-auto max-w-[1480px] px-6 md:px-10">
         <div className="text-center max-w-3xl mx-auto">
           <p className="eyebrow">— The Collection</p>
-          <h2 className="mt-5 font-display text-5xl md:text-7xl leading-[0.95] text-cream">
+          <h2 className="mt-5 font-display text-5xl md:text-7xl leading-[0.95] text-ink">
             Eight objects, conceived <em className="text-brass">in shadow.</em>
           </h2>
           <p className="mt-6 text-muted-foreground leading-relaxed">
@@ -316,7 +316,7 @@ function Collection({
         <div className="mt-20 text-center">
           <Link
             to="/shop"
-            className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.32em] text-cream/80 luxe-link hover:text-brass"
+            className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.32em] text-ink/80 luxe-link hover:text-brass"
           >
             View the full collection <ArrowRight className="w-4 h-4" />
           </Link>
@@ -342,7 +342,7 @@ function CategoryTab({
     <button
       onClick={() => onClick(slug)}
       className={`text-[11px] uppercase tracking-[0.32em] transition-colors duration-300 ${
-        isActive ? "text-brass" : "text-cream/60 hover:text-cream"
+        isActive ? "text-brass" : "text-ink/60 hover:text-ink"
       }`}
     >
       {label}
@@ -367,7 +367,7 @@ function ProductCard({
       className="group block"
       style={{ animationDelay: `${index * 60}ms` }}
     >
-      <div className="aspect-[4/5] bg-ink overflow-hidden mb-5 rounded-sm">
+      <div className="aspect-[4/5] bg-walnut overflow-hidden mb-5 rounded-sm">
         {p.images?.[0] ? (
           <img
             src={p.images[0]}
@@ -376,7 +376,7 @@ function ProductCard({
             className="w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.06]"
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-cream/30 font-display text-7xl">
+          <div className="w-full h-full flex items-center justify-center text-ink/30 font-display text-7xl">
             ⵘ
           </div>
         )}
@@ -385,10 +385,10 @@ function ProductCard({
         {cat && (
           <p className="text-[10px] uppercase tracking-[0.32em] text-brass">{cat.name}</p>
         )}
-        <h3 className="font-display text-xl text-cream group-hover:text-brass transition-colors duration-500">
+        <h3 className="font-display text-xl text-ink group-hover:text-brass transition-colors duration-500">
           {p.name}
         </h3>
-        <p className="text-sm text-cream/70 pt-1">
+        <p className="text-sm text-ink/70 pt-1">
           {formatPrice(p.price_cents, p.currency)}
         </p>
       </div>
@@ -417,7 +417,7 @@ function Craft() {
 
         <div className="md:col-span-5 md:col-start-8 order-1 md:order-2 space-y-8">
           <p className="eyebrow">— Craft</p>
-          <h2 className="font-display text-5xl md:text-6xl leading-[0.95] text-cream">
+          <h2 className="font-display text-5xl md:text-6xl leading-[0.95] text-ink">
             Eighty hours,
             <br />
             <em className="text-brass">one pair of hands.</em>
@@ -446,7 +446,7 @@ function Craft() {
 function Stat({ n, label }: { n: string; label: string }) {
   return (
     <div>
-      <p className="font-display text-3xl md:text-4xl text-cream">{n}</p>
+      <p className="font-display text-3xl md:text-4xl text-ink">{n}</p>
       <p className="text-[10px] uppercase tracking-[0.32em] text-muted-foreground mt-1.5">
         {label}
       </p>
@@ -464,7 +464,7 @@ function Atelier() {
       <div className="mx-auto max-w-[1480px] px-6 md:px-10">
         <div className="text-center max-w-3xl mx-auto mb-16 md:mb-24">
           <p className="eyebrow">— The Atelier</p>
-          <h2 className="mt-5 font-display text-5xl md:text-7xl leading-[0.95] text-cream">
+          <h2 className="mt-5 font-display text-5xl md:text-7xl leading-[0.95] text-ink">
             A studio of <em>two,</em>
             <br />
             a forest of <em className="text-brass">memory.</em>
@@ -473,7 +473,7 @@ function Atelier() {
 
         <div className="grid md:grid-cols-12 gap-12 md:gap-16 items-center">
           <div className="md:col-span-7">
-            <div className="aspect-[4/3] overflow-hidden rounded-sm bg-ink">
+            <div className="aspect-[4/3] overflow-hidden rounded-sm bg-walnut">
               <img
                 src={ATELIER_IMG}
                 alt="The Woods atelier interior in Saharanpur"
@@ -485,7 +485,7 @@ function Atelier() {
 
           <div className="md:col-span-5 space-y-6 text-muted-foreground leading-relaxed">
             <p>
-              <span className="text-cream">The Woods</span> is a Saharanpur-based wooden
+              <span className="text-ink">The Woods</span> is a Saharanpur-based wooden
               handicraft brand, founded in a converted granary at the edge of the old
               timber market — where India&rsquo;s finest woodcarvers have worked for
               generations.
@@ -526,7 +526,7 @@ function Journal() {
         <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16 md:mb-20">
           <div className="max-w-2xl">
             <p className="eyebrow">— The Journal</p>
-            <h2 className="mt-5 font-display text-5xl md:text-7xl leading-[0.95] text-cream">
+            <h2 className="mt-5 font-display text-5xl md:text-7xl leading-[0.95] text-ink">
               Field notes from <em className="text-brass">the atelier.</em>
             </h2>
             <p className="mt-6 text-muted-foreground leading-relaxed">
@@ -536,7 +536,7 @@ function Journal() {
           </div>
           <Link
             to="/contact"
-            className="text-[11px] uppercase tracking-[0.32em] text-cream/70 luxe-link hover:text-brass shrink-0"
+            className="text-[11px] uppercase tracking-[0.32em] text-ink/70 luxe-link hover:text-brass shrink-0"
           >
             Subscribe by post →
           </Link>
@@ -553,19 +553,19 @@ function Journal() {
                   className="w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.06]"
                 />
               </div>
-              <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.32em] text-cream/50 mb-3">
+              <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.32em] text-ink/55 mb-3">
                 <span className="text-brass">{j.chapter}</span>
                 <span>
                   {j.tag} <span className="mx-1.5">·</span> {j.minutes}
                 </span>
               </div>
-              <h3 className="font-display text-2xl md:text-3xl text-cream group-hover:text-brass transition-colors duration-500">
+              <h3 className="font-display text-2xl md:text-3xl text-ink group-hover:text-brass transition-colors duration-500">
                 {j.title}
               </h3>
               <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
                 {j.excerpt}
               </p>
-              <div className="mt-5 flex items-center justify-between text-[10px] uppercase tracking-[0.32em] text-cream/40">
+              <div className="mt-5 flex items-center justify-between text-[10px] uppercase tracking-[0.32em] text-ink/45">
                 <span>{j.date}</span>
                 <span className="text-brass">Read →</span>
               </div>
@@ -587,7 +587,7 @@ function Correspondence() {
       <div className="mx-auto max-w-[1480px] px-6 md:px-10 grid md:grid-cols-12 gap-12 md:gap-20">
         <div className="md:col-span-5 space-y-8">
           <p className="eyebrow">— Correspondence</p>
-          <h2 className="font-display text-5xl md:text-6xl leading-[0.95] text-cream">
+          <h2 className="font-display text-5xl md:text-6xl leading-[0.95] text-ink">
             For commissions
             <br />
             &amp; <em className="text-brass">private viewings.</em>
@@ -609,7 +609,7 @@ function Correspondence() {
         <div className="md:col-span-7">
           <div className="border border-border bg-background/40 backdrop-blur p-8 md:p-12">
             <p className="eyebrow mb-8">Begin a conversation</p>
-            <p className="text-cream/80 leading-relaxed mb-8">
+            <p className="text-ink/80 leading-relaxed mb-8">
               Tell us about the room you have in mind, the tree you remember, or the
               piece you would like to commission. Every enquiry is read by the maker.
             </p>
@@ -620,7 +620,7 @@ function Correspondence() {
               Open the enquiry form
               <ArrowRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1" />
             </Link>
-            <p className="mt-8 text-[10px] uppercase tracking-[0.32em] text-cream/40">
+            <p className="mt-8 text-[10px] uppercase tracking-[0.32em] text-ink/45">
               Replies within three working days.
             </p>
           </div>
@@ -635,7 +635,7 @@ function InfoBlock({ label, lines }: { label: string; lines: string[] }) {
     <div>
       <p className="text-[10px] uppercase tracking-[0.32em] text-brass mb-2">{label}</p>
       {lines.map((l, i) => (
-        <p key={i} className="text-cream/85">
+        <p key={i} className="text-ink/85">
           {l}
         </p>
       ))}

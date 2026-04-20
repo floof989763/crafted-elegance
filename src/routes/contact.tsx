@@ -100,9 +100,9 @@ function ContactPage() {
       <section className="py-20 md:py-28">
         <div className="mx-auto max-w-[1480px] px-6 md:px-10 grid lg:grid-cols-12 gap-16">
           <div className="lg:col-span-4 space-y-10">
-            <Info icon={MapPin} title="The atelier" lines={["The Woods Atelier", "Saharanpur, Uttar Pradesh", "India · By appointment"]} />
-            <Info icon={Mail} title="Email" lines={["hello@thewoods.studio"]} />
-            <Info icon={Phone} title="Telephone" lines={["+91 90000 00000"]} />
+            <Info icon={MapPin} title="The atelier" lines={["The Woods Atelier", "Nakhasa Bazar, Saharanpur", "Uttar Pradesh, India · By appointment"]} />
+            <Info icon={Mail} title="Email" lines={["mohumar20052004@gmail.com"]} />
+            <Info icon={Phone} title="Telephone" lines={["+91 70557 62173"]} />
             <div className="hairline" />
             <p className="text-xs text-muted-foreground leading-relaxed">
               Studio hours are Tuesday through Saturday, 10am – 5pm. Visits are by

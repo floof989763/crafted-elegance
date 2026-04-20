@@ -592,9 +592,10 @@ function Correspondence() {
           <div className="space-y-6 pt-4">
             <InfoBlock
               label="Atelier"
-              lines={["Old Timber Market", "Saharanpur · Uttar Pradesh · India"]}
+              lines={["Nakhasa Bazar", "Saharanpur · Uttar Pradesh · India"]}
             />
-            <InfoBlock label="Write" lines={["atelier@thewoods.studio"]} />
+            <InfoBlock label="Write" lines={["mohumar20052004@gmail.com"]} />
+            <InfoBlock label="Telephone" lines={["+91 70557 62173"]} />
             <InfoBlock
               label="By appointment"
               lines={["Thursday — Saturday"]}

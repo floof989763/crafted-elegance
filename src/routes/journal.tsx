@@ -11,7 +11,7 @@ const entries = [
     excerpt:
       "A walnut tree felled by storm in the Saharanpur foothills waits seven years before it is ready to be turned. We trace the slow arc from forest floor to finished vessel.",
     date: "March, MMXXV",
-    img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1400&q=80",
+    img: "/images/products/tabletop-hero.jpg",
   },
   {
     chapter: "Chapter 02",
@@ -21,7 +21,7 @@ const entries = [
     excerpt:
       "Our maker keeps only twelve carving tools — most older than he is. A meditation on the discipline of working with less, and why a sharp edge is half the design.",
     date: "February, MMXXV",
-    img: "https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=1400&q=80",
+    img: "/images/products/candle-stands-angle.jpg",
   },
   {
     chapter: "Chapter 03",
@@ -31,7 +31,7 @@ const entries = [
     excerpt:
       "We never lacquer. We never spray. The story of our seventeen-coat hand-rubbed finish, and why a piece of The Woods continues to deepen for decades after it leaves the atelier.",
     date: "January, MMXXV",
-    img: "https://images.unsplash.com/photo-1517260911205-8a3bea4ec9bd?auto=format&fit=crop&w=1400&q=80",
+    img: "/images/products/photo-frame-story.jpg",
   },
   {
     chapter: "Chapter 04",
@@ -41,7 +41,7 @@ const entries = [
     excerpt:
       "Notes from collectors in Kyoto, Antwerp and Mumbai on what it means to live with a single, considered object — and the quiet it brings to a room.",
     date: "December, MMXXIV",
-    img: "https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?auto=format&fit=crop&w=1400&q=80",
+    img: "/images/products/photo-frame-hero.jpg",
   },
   {
     chapter: "Chapter 05",
@@ -51,7 +51,7 @@ const entries = [
     excerpt:
       "Every billet tells the maker how it wants to be shaped. A study of figure, flame and burl — and the small ritual of standing still before the chisel meets the wood.",
     date: "November, MMXXIV",
-    img: "https://images.unsplash.com/photo-1605117913953-65f44a9e2cd3?auto=format&fit=crop&w=1400&q=80",
+    img: "/images/products/candle-stands-story.jpg",
   },
   {
     chapter: "Chapter 06",
@@ -61,7 +61,7 @@ const entries = [
     excerpt:
       "Each form is released in an edition of nine — then the templates are burned. A short essay on scarcity, signature, and the brass plate stamped into every base.",
     date: "October, MMXXIV",
-    img: "https://images.unsplash.com/photo-1604147706283-d7119b5b822c?auto=format&fit=crop&w=1400&q=80",
+    img: "/images/products/photo-frame-angle.jpg",
   },
 ];
 

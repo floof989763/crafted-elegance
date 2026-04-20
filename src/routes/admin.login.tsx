@@ -64,8 +64,8 @@ function AdminLogin() {
       {/* Left visual */}
       <div className="hidden lg:flex relative w-1/2 bg-walnut overflow-hidden">
         <img
-          src="https://images.unsplash.com/photo-1516455207990-7a41ce80f7ee?auto=format&fit=crop&w=1600&q=80"
-          alt="Workshop"
+          src="/images/products/candle-stands-story.jpg"
+          alt="Handcrafted wooden objects in the atelier"
           className="absolute inset-0 w-full h-full object-cover ken-burns"
         />
         <div className="absolute inset-0" style={{ background: "var(--gradient-overlay)" }} />

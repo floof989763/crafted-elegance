@@ -12,18 +12,19 @@ export function SiteFooter() {
               <em className="text-brass">forest's quiet.</em>
             </h3>
             <p className="text-sm leading-relaxed max-w-md text-cream/60">
-              Heirloom wooden objects, made slowly by a small atelier of carvers in
-              the foothills. Each piece is signed, numbered and meant to age with you.
+              The Woods is a Saharanpur-based wooden handicraft brand. Heirloom objects,
+              made slowly by a single pair of hands. Each piece is signed, numbered, and
+              meant to age with you.
             </p>
           </div>
 
           <div className="md:col-span-2 space-y-4">
-            <p className="eyebrow">Shop</p>
+            <p className="eyebrow">Collection</p>
             <ul className="space-y-3 text-sm">
-              <li><Link to="/shop" className="hover:text-brass transition-colors">Collection</Link></li>
-              <li><Link to="/shop" search={{ category: "trays" }} className="hover:text-brass transition-colors">Trays</Link></li>
-              <li><Link to="/shop" search={{ category: "decor" }} className="hover:text-brass transition-colors">Decor</Link></li>
-              <li><Link to="/shop" search={{ category: "furniture" }} className="hover:text-brass transition-colors">Furniture</Link></li>
+              <li><Link to="/shop" className="hover:text-brass transition-colors">All pieces</Link></li>
+              <li><Link to="/shop" search={{ category: "centerpieces" }} className="hover:text-brass transition-colors">Centerpieces</Link></li>
+              <li><Link to="/shop" search={{ category: "bowls" }} className="hover:text-brass transition-colors">Bowls</Link></li>
+              <li><Link to="/shop" search={{ category: "tables" }} className="hover:text-brass transition-colors">Tables</Link></li>
             </ul>
           </div>
 
@@ -31,6 +32,7 @@ export function SiteFooter() {
             <p className="eyebrow">House</p>
             <ul className="space-y-3 text-sm">
               <li><Link to="/about" className="hover:text-brass transition-colors">Atelier</Link></li>
+              <li><Link to="/journal" className="hover:text-brass transition-colors">Journal</Link></li>
               <li><Link to="/contact" className="hover:text-brass transition-colors">Contact</Link></li>
               <li><Link to="/admin" className="hover:text-brass transition-colors">Admin</Link></li>
             </ul>

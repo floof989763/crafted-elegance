@@ -126,41 +126,42 @@ function HomePage() {
 
 function Hero() {
   return (
-    <section className="relative h-[100svh] min-h-[640px] w-full overflow-hidden">
+    <section className="relative h-[100svh] min-h-[640px] w-full overflow-hidden bg-cream">
       <video
         autoPlay
         muted
         loop
         playsInline
         poster={HERO_POSTER}
-        className="absolute inset-0 w-full h-full object-cover ken-burns"
+        className="absolute inset-0 w-full h-full object-cover"
       >
         <source src={HERO_VIDEO} type="video/mp4" />
       </video>
 
-      {/* Soft warm wash so the brand wordmark sits clearly above the bowl */}
+      {/* Soft warm wash from top so the wordmark reads cleanly above the bowl */}
       <div
-        className="absolute inset-0"
+        className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse at 50% 35%, color-mix(in oklab, var(--ink) 25%, transparent) 0%, color-mix(in oklab, var(--ink) 65%, transparent) 60%, color-mix(in oklab, var(--ink) 85%, transparent) 100%)",
+            "linear-gradient(180deg, color-mix(in oklab, var(--cream) 70%, transparent) 0%, color-mix(in oklab, var(--cream) 25%, transparent) 28%, transparent 55%, color-mix(in oklab, var(--cream) 20%, transparent) 100%)",
         }}
       />
-      <div className="absolute inset-0 grain" />
+      <div className="absolute inset-0 grain pointer-events-none" />
 
-      <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
+      {/* Wordmark sits in the upper third — above the bowl, never engraved on it */}
+      <div className="relative z-10 h-full flex flex-col items-center px-6 pt-[14vh] md:pt-[12vh]">
         <p className="eyebrow reveal reveal-delay-1">A Saharanpur Atelier · Est. MMXXIV</p>
-        <h1 className="mt-8 font-display text-cream text-[20vw] md:text-[12vw] leading-[0.85] reveal reveal-delay-2">
+        <h1 className="mt-5 font-display text-ink text-[16vw] md:text-[10vw] leading-[0.85] reveal reveal-delay-2">
           The Woods
         </h1>
-        <p className="mt-10 max-w-md mx-auto font-display italic text-cream/75 text-lg md:text-2xl leading-snug reveal reveal-delay-3">
+        <p className="mt-auto mb-24 max-w-md mx-auto font-display italic text-ink/75 text-base md:text-xl leading-snug text-center reveal reveal-delay-3">
           “We would rather make one bowl that outlives us,
           <br />
           than a hundred that do not.”
         </p>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3 text-cream/60 reveal reveal-delay-4">
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3 text-ink/60 reveal reveal-delay-4">
         <span className="text-[10px] uppercase tracking-[0.32em]">Scroll</span>
         <ChevronDown className="w-4 h-4 animate-bounce" strokeWidth={1.2} />
       </div>

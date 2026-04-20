@@ -216,7 +216,7 @@ function Manifesto() {
           <div className="flex flex-wrap items-center gap-x-8 gap-y-4 pt-4">
             <Link
               to="/shop"
-              className="group inline-flex items-center gap-3 px-7 py-4 bg-ink text-cream hover:bg-brass text-[11px] uppercase tracking-[0.32em] hover:bg-brass transition-colors duration-500"
+              className="group inline-flex items-center gap-3 px-7 py-4 bg-ink text-cream text-[11px] uppercase tracking-[0.32em] hover:bg-brass transition-colors duration-500"
             >
               View the Collection
               <ArrowRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1" />
@@ -615,7 +615,7 @@ function Correspondence() {
             </p>
             <Link
               to="/contact"
-              className="group inline-flex items-center gap-3 px-7 py-4 bg-ink text-cream hover:bg-brass text-[11px] uppercase tracking-[0.32em] hover:bg-brass transition-colors duration-500"
+              className="group inline-flex items-center gap-3 px-7 py-4 bg-ink text-cream text-[11px] uppercase tracking-[0.32em] hover:bg-brass transition-colors duration-500"
             >
               Open the enquiry form
               <ArrowRight className="w-4 h-4 transition-transform duration-500 group-hover:translate-x-1" />

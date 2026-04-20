@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShoppingBag } from "lucide-react";
 
 const navLinks = [
   { to: "/shop", label: "Collection" },
@@ -32,13 +32,13 @@ export function SiteHeader() {
         <div className="flex h-20 md:h-24 items-center justify-between">
           <Link
             to="/"
-            className="flex items-baseline gap-3 text-cream"
+            className="flex items-baseline gap-3 text-ink"
             onClick={() => setOpen(false)}
           >
             <span className="font-display text-2xl md:text-[1.75rem] tracking-tight">
               The Woods
             </span>
-            <span className="hidden sm:inline text-[10px] uppercase tracking-[0.32em] text-cream/50">
+            <span className="hidden sm:inline text-[10px] uppercase tracking-[0.32em] text-ink/55">
               Est. MMXXIV
             </span>
           </Link>
@@ -48,7 +48,7 @@ export function SiteHeader() {
               <Link
                 key={link.to}
                 to={link.to}
-                className="text-[11px] uppercase tracking-[0.32em] text-cream/80 hover:text-brass luxe-link transition-colors duration-500"
+                className="text-[11px] uppercase tracking-[0.32em] text-ink/75 hover:text-brass luxe-link transition-colors duration-500"
                 activeProps={{ className: "text-brass" }}
               >
                 {link.label}
@@ -59,15 +59,15 @@ export function SiteHeader() {
           <div className="flex items-center gap-4">
             <Link
               to="/shop"
-              className="hidden md:inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.32em] text-cream/80 hover:text-brass transition-colors duration-500"
+              className="hidden md:inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.32em] text-ink/75 hover:text-brass transition-colors duration-500"
             >
-              Selection
-              <span className="text-brass">·</span>
-              <span className="text-cream/40">0</span>
+              <ShoppingBag className="w-4 h-4" strokeWidth={1.4} />
+              Cart
+              <span className="text-ink/40">0</span>
             </Link>
             <button
               onClick={() => setOpen((v) => !v)}
-              className="md:hidden text-cream"
+              className="md:hidden text-ink"
               aria-label="Toggle menu"
             >
               {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -88,7 +88,7 @@ export function SiteHeader() {
               key={link.to}
               to={link.to}
               onClick={() => setOpen(false)}
-              className="py-3 text-sm uppercase tracking-[0.32em] text-cream/80 border-b border-border last:border-0"
+              className="py-3 text-sm uppercase tracking-[0.32em] text-ink/80 border-b border-border last:border-0"
               activeProps={{ className: "text-brass" }}
             >
               {link.label}

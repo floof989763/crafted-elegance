@@ -7,15 +7,11 @@ import { formatPrice } from "@/lib/format";
 import heroCraftVideo from "@/assets/hero-craft.mp4.asset.json";
 
 const HERO_VIDEO = heroCraftVideo.url;
-const HERO_POSTER =
-  "https://images.unsplash.com/photo-1517260911205-8a3bea4ec9bd?auto=format&fit=crop&w=2400&q=80";
+const HERO_POSTER = "/images/products/tabletop-hero.jpg";
 
-const MANIFESTO_IMG =
-  "https://images.unsplash.com/photo-1611036989259-26d6caf6e7e7?auto=format&fit=crop&w=1600&q=85";
-const CRAFT_IMG =
-  "https://images.unsplash.com/photo-1605117913953-65f44a9e2cd3?auto=format&fit=crop&w=1800&q=85";
-const ATELIER_IMG =
-  "https://images.unsplash.com/photo-1581094288338-2314dddb7ece?auto=format&fit=crop&w=1800&q=85";
+const MANIFESTO_IMG = "/images/products/candle-stands-angle.jpg";
+const CRAFT_IMG = "/images/products/photo-frame-angle.jpg";
+const ATELIER_IMG = "/images/products/candle-stands-story.jpg";
 
 type Product = {
   id: string;
@@ -43,7 +39,7 @@ const journalEntries = [
     excerpt:
       "A walnut tree felled by storm in the Saharanpur foothills waits seven years before it is ready to be turned. We trace the slow arc from forest floor to finished vessel.",
     date: "March, MMXXV",
-    img: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1400&q=80",
+    img: "/images/products/tabletop-hero.jpg",
   },
   {
     chapter: "Chapter 02",
@@ -53,7 +49,7 @@ const journalEntries = [
     excerpt:
       "Our maker keeps only twelve carving tools — most older than he is. A meditation on the discipline of working with less, and why a sharp edge is half the design.",
     date: "February, MMXXV",
-    img: "https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=1400&q=80",
+    img: "/images/products/photo-frame-angle.jpg",
   },
   {
     chapter: "Chapter 03",
@@ -63,7 +59,7 @@ const journalEntries = [
     excerpt:
       "We never lacquer. We never spray. The story of our seventeen-coat hand-rubbed finish, and why a piece of The Woods continues to deepen for decades after it leaves the atelier.",
     date: "January, MMXXV",
-    img: "https://images.unsplash.com/photo-1517260911205-8a3bea4ec9bd?auto=format&fit=crop&w=1400&q=80",
+    img: "/images/products/candle-stands-story.jpg",
   },
 ];
 

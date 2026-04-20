@@ -26,8 +26,8 @@ function AboutPage() {
     <SiteShell>
       <section className="relative h-[80vh] min-h-[520px] overflow-hidden">
         <img
-          src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?auto=format&fit=crop&w=2400&q=80"
-          alt="Workshop interior with hand tools"
+          src="/images/products/tabletop-hero.jpg"
+          alt="Handcrafted wooden table top at The Woods atelier"
           className="absolute inset-0 w-full h-full object-cover ken-burns"
         />
         <div className="absolute inset-0" style={{ background: "var(--gradient-overlay)" }} />
@@ -77,15 +77,15 @@ function AboutPage() {
         <div className="mx-auto max-w-[1480px] px-6 md:px-10 grid md:grid-cols-2 gap-6 md:gap-10">
           <div className="aspect-[4/5] overflow-hidden rounded-sm">
             <img
-              src="https://images.unsplash.com/photo-1565123409695-7b5ef63a2efb?auto=format&fit=crop&w=1600&q=80"
-              alt="Hand chiseling wood"
+              src="/images/products/candle-stands-angle.jpg"
+              alt="Close detail of hand-finished wooden candle stands"
               className="w-full h-full object-cover ken-burns"
             />
           </div>
           <div className="aspect-[4/5] overflow-hidden rounded-sm md:mt-20">
             <img
-              src="https://images.unsplash.com/photo-1452860606245-08befc0ff44b?auto=format&fit=crop&w=1600&q=80"
-              alt="Stack of finished wood pieces"
+              src="/images/products/photo-frame-story.jpg"
+              alt="Handcrafted wooden photo frame styled in warm natural light"
               className="w-full h-full object-cover ken-burns"
             />
           </div>

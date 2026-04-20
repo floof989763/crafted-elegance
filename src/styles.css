@@ -75,46 +75,46 @@
 :root {
   --radius: 0.25rem;
 
-  /* The Woods — dark editorial */
-  --ink: oklch(0.16 0.012 60);
-  --walnut: oklch(0.24 0.022 50);
-  --bark: oklch(0.34 0.028 55);
-  --cream: oklch(0.94 0.018 80);
-  --brass: oklch(0.74 0.11 75);
+  /* The Woods — light parchment editorial (matches woods-whisper-studio) */
+  --ink: oklch(0.22 0.018 55);          /* dark walnut ink for text */
+  --walnut: oklch(0.88 0.022 80);       /* warm sand panel */
+  --bark: oklch(0.55 0.04 60);           /* mid bark for muted text */
+  --cream: oklch(0.96 0.015 85);        /* parchment cream */
+  --brass: oklch(0.52 0.08 55);          /* deep brass / antique gold */
 
-  --background: oklch(0.13 0.01 60);
-  --foreground: oklch(0.94 0.018 80);
+  --background: oklch(0.94 0.014 85);   /* page parchment */
+  --foreground: oklch(0.22 0.018 55);   /* dark ink */
 
-  --card: oklch(0.18 0.013 55);
-  --card-foreground: oklch(0.94 0.018 80);
+  --card: oklch(0.91 0.018 82);
+  --card-foreground: oklch(0.22 0.018 55);
 
-  --popover: oklch(0.18 0.013 55);
-  --popover-foreground: oklch(0.94 0.018 80);
+  --popover: oklch(0.96 0.015 85);
+  --popover-foreground: oklch(0.22 0.018 55);
 
-  --primary: oklch(0.94 0.018 80);
-  --primary-foreground: oklch(0.16 0.012 60);
+  --primary: oklch(0.22 0.018 55);
+  --primary-foreground: oklch(0.96 0.015 85);
 
-  --secondary: oklch(0.24 0.022 50);
-  --secondary-foreground: oklch(0.94 0.018 80);
+  --secondary: oklch(0.88 0.022 80);
+  --secondary-foreground: oklch(0.22 0.018 55);
 
-  --muted: oklch(0.22 0.018 55);
-  --muted-foreground: oklch(0.68 0.02 70);
+  --muted: oklch(0.90 0.018 82);
+  --muted-foreground: oklch(0.45 0.022 60);
 
-  --accent: oklch(0.74 0.11 75);
-  --accent-foreground: oklch(0.16 0.012 60);
+  --accent: oklch(0.52 0.08 55);
+  --accent-foreground: oklch(0.96 0.015 85);
 
   --destructive: oklch(0.55 0.2 25);
   --destructive-foreground: oklch(0.96 0 0);
 
-  --border: oklch(0.94 0.018 80 / 0.12);
-  --input: oklch(0.94 0.018 80 / 0.18);
-  --ring: oklch(0.74 0.11 75 / 0.6);
+  --border: oklch(0.22 0.018 55 / 0.14);
+  --input: oklch(0.22 0.018 55 / 0.2);
+  --ring: oklch(0.52 0.08 55 / 0.5);
 }
 
 .dark {
-  /* App is dark by default; .dark mirrors :root to avoid surprises */
-  --background: oklch(0.13 0.01 60);
-  --foreground: oklch(0.94 0.018 80);
+  /* Light theme is the brand default; mirror :root */
+  --background: oklch(0.94 0.014 85);
+  --foreground: oklch(0.22 0.018 55);
 }
 
 @layer base {
@@ -143,8 +143,8 @@
   }
 
   ::selection {
-    background-color: color-mix(in oklab, var(--brass) 50%, transparent);
-    color: var(--ink);
+    background-color: color-mix(in oklab, var(--brass) 35%, transparent);
+    color: var(--cream);
   }
 }
 

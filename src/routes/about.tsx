@@ -26,8 +26,8 @@ function AboutPage() {
     <SiteShell>
       <section className="relative h-[80vh] min-h-[520px] overflow-hidden">
         <img
-          src="/images/products/tabletop-hero.jpg"
-          alt="Handcrafted wooden table top at The Woods atelier"
+          src="/images/editorial/atelier-interior.jpg"
+          alt="The Woods atelier interior in Saharanpur"
           className="absolute inset-0 w-full h-full object-cover ken-burns"
         />
         <div className="absolute inset-0" style={{ background: "var(--gradient-overlay)" }} />
@@ -77,15 +77,15 @@ function AboutPage() {
         <div className="mx-auto max-w-[1480px] px-6 md:px-10 grid md:grid-cols-2 gap-6 md:gap-10">
           <div className="aspect-[4/5] overflow-hidden rounded-sm">
             <img
-              src="/images/products/candle-stands-angle.jpg"
-              alt="Close detail of hand-finished wooden candle stands"
+              src="/images/editorial/atelier-hands.jpg"
+              alt="The maker's hands carving walnut"
               className="w-full h-full object-cover ken-burns"
             />
           </div>
           <div className="aspect-[4/5] overflow-hidden rounded-sm md:mt-20">
             <img
-              src="/images/products/photo-frame-story.jpg"
-              alt="Handcrafted wooden photo frame styled in warm natural light"
+              src="/images/editorial/beeswax-finish.jpg"
+              alt="Beeswax tin and linen cloth on a finished walnut bowl"
               className="w-full h-full object-cover ken-burns"
             />
           </div>

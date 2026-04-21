@@ -35,6 +35,12 @@ export const Route = createRootRoute({
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: "The Woods" },
       { name: "twitter:card", content: "summary_large_image" },
+      { property: "og:title", content: "The Woods — Heirloom Wooden Handicraft" },
+      { name: "twitter:title", content: "The Woods — Heirloom Wooden Handicraft" },
+      { property: "og:description", content: "Hand-carved trays, decor, furniture and accessories from a small atelier of wood artisans." },
+      { name: "twitter:description", content: "Hand-carved trays, decor, furniture and accessories from a small atelier of wood artisans." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d1226b18-59c4-4794-af27-397f102d2a80/id-preview-1cf236ea--3aa30a62-81f4-4d5c-b75b-9adb5f45cece.lovable.app-1776681156587.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/d1226b18-59c4-4794-af27-397f102d2a80/id-preview-1cf236ea--3aa30a62-81f4-4d5c-b75b-9adb5f45cece.lovable.app-1776681156587.png" },
     ],
     links: [
       {

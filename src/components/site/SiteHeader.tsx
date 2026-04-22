@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Menu, X, ShoppingBag } from "lucide-react";
+import { Menu, X, ShoppingBag, User } from "lucide-react";
+import { useCart } from "@/hooks/use-cart";
+import { useCustomerAuth } from "@/hooks/use-customer-auth";
 
 const navLinks = [
   { to: "/shop", label: "Collection" },
@@ -12,6 +14,8 @@ const navLinks = [
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const { count } = useCart();
+  const { user } = useCustomerAuth();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -58,12 +62,19 @@ export function SiteHeader() {
 
           <div className="flex items-center gap-4">
             <Link
-              to="/shop"
+              to="/account"
+              className="hidden md:inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.32em] text-ink/75 hover:text-brass transition-colors duration-500"
+            >
+              <User className="w-4 h-4" strokeWidth={1.4} />
+              {user ? "Account" : "Sign in"}
+            </Link>
+            <Link
+              to="/cart"
               className="hidden md:inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.32em] text-ink/75 hover:text-brass transition-colors duration-500"
             >
               <ShoppingBag className="w-4 h-4" strokeWidth={1.4} />
               Cart
-              <span className="text-ink/40">0</span>
+              <span className={count > 0 ? "text-brass" : "text-ink/40"}>{count}</span>
             </Link>
             <button
               onClick={() => setOpen((v) => !v)}
@@ -94,6 +105,21 @@ export function SiteHeader() {
               {link.label}
             </Link>
           ))}
+          <Link
+            to="/cart"
+            onClick={() => setOpen(false)}
+            className="py-3 text-sm uppercase tracking-[0.32em] text-ink/80 border-b border-border flex items-center justify-between"
+          >
+            <span>Cart</span>
+            <span className={count > 0 ? "text-brass" : "text-ink/40"}>{count}</span>
+          </Link>
+          <Link
+            to="/account"
+            onClick={() => setOpen(false)}
+            className="py-3 text-sm uppercase tracking-[0.32em] text-ink/80"
+          >
+            {user ? "Account" : "Sign in"}
+          </Link>
         </nav>
       </div>
     </header>

@@ -291,7 +291,7 @@ function AdminProducts() {
                     ))}
                   </select>
                 </Field>
-                <Field label="Price (USD)">
+                <Field label="Price (₹ INR)">
                   <input
                     type="number"
                     step="0.01"

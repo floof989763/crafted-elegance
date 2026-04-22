@@ -1,9 +1,11 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowLeft, Loader2 } from "lucide-react";
+import { ArrowLeft, Loader2, ShoppingBag, Check } from "lucide-react";
 import { SiteShell } from "@/components/site/SiteShell";
 import { supabase } from "@/integrations/supabase/client";
 import { formatPrice } from "@/lib/format";
+import { useCart } from "@/hooks/use-cart";
+import { ProductReviews } from "@/components/site/ProductReviews";
 
 type Product = {
   id: string;
@@ -41,10 +43,13 @@ export const Route = createFileRoute("/shop/$slug")({
 
 function ProductPage() {
   const { slug } = Route.useParams();
+  const navigate = useNavigate();
+  const { add } = useCart();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeImg, setActiveImg] = useState(0);
-  const [checkingOut, setCheckingOut] = useState(false);
+  const [adding, setAdding] = useState(false);
+  const [added, setAdded] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -59,17 +64,32 @@ function ProductPage() {
     })();
   }, [slug]);
 
-  const handleCheckout = async () => {
+  const handleAddToCart = async () => {
     if (!product) return;
-    setCheckingOut(true);
+    setAdding(true);
     try {
-      // Placeholder — wired to Stripe in next step
-      alert(
-        "Checkout will open here once Stripe is enabled in the next step.\n\nFor now you can use the contact form to inquire about this piece."
+      await add(
+        {
+          product_id: product.id,
+          name: product.name,
+          slug: product.slug,
+          price_cents: product.price_cents,
+          currency: product.currency,
+          image: product.images?.[0] ?? null,
+          stock: product.stock,
+        },
+        1,
       );
+      setAdded(true);
+      setTimeout(() => setAdded(false), 1800);
     } finally {
-      setCheckingOut(false);
+      setAdding(false);
     }
+  };
+
+  const handleBuyNow = async () => {
+    await handleAddToCart();
+    navigate({ to: "/checkout" });
   };
 
   if (loading) {
@@ -180,11 +200,29 @@ function ProductPage() {
               </div>
 
               <button
-                onClick={handleCheckout}
-                disabled={checkingOut}
-                className="w-full px-8 py-5 bg-cream text-ink text-xs uppercase tracking-[0.28em] hover:bg-brass transition-colors duration-500 disabled:opacity-50"
+                onClick={handleAddToCart}
+                disabled={adding}
+                className="w-full inline-flex justify-center items-center gap-3 px-8 py-5 bg-ink text-cream text-xs uppercase tracking-[0.28em] hover:bg-brass transition-colors duration-500 disabled:opacity-50"
               >
-                {checkingOut ? "Opening checkout…" : "Acquire this piece"}
+                {adding ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : added ? (
+                  <>
+                    <Check className="w-4 h-4" /> Added to cart
+                  </>
+                ) : (
+                  <>
+                    <ShoppingBag className="w-4 h-4" /> Add to cart
+                  </>
+                )}
+              </button>
+
+              <button
+                onClick={handleBuyNow}
+                disabled={adding}
+                className="w-full px-8 py-5 border border-border text-xs uppercase tracking-[0.28em] text-ink hover:border-brass hover:text-brass transition-colors duration-500 disabled:opacity-50"
+              >
+                Buy now
               </button>
 
               <Link
@@ -197,6 +235,8 @@ function ProductPage() {
           </div>
         </div>
       </section>
+
+      <ProductReviews productId={product.id} />
     </SiteShell>
   );
 }

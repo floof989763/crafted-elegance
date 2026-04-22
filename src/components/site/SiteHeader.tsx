@@ -105,6 +105,21 @@ export function SiteHeader() {
               {link.label}
             </Link>
           ))}
+          <Link
+            to="/cart"
+            onClick={() => setOpen(false)}
+            className="py-3 text-sm uppercase tracking-[0.32em] text-ink/80 border-b border-border flex items-center justify-between"
+          >
+            <span>Cart</span>
+            <span className={count > 0 ? "text-brass" : "text-ink/40"}>{count}</span>
+          </Link>
+          <Link
+            to="/account"
+            onClick={() => setOpen(false)}
+            className="py-3 text-sm uppercase tracking-[0.32em] text-ink/80"
+          >
+            {user ? "Account" : "Sign in"}
+          </Link>
         </nav>
       </div>
     </header>

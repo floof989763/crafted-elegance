@@ -59,7 +59,7 @@ function AdminInquiries() {
     <div className="p-10 space-y-8">
       <header>
         <p className="eyebrow">Letters</p>
-        <h1 className="mt-3 font-display text-5xl text-cream">Inquiries</h1>
+        <h1 className="mt-3 font-display text-5xl text-ink">Inquiries</h1>
       </header>
 
       <div className="flex gap-6 border-b border-border">
@@ -68,7 +68,7 @@ function AdminInquiries() {
             key={s}
             onClick={() => setFilter(s)}
             className={`pb-3 text-xs uppercase tracking-[0.28em] border-b-2 -mb-px transition-colors ${
-              filter === s ? "text-brass border-brass" : "text-muted-foreground border-transparent hover:text-cream"
+              filter === s ? "text-brass border-brass" : "text-muted-foreground border-transparent hover:text-ink"
             }`}
           >
             {s.replace("_", " ")} ({s === "all" ? items.length : items.filter((i) => i.status === s).length})
@@ -95,7 +95,7 @@ function AdminInquiries() {
                 >
                   <div className="flex items-start justify-between gap-3">
                     <div className="min-w-0">
-                      <p className="text-cream truncate">{i.name}</p>
+                      <p className="text-ink truncate">{i.name}</p>
                       <p className="text-xs text-muted-foreground truncate">{i.subject || i.email}</p>
                     </div>
                     <ChevronRight className="w-4 h-4 text-muted-foreground shrink-0" />
@@ -121,7 +121,7 @@ function AdminInquiries() {
             {active ? (
               <div className="border border-border rounded-sm">
                 <header className="p-6 border-b border-border space-y-1">
-                  <h2 className="font-display text-3xl text-cream">{active.name}</h2>
+                  <h2 className="font-display text-3xl text-ink">{active.name}</h2>
                   <p className="text-sm text-muted-foreground">
                     <a href={`mailto:${active.email}`} className="hover:text-brass">
                       {active.email}
@@ -129,11 +129,11 @@ function AdminInquiries() {
                     {active.phone && <> · {active.phone}</>}
                   </p>
                   {active.subject && (
-                    <p className="text-sm text-cream/70 italic">"{active.subject}"</p>
+                    <p className="text-sm text-ink/70 italic">"{active.subject}"</p>
                   )}
                 </header>
                 <div className="p-6">
-                  <p className="text-sm text-cream/80 whitespace-pre-line leading-relaxed">
+                  <p className="text-sm text-ink/80 whitespace-pre-line leading-relaxed">
                     {active.message}
                   </p>
                 </div>
@@ -141,7 +141,7 @@ function AdminInquiries() {
                   <select
                     value={active.status}
                     onChange={(e) => updateStatus(active.id, e.target.value)}
-                    className="bg-transparent border border-border rounded-sm px-3 py-2 text-sm text-cream"
+                    className="bg-transparent border border-border rounded-sm px-3 py-2 text-sm text-ink"
                   >
                     {STATUSES.map((s) => (
                       <option key={s} value={s}>

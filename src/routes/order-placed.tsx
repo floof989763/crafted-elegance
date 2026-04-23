@@ -39,7 +39,7 @@ function OrderPlaced() {
               <span className="font-mono text-ink">#{id.slice(0, 8).toUpperCase()}</span>
             </p>
           )}
-          <p className="text-cream text-base text-muted-foreground leading-relaxed">
+          <p className="text-base text-muted-foreground leading-relaxed">
             {pending
               ? "Your piece is reserved. We'll reach you at the email and phone you provided to share a secure payment link."
               : "Your piece is reserved. We will be in touch shortly to confirm dispatch and arrange cash payment on delivery."}

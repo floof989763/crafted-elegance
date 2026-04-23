@@ -45,7 +45,7 @@ function AdminLogin() {
         return;
       }
       setInfo(
-        "Account created. The first signup is automatic; ask the owner to grant the admin role in user_roles before you can manage the site."
+        "Account created. You can now sign in with your email and password."
       );
       return;
     }
@@ -85,7 +85,7 @@ function AdminLogin() {
         <div className="w-full max-w-md space-y-8">
           <div>
             <p className="eyebrow">{mode === "signin" ? "Sign in" : "Create account"}</p>
-            <h2 className="mt-3 font-display text-4xl text-cream">
+            <h2 className="mt-3 font-display text-4xl text-ink">
               {mode === "signin" ? "Welcome back." : "Begin your access."}
             </h2>
           </div>
@@ -99,7 +99,7 @@ function AdminLogin() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 autoComplete="email"
-                className="w-full bg-transparent border-b border-border focus:border-brass outline-none py-3 text-cream"
+                className="w-full bg-transparent border-b border-border focus:border-brass outline-none py-3 text-ink"
               />
             </label>
             <label className="block">
@@ -111,7 +111,7 @@ function AdminLogin() {
                 required
                 minLength={8}
                 autoComplete={mode === "signin" ? "current-password" : "new-password"}
-                className="w-full bg-transparent border-b border-border focus:border-brass outline-none py-3 text-cream"
+                className="w-full bg-transparent border-b border-border focus:border-brass outline-none py-3 text-ink"
               />
             </label>
 

@@ -43,7 +43,7 @@ function AboutPage() {
       </section>
 
       <section className="py-32 md:py-48">
-        <div className="mx-auto max-w-3xl px-6 md:px-10 space-y-10 font-display text-2xl md:text-3xl text-cream/90 leading-[1.4]">
+        <div className="mx-auto max-w-3xl px-6 md:px-10 space-y-10 font-display text-2xl md:text-3xl text-ink/90 leading-[1.4]">
           <p>
             The Woods is a Saharanpur-based wooden handicraft brand, founded in a
             converted granary at the edge of the old timber market — where India&rsquo;s

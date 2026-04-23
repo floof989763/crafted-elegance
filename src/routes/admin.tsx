@@ -51,7 +51,7 @@ function AdminLayout() {
       <div className="min-h-screen flex items-center justify-center bg-background px-6">
         <div className="max-w-md text-center">
           <p className="eyebrow">Restricted</p>
-          <h1 className="mt-4 font-display text-4xl text-cream">Not an admin.</h1>
+          <h1 className="mt-4 font-display text-4xl text-ink">Not an admin.</h1>
           <p className="mt-4 text-muted-foreground text-sm">
             Your account exists but no admin role has been assigned. Ask the owner to
             grant you the admin role in <code className="text-brass">user_roles</code>.
@@ -73,7 +73,7 @@ function AdminLayout() {
   return (
     <div className="min-h-screen bg-background flex">
       <aside className="w-64 shrink-0 border-r border-border bg-card flex flex-col">
-        <Link to="/" className="px-6 py-8 font-display text-2xl text-cream border-b border-border">
+        <Link to="/" className="px-6 py-8 font-display text-2xl text-ink border-b border-border">
           The Woods<span className="text-brass">.</span>
           <div className="text-[10px] uppercase tracking-[0.32em] text-muted-foreground mt-1">
             Atelier panel
@@ -86,7 +86,7 @@ function AdminLayout() {
               key={l.to}
               to={l.to}
               activeOptions={{ exact: l.exact }}
-              className="flex items-center gap-3 px-4 py-3 text-sm rounded-sm text-cream/70 hover:bg-walnut hover:text-cream transition-colors"
+              className="flex items-center gap-3 px-4 py-3 text-sm rounded-sm text-ink/70 hover:bg-walnut hover:text-ink transition-colors"
               activeProps={{ className: "bg-walnut text-brass" }}
             >
               <l.icon className="w-4 h-4" strokeWidth={1.4} />
@@ -102,7 +102,7 @@ function AdminLayout() {
               await supabase.auth.signOut();
               navigate({ to: "/admin/login" });
             }}
-            className="w-full flex items-center gap-3 px-4 py-3 text-sm rounded-sm text-cream/70 hover:bg-walnut hover:text-cream transition-colors"
+            className="w-full flex items-center gap-3 px-4 py-3 text-sm rounded-sm text-ink/70 hover:bg-walnut hover:text-ink transition-colors"
           >
             <LogOut className="w-4 h-4" strokeWidth={1.4} /> Sign out
           </button>

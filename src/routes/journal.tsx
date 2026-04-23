@@ -90,7 +90,7 @@ function JournalPage() {
       <section className="pt-40 md:pt-48 pb-20 border-b border-border">
         <div className="mx-auto max-w-[1480px] px-6 md:px-10">
           <p className="eyebrow">— The Journal</p>
-          <h1 className="mt-5 font-display text-6xl md:text-8xl text-cream leading-[0.92] max-w-4xl">
+          <h1 className="mt-5 font-display text-6xl md:text-8xl text-ink leading-[0.92] max-w-4xl">
             Field notes from
             <br />
             <em className="text-brass">the atelier.</em>
@@ -114,19 +114,19 @@ function JournalPage() {
                   className="w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.06]"
                 />
               </div>
-              <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.32em] text-cream/50 mb-3">
+              <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.32em] text-ink/50 mb-3">
                 <span className="text-brass">{j.chapter}</span>
                 <span>
                   {j.tag} <span className="mx-1.5">·</span> {j.minutes}
                 </span>
               </div>
-              <h2 className="font-display text-2xl md:text-3xl text-cream group-hover:text-brass transition-colors duration-500">
+              <h2 className="font-display text-2xl md:text-3xl text-ink group-hover:text-brass transition-colors duration-500">
                 {j.title}
               </h2>
               <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
                 {j.excerpt}
               </p>
-              <div className="mt-5 flex items-center justify-between text-[10px] uppercase tracking-[0.32em] text-cream/40">
+              <div className="mt-5 flex items-center justify-between text-[10px] uppercase tracking-[0.32em] text-ink/40">
                 <span>{j.date}</span>
                 <span className="text-brass">Read →</span>
               </div>

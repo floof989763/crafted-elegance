@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Plus, Pencil, Trash2, X, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { formatPrice } from "@/lib/format";
+import { ImageUploader } from "@/components/admin/ImageUploader";
 
 type Category = { id: string; name: string; slug: string };
 type Product = {
@@ -29,7 +30,7 @@ type FormState = {
   short_description: string;
   description: string;
   price: string;
-  images: string;
+  images: string[];
   materials: string;
   dimensions: string;
   stock: string;
@@ -44,7 +45,7 @@ const empty: FormState = {
   short_description: "",
   description: "",
   price: "",
-  images: "",
+  images: [],
   materials: "",
   dimensions: "",
   stock: "0",
@@ -94,7 +95,7 @@ function AdminProducts() {
       short_description: p.short_description || "",
       description: p.description || "",
       price: (p.price_cents / 100).toString(),
-      images: p.images.join("\n"),
+      images: p.images || [],
       materials: p.materials || "",
       dimensions: p.dimensions || "",
       stock: p.stock.toString(),
@@ -115,10 +116,7 @@ function AdminProducts() {
       short_description: editing.short_description.trim() || null,
       description: editing.description.trim() || null,
       price_cents: Math.round(Number(editing.price || "0") * 100),
-      images: editing.images
-        .split("\n")
-        .map((s) => s.trim())
-        .filter(Boolean),
+      images: editing.images.map((s) => s.trim()).filter(Boolean),
       materials: editing.materials.trim() || null,
       dimensions: editing.dimensions.trim() || null,
       stock: Number(editing.stock || "0"),
@@ -157,7 +155,7 @@ function AdminProducts() {
       <header className="flex items-center justify-between">
         <div>
           <p className="eyebrow">Catalogue</p>
-          <h1 className="mt-3 font-display text-5xl text-cream">Products</h1>
+          <h1 className="mt-3 font-display text-5xl text-ink">Products</h1>
         </div>
         <button
           onClick={startNew}
@@ -173,7 +171,7 @@ function AdminProducts() {
         </div>
       ) : products.length === 0 ? (
         <div className="border border-border rounded-sm p-16 text-center">
-          <p className="font-display text-2xl text-cream">No products yet.</p>
+          <p className="font-display text-2xl text-ink">No products yet.</p>
           <p className="mt-2 text-sm text-muted-foreground">
             Add your first piece to begin the collection.
           </p>
@@ -204,16 +202,16 @@ function AdminProducts() {
                           )}
                         </div>
                         <div>
-                          <p className="text-cream">{p.name}</p>
+                          <p className="text-ink">{p.name}</p>
                           <p className="text-xs text-muted-foreground">{p.slug}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-cream/70">{cat?.name || "—"}</td>
-                    <td className="px-6 py-4 text-cream/70">
+                    <td className="px-6 py-4 text-ink/70">{cat?.name || "—"}</td>
+                    <td className="px-6 py-4 text-ink/70">
                       {formatPrice(p.price_cents, p.currency)}
                     </td>
-                    <td className="px-6 py-4 text-cream/70">{p.stock}</td>
+                    <td className="px-6 py-4 text-ink/70">{p.stock}</td>
                     <td className="px-6 py-4">
                       <span
                         className={`text-xs uppercase tracking-[0.2em] ${
@@ -253,7 +251,7 @@ function AdminProducts() {
         <div className="fixed inset-0 z-50 bg-ink/80 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-card border border-border rounded-sm w-full max-w-3xl max-h-[90vh] overflow-auto">
             <header className="px-8 py-5 border-b border-border flex items-center justify-between sticky top-0 bg-card z-10">
-              <h2 className="font-display text-2xl text-cream">
+              <h2 className="font-display text-2xl text-ink">
                 {editing.id ? "Edit piece" : "New piece"}
               </h2>
               <button onClick={() => setEditing(null)} aria-label="Close">
@@ -319,12 +317,11 @@ function AdminProducts() {
                 />
               </Field>
 
-              <Field label="Image URLs (one per line)">
-                <textarea
+              <Field label="Photos">
+                <ImageUploader
                   value={editing.images}
-                  onChange={(e) => setEditing({ ...editing, images: e.target.value })}
-                  className="admin-input min-h-24 resize-y font-mono text-xs"
-                  placeholder={"https://...\nhttps://..."}
+                  onChange={(images) => setEditing({ ...editing, images })}
+                  folder="products"
                 />
               </Field>
 
@@ -355,7 +352,7 @@ function AdminProducts() {
               </div>
 
               <div className="flex gap-8 pt-2">
-                <label className="flex items-center gap-3 text-sm text-cream">
+                <label className="flex items-center gap-3 text-sm text-ink">
                   <input
                     type="checkbox"
                     checked={editing.is_active}
@@ -363,7 +360,7 @@ function AdminProducts() {
                   />
                   Active
                 </label>
-                <label className="flex items-center gap-3 text-sm text-cream">
+                <label className="flex items-center gap-3 text-sm text-ink">
                   <input
                     type="checkbox"
                     checked={editing.is_featured}
@@ -378,7 +375,7 @@ function AdminProducts() {
             <footer className="px-8 py-5 border-t border-border flex items-center justify-end gap-3 sticky bottom-0 bg-card">
               <button
                 onClick={() => setEditing(null)}
-                className="px-6 py-3 text-xs uppercase tracking-[0.28em] text-muted-foreground hover:text-cream"
+                className="px-6 py-3 text-xs uppercase tracking-[0.28em] text-muted-foreground hover:text-ink"
               >
                 Cancel
               </button>

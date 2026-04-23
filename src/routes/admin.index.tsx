@@ -40,7 +40,7 @@ function AdminOverview() {
     <div className="p-10 space-y-12">
       <header>
         <p className="eyebrow">Atelier overview</p>
-        <h1 className="mt-3 font-display text-5xl text-cream">Today, in the workshop.</h1>
+        <h1 className="mt-3 font-display text-5xl text-ink">Today, in the workshop.</h1>
       </header>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
@@ -52,7 +52,7 @@ function AdminOverview() {
 
       <section className="border border-border rounded-sm">
         <div className="px-6 py-4 border-b border-border flex items-center justify-between">
-          <h2 className="font-display text-2xl text-cream">Recent inquiries</h2>
+          <h2 className="font-display text-2xl text-ink">Recent inquiries</h2>
           <Link to="/admin/inquiries" className="text-xs uppercase tracking-[0.28em] text-brass luxe-link">
             View all
           </Link>
@@ -64,7 +64,7 @@ function AdminOverview() {
             {recentInquiries.map((i) => (
               <li key={i.id} className="px-6 py-4 flex items-center justify-between gap-4">
                 <div className="min-w-0">
-                  <p className="text-cream truncate">{i.name}</p>
+                  <p className="text-ink truncate">{i.name}</p>
                   <p className="text-xs text-muted-foreground truncate">
                     {i.subject || i.email}
                   </p>
@@ -95,7 +95,7 @@ function Stat({
   const inner = (
     <div className="border border-border rounded-sm p-6 hover:bg-card transition-colors">
       <Icon className="w-5 h-5 text-brass" strokeWidth={1.4} />
-      <p className="mt-6 text-4xl font-display text-cream">{value}</p>
+      <p className="mt-6 text-4xl font-display text-ink">{value}</p>
       <p className="mt-1 eyebrow">{label}</p>
     </div>
   );

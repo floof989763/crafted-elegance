@@ -86,7 +86,7 @@ function ContactPage() {
       <section className="pt-40 md:pt-48 pb-12">
         <div className="mx-auto max-w-[1480px] px-6 md:px-10">
           <p className="eyebrow">Contact</p>
-          <h1 className="mt-4 font-display text-6xl md:text-8xl text-cream leading-[0.92] max-w-4xl">
+          <h1 className="mt-4 font-display text-6xl md:text-8xl text-ink leading-[0.92] max-w-4xl">
             Write us a<br />
             <em className="text-brass">letter.</em>
           </h1>
@@ -114,7 +114,7 @@ function ContactPage() {
             {success ? (
               <div className="border border-border rounded-sm p-12 md:p-16 text-center">
                 <CheckCircle2 className="w-10 h-10 text-brass mx-auto" strokeWidth={1.2} />
-                <h2 className="mt-6 font-display text-4xl text-cream">Letter received.</h2>
+                <h2 className="mt-6 font-display text-4xl text-ink">Letter received.</h2>
                 <p className="mt-4 text-muted-foreground max-w-md mx-auto">
                   Thank you. We'll write back personally, often within a day or two.
                 </p>
@@ -238,7 +238,7 @@ function Info({
       <Icon className="w-5 h-5 text-brass" strokeWidth={1.4} />
       <p className="eyebrow">{title}</p>
       {lines.map((l, i) => (
-        <p key={i} className="text-sm text-cream/80">
+        <p key={i} className="text-sm text-ink/80">
           {l}
         </p>
       ))}

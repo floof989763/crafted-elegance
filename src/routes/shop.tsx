@@ -93,7 +93,7 @@ function ShopPage() {
       <section className="pt-40 md:pt-48 pb-16 border-b border-border">
         <div className="mx-auto max-w-[1480px] px-6 md:px-10">
           <p className="eyebrow">The Collection</p>
-          <h1 className="mt-4 font-display text-6xl md:text-8xl text-cream leading-[0.92]">
+          <h1 className="mt-4 font-display text-6xl md:text-8xl text-ink leading-[0.92]">
             Every piece,<br />
             <em className="text-brass">numbered.</em>
           </h1>
@@ -106,7 +106,7 @@ function ShopPage() {
             to="/shop"
             search={{}}
             className={`text-xs uppercase tracking-[0.28em] luxe-link transition-colors ${
-              !category ? "text-brass" : "text-cream/70 hover:text-cream"
+              !category ? "text-brass" : "text-ink/70 hover:text-ink"
             }`}
           >
             All
@@ -117,7 +117,7 @@ function ShopPage() {
               to="/shop"
               search={{ category: c.slug }}
               className={`text-xs uppercase tracking-[0.28em] luxe-link transition-colors ${
-                category === c.slug ? "text-brass" : "text-cream/70 hover:text-cream"
+                category === c.slug ? "text-brass" : "text-ink/70 hover:text-ink"
               }`}
             >
               {c.name}
@@ -132,7 +132,7 @@ function ShopPage() {
             <div className="text-center py-32 text-muted-foreground text-sm">Loading…</div>
           ) : products.length === 0 ? (
             <div className="text-center py-32">
-              <p className="font-display text-3xl text-cream">Nothing here yet.</p>
+              <p className="font-display text-3xl text-ink">Nothing here yet.</p>
               <p className="mt-3 text-sm text-muted-foreground">
                 The atelier is preparing the next pieces.
               </p>
@@ -155,19 +155,19 @@ function ShopPage() {
                         className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-cream/30 font-display text-7xl">
+                      <div className="w-full h-full flex items-center justify-center text-ink/30 font-display text-7xl">
                         ⵘ
                       </div>
                     )}
                   </div>
                   <div className="space-y-2">
-                    <h3 className="font-display text-2xl text-cream group-hover:text-brass transition-colors duration-500">
+                    <h3 className="font-display text-2xl text-ink group-hover:text-brass transition-colors duration-500">
                       {p.name}
                     </h3>
                     {p.short_description && (
                       <p className="text-xs text-muted-foreground">{p.short_description}</p>
                     )}
-                    <p className="text-sm text-cream/80 pt-2">
+                    <p className="text-sm text-ink/80 pt-2">
                       {formatPrice(p.price_cents, p.currency)}
                     </p>
                   </div>

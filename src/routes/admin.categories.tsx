@@ -84,7 +84,7 @@ function AdminCategories() {
       <header className="flex items-center justify-between">
         <div>
           <p className="eyebrow">Taxonomy</p>
-          <h1 className="mt-3 font-display text-5xl text-cream">Categories</h1>
+          <h1 className="mt-3 font-display text-5xl text-ink">Categories</h1>
         </div>
         <button
           onClick={() => setEditing({ ...empty })}
@@ -108,7 +108,7 @@ function AdminCategories() {
                   <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">
                     /{c.slug} · #{c.sort_order}
                   </p>
-                  <h3 className="mt-2 font-display text-2xl text-cream">{c.name}</h3>
+                  <h3 className="mt-2 font-display text-2xl text-ink">{c.name}</h3>
                   {c.description && (
                     <p className="mt-2 text-sm text-muted-foreground">{c.description}</p>
                   )}
@@ -148,7 +148,7 @@ function AdminCategories() {
         <div className="fixed inset-0 z-50 bg-ink/80 backdrop-blur-sm flex items-center justify-center p-4">
           <div className="bg-card border border-border rounded-sm w-full max-w-xl">
             <header className="px-8 py-5 border-b border-border flex items-center justify-between">
-              <h2 className="font-display text-2xl text-cream">
+              <h2 className="font-display text-2xl text-ink">
                 {editing.id ? "Edit category" : "New category"}
               </h2>
               <button onClick={() => setEditing(null)} aria-label="Close">
@@ -199,7 +199,7 @@ function AdminCategories() {
             <footer className="px-8 py-5 border-t border-border flex items-center justify-end gap-3">
               <button
                 onClick={() => setEditing(null)}
-                className="px-6 py-3 text-xs uppercase tracking-[0.28em] text-muted-foreground hover:text-cream"
+                className="px-6 py-3 text-xs uppercase tracking-[0.28em] text-muted-foreground hover:text-ink"
               >
                 Cancel
               </button>

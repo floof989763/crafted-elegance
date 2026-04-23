@@ -69,12 +69,12 @@ function AdminLogin() {
           className="absolute inset-0 w-full h-full object-cover ken-burns"
         />
         <div className="absolute inset-0" style={{ background: "var(--gradient-overlay)" }} />
-        <div className="relative z-10 flex flex-col justify-end p-12 text-cream">
+        <div className="relative z-10 flex flex-col justify-end p-12 text-ink">
           <p className="eyebrow">Atelier panel</p>
           <h1 className="mt-4 font-display text-5xl leading-[0.95]">
             The keys<br />to the <em className="text-brass">workshop.</em>
           </h1>
-          <p className="mt-6 text-cream/70 max-w-sm text-sm">
+          <p className="mt-6 text-ink/70 max-w-sm text-sm">
             Manage products, categories, inquiries and orders from one quiet place.
           </p>
         </div>
@@ -85,7 +85,7 @@ function AdminLogin() {
         <div className="w-full max-w-md space-y-8">
           <div>
             <p className="eyebrow">{mode === "signin" ? "Sign in" : "Create account"}</p>
-            <h2 className="mt-3 font-display text-4xl text-cream">
+            <h2 className="mt-3 font-display text-4xl text-ink">
               {mode === "signin" ? "Welcome back." : "Begin your access."}
             </h2>
           </div>
@@ -99,7 +99,7 @@ function AdminLogin() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 autoComplete="email"
-                className="w-full bg-transparent border-b border-border focus:border-brass outline-none py-3 text-cream"
+                className="w-full bg-transparent border-b border-border focus:border-brass outline-none py-3 text-ink"
               />
             </label>
             <label className="block">
@@ -111,7 +111,7 @@ function AdminLogin() {
                 required
                 minLength={8}
                 autoComplete={mode === "signin" ? "current-password" : "new-password"}
-                className="w-full bg-transparent border-b border-border focus:border-brass outline-none py-3 text-cream"
+                className="w-full bg-transparent border-b border-border focus:border-brass outline-none py-3 text-ink"
               />
             </label>
 

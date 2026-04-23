@@ -32,7 +32,7 @@ export const Route = createFileRoute("/shop/$slug")({
   notFoundComponent: () => (
     <SiteShell>
       <div className="pt-40 pb-32 text-center">
-        <h1 className="font-display text-5xl text-cream">Piece not found</h1>
+        <h1 className="font-display text-5xl text-ink">Piece not found</h1>
         <Link to="/shop" className="mt-8 inline-block text-brass luxe-link">
           Back to the collection
         </Link>
@@ -132,7 +132,7 @@ function ProductPage() {
                     className="w-full h-full object-cover"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-cream/30 font-display text-9xl">
+                  <div className="w-full h-full flex items-center justify-center text-ink/30 font-display text-9xl">
                     ⵘ
                   </div>
                 )}
@@ -158,7 +158,7 @@ function ProductPage() {
             <div className="lg:col-span-5 lg:pt-12 space-y-8">
               <div>
                 <p className="eyebrow">Numbered piece</p>
-                <h1 className="mt-4 font-display text-5xl md:text-6xl text-cream leading-[0.95]">
+                <h1 className="mt-4 font-display text-5xl md:text-6xl text-ink leading-[0.95]">
                   {product.name}
                 </h1>
                 {product.short_description && (
@@ -168,12 +168,12 @@ function ProductPage() {
 
               <div className="hairline" />
 
-              <div className="text-3xl font-display text-cream">
+              <div className="text-3xl font-display text-ink">
                 {formatPrice(product.price_cents, product.currency)}
               </div>
 
               {product.description && (
-                <p className="text-sm text-cream/70 leading-relaxed whitespace-pre-line">
+                <p className="text-sm text-ink/70 leading-relaxed whitespace-pre-line">
                   {product.description}
                 </p>
               )}
@@ -182,18 +182,18 @@ function ProductPage() {
                 {product.materials && (
                   <div className="flex gap-4">
                     <span className="eyebrow w-32 pt-1">Materials</span>
-                    <span className="text-cream/80">{product.materials}</span>
+                    <span className="text-ink/80">{product.materials}</span>
                   </div>
                 )}
                 {product.dimensions && (
                   <div className="flex gap-4">
                     <span className="eyebrow w-32 pt-1">Dimensions</span>
-                    <span className="text-cream/80">{product.dimensions}</span>
+                    <span className="text-ink/80">{product.dimensions}</span>
                   </div>
                 )}
                 <div className="flex gap-4">
                   <span className="eyebrow w-32 pt-1">Availability</span>
-                  <span className="text-cream/80">
+                  <span className="text-ink/80">
                     {product.stock > 0 ? `${product.stock} in atelier` : "Made to order"}
                   </span>
                 </div>

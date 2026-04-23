@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Plus, Pencil, Trash2, X, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { ImageUploader } from "@/components/admin/ImageUploader";
 
 type Category = {
   id: string;
@@ -179,11 +180,14 @@ function AdminCategories() {
                   className="admin-input min-h-24 resize-y"
                 />
               </Field>
-              <Field label="Image URL">
-                <input
-                  value={editing.image_url}
-                  onChange={(e) => setEditing({ ...editing, image_url: e.target.value })}
-                  className="admin-input"
+              <Field label="Cover photo">
+                <ImageUploader
+                  value={editing.image_url ? [editing.image_url] : []}
+                  onChange={(urls) =>
+                    setEditing({ ...editing, image_url: urls[0] || "" })
+                  }
+                  multiple={false}
+                  folder="categories"
                 />
               </Field>
               <Field label="Sort order">

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Plus, Pencil, Trash2, X, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { formatPrice } from "@/lib/format";
+import { ImageUploader } from "@/components/admin/ImageUploader";
 
 type Category = { id: string; name: string; slug: string };
 type Product = {
@@ -29,7 +30,7 @@ type FormState = {
   short_description: string;
   description: string;
   price: string;
-  images: string;
+  images: string[];
   materials: string;
   dimensions: string;
   stock: string;
@@ -44,7 +45,7 @@ const empty: FormState = {
   short_description: "",
   description: "",
   price: "",
-  images: "",
+  images: [],
   materials: "",
   dimensions: "",
   stock: "0",

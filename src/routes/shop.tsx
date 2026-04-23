@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { z } from "zod";
 import { SiteShell } from "@/components/site/SiteShell";
@@ -43,8 +43,18 @@ export const Route = createFileRoute("/shop")({
       },
     ],
   }),
-  component: ShopPage,
+  component: ShopRouteBoundary,
 });
+
+function ShopRouteBoundary() {
+  const location = useLocation();
+
+  if (location.pathname !== "/shop") {
+    return <Outlet />;
+  }
+
+  return <ShopPage />;
+}
 
 function ShopPage() {
   const { category } = Route.useSearch();

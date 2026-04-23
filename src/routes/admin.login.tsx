@@ -45,7 +45,7 @@ function AdminLogin() {
         return;
       }
       setInfo(
-        "Account created. The first signup is automatic; ask the owner to grant the admin role in user_roles before you can manage the site."
+        "Account created. You can now sign in with your email and password."
       );
       return;
     }

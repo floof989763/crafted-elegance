@@ -34,7 +34,7 @@ function AboutPage() {
         <div className="relative z-10 h-full flex items-end pb-16 md:pb-24">
           <div className="mx-auto max-w-[1480px] px-6 md:px-10">
             <p className="eyebrow">The Atelier</p>
-            <h1 className="mt-6 font-display text-ink text-[14vw] md:text-[8vw] leading-[0.92] max-w-5xl">
+            <h1 className="mt-6 font-display text-cream text-[14vw] md:text-[8vw] leading-[0.92] max-w-5xl">
               We work in <em className="text-brass">silence,</em><br />
               and in wood.
             </h1>

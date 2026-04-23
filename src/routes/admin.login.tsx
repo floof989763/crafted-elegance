@@ -69,12 +69,12 @@ function AdminLogin() {
           className="absolute inset-0 w-full h-full object-cover ken-burns"
         />
         <div className="absolute inset-0" style={{ background: "var(--gradient-overlay)" }} />
-        <div className="relative z-10 flex flex-col justify-end p-12 text-ink">
+        <div className="relative z-10 flex flex-col justify-end p-12 text-cream">
           <p className="eyebrow">Atelier panel</p>
           <h1 className="mt-4 font-display text-5xl leading-[0.95]">
             The keys<br />to the <em className="text-brass">workshop.</em>
           </h1>
-          <p className="mt-6 text-ink/70 max-w-sm text-sm">
+          <p className="mt-6 text-cream/70 max-w-sm text-sm">
             Manage products, categories, inquiries and orders from one quiet place.
           </p>
         </div>

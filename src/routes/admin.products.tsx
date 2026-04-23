@@ -95,7 +95,7 @@ function AdminProducts() {
       short_description: p.short_description || "",
       description: p.description || "",
       price: (p.price_cents / 100).toString(),
-      images: p.images.join("\n"),
+      images: p.images || [],
       materials: p.materials || "",
       dimensions: p.dimensions || "",
       stock: p.stock.toString(),
@@ -116,10 +116,7 @@ function AdminProducts() {
       short_description: editing.short_description.trim() || null,
       description: editing.description.trim() || null,
       price_cents: Math.round(Number(editing.price || "0") * 100),
-      images: editing.images
-        .split("\n")
-        .map((s) => s.trim())
-        .filter(Boolean),
+      images: editing.images.map((s) => s.trim()).filter(Boolean),
       materials: editing.materials.trim() || null,
       dimensions: editing.dimensions.trim() || null,
       stock: Number(editing.stock || "0"),
@@ -320,12 +317,11 @@ function AdminProducts() {
                 />
               </Field>
 
-              <Field label="Image URLs (one per line)">
-                <textarea
+              <Field label="Photos">
+                <ImageUploader
                   value={editing.images}
-                  onChange={(e) => setEditing({ ...editing, images: e.target.value })}
-                  className="admin-input min-h-24 resize-y font-mono text-xs"
-                  placeholder={"https://...\nhttps://..."}
+                  onChange={(images) => setEditing({ ...editing, images })}
+                  folder="products"
                 />
               </Field>
 

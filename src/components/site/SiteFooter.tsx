@@ -20,7 +20,7 @@ export function SiteFooter() {
               <p>Nakhasa Bazar, Saharanpur</p>
               <p>Uttar Pradesh, India</p>
               <p><a href="tel:+917055762173" className="hover:text-brass transition-colors">+91 70557 62173</a></p>
-              <p><a href="mailto:mohumar20052004@gmail.com" className="hover:text-brass transition-colors">mohumar20052004@gmail.com</a></p>
+              <p><a href="mailto:mohdumar20052004@gmail.com" className="hover:text-brass transition-colors">mohdumar20052004@gmail.com</a></p>
             </div>
           </div>
 

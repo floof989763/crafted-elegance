@@ -1,67 +1,21 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowRight, ChevronDown } from "lucide-react";
 import { SiteShell } from "@/components/site/SiteShell";
 import { supabase } from "@/integrations/supabase/client";
-import { formatPrice } from "@/lib/format";
+import { useSiteContent } from "@/hooks/use-site-content";
 import heroCraftVideo from "@/assets/hero-craft.mp4.asset.json";
 
-const HERO_VIDEO = heroCraftVideo.url;
-const HERO_POSTER = "/images/products/bowl-01-walnut.jpg";
-
-const MANIFESTO_IMG = "/images/products/candle-01-walnut-tall.jpg";
-const CRAFT_IMG = "/images/editorial/atelier-hands.jpg";
-const ATELIER_IMG = "/images/editorial/atelier-interior.jpg";
-
-type Product = {
-  id: string;
-  slug: string;
-  name: string;
-  short_description: string | null;
-  price_cents: number;
-  currency: string;
-  images: string[];
-  category_id: string | null;
-};
+const FALLBACK_HERO_VIDEO = heroCraftVideo.url;
+const FALLBACK_HERO_POSTER = "/images/products/bowl-01-walnut.jpg";
 
 type Category = {
   id: string;
   slug: string;
   name: string;
+  description: string | null;
+  image_url: string | null;
 };
-
-const journalEntries = [
-  {
-    chapter: "Chapter 01",
-    tag: "Material",
-    minutes: "8 min",
-    title: "On the patience of fallen timber.",
-    excerpt:
-      "A walnut tree felled by storm in the Saharanpur foothills waits seven years before it is ready to be turned. We trace the slow arc from forest floor to finished vessel.",
-    date: "March, MMXXV",
-    img: "/images/editorial/timber-stack.jpg",
-  },
-  {
-    chapter: "Chapter 02",
-    tag: "Tools",
-    minutes: "6 min",
-    title: "Twelve gouges, one philosophy.",
-    excerpt:
-      "Our maker keeps only twelve carving tools — most older than he is. A meditation on the discipline of working with less, and why a sharp edge is half the design.",
-    date: "February, MMXXV",
-    img: "/images/editorial/atelier-hands.jpg",
-  },
-  {
-    chapter: "Chapter 03",
-    tag: "Finish",
-    minutes: "5 min",
-    title: "Beeswax, linseed, and time.",
-    excerpt:
-      "We never lacquer. We never spray. The story of our seventeen-coat hand-rubbed finish, and why a piece of The Woods continues to deepen for decades after it leaves the atelier.",
-    date: "January, MMXXV",
-    img: "/images/editorial/beeswax-finish.jpg",
-  },
-];
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -78,7 +32,7 @@ export const Route = createFileRoute("/")({
         content:
           "Hand-carved heirloom objects in walnut, oak and ash. Editions of nine, numbered and signed by the maker.",
       },
-      { property: "og:image", content: HERO_POSTER },
+      { property: "og:image", content: FALLBACK_HERO_POSTER },
     ],
   }),
   component: HomePage,
@@ -86,20 +40,22 @@ export const Route = createFileRoute("/")({
 
 function HomePage() {
   const [categories, setCategories] = useState<Category[]>([]);
-  const [products, setProducts] = useState<Product[]>([]);
+  const [productCount, setProductCount] = useState(0);
 
   useEffect(() => {
     (async () => {
-      const [{ data: cats }, { data: prods }] = await Promise.all([
-        supabase.from("categories").select("id, slug, name").order("sort_order"),
+      const [{ data: cats }, { count }] = await Promise.all([
+        supabase
+          .from("categories")
+          .select("id, slug, name, description, image_url")
+          .order("sort_order"),
         supabase
           .from("products")
-          .select("id, slug, name, short_description, price_cents, currency, images, category_id")
-          .eq("is_active", true)
-          .order("created_at", { ascending: true }),
+          .select("id", { count: "exact", head: true })
+          .eq("is_active", true),
       ]);
       if (cats) setCategories(cats as Category[]);
-      if (prods) setProducts(prods as Product[]);
+      if (typeof count === "number") setProductCount(count);
     })();
   }, []);
 
@@ -107,10 +63,9 @@ function HomePage() {
     <SiteShell>
       <Hero />
       <Manifesto />
-      <Collection categories={categories} products={products} />
+      <Collection categories={categories} productCount={productCount} />
       <Craft />
       <Atelier />
-      <Journal />
       <Correspondence />
     </SiteShell>
   );
@@ -121,20 +76,24 @@ function HomePage() {
 /* -------------------------------------------------------------------------- */
 
 function Hero() {
+  const c = useSiteContent("home.hero");
+  const videoSrc = c.video_url?.trim() ? c.video_url : FALLBACK_HERO_VIDEO;
+  const poster = c.poster_image?.trim() ? c.poster_image : FALLBACK_HERO_POSTER;
+
   return (
     <section className="relative h-[100svh] min-h-[640px] w-full overflow-hidden bg-cream">
       <video
+        key={videoSrc}
         autoPlay
         muted
         loop
         playsInline
-        poster={HERO_POSTER}
+        poster={poster}
         className="absolute inset-0 w-full h-full object-cover"
       >
-        <source src={HERO_VIDEO} type="video/mp4" />
+        <source src={videoSrc} type="video/mp4" />
       </video>
 
-      {/* Soft warm wash from top so the wordmark reads cleanly above the bowl */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -144,16 +103,13 @@ function Hero() {
       />
       <div className="absolute inset-0 grain pointer-events-none" />
 
-      {/* Wordmark sits in the upper third — above the bowl, never engraved on it */}
       <div className="relative z-10 h-full flex flex-col items-center px-6 pt-[14vh] md:pt-[12vh]">
-        <p className="eyebrow reveal reveal-delay-1">A Saharanpur Atelier · Est. MMXXIV</p>
+        <p className="eyebrow reveal reveal-delay-1">{c.eyebrow}</p>
         <h1 className="mt-5 font-display text-ink text-[16vw] md:text-[10vw] leading-[0.85] reveal reveal-delay-2">
-          The Woods
+          {c.title}
         </h1>
-        <p className="mt-auto mb-24 max-w-md mx-auto font-display italic text-ink/75 text-base md:text-xl leading-snug text-center reveal reveal-delay-3">
-          “We would rather make one bowl that outlives us,
-          <br />
-          than a hundred that do not.”
+        <p className="mt-auto mb-24 max-w-md mx-auto font-display italic text-ink/75 text-base md:text-xl leading-snug text-center reveal reveal-delay-3 whitespace-pre-line">
+          {c.quote}
         </p>
       </div>
 
@@ -170,43 +126,35 @@ function Hero() {
 /* -------------------------------------------------------------------------- */
 
 function Manifesto() {
+  const c = useSiteContent("home.manifesto");
   return (
     <section className="relative py-32 md:py-48 overflow-hidden">
       <div className="mx-auto max-w-[1480px] px-6 md:px-10 grid md:grid-cols-12 gap-12 md:gap-20 items-center">
         <div className="md:col-span-5 md:col-start-1 relative">
           <div className="aspect-[3/4] overflow-hidden rounded-sm bg-walnut">
             <img
-              src={MANIFESTO_IMG}
-              alt="A single hand-turned walnut candle stand by The Woods"
+              src={c.image}
+              alt="The Woods"
               loading="lazy"
               className="w-full h-full object-cover ken-burns"
             />
           </div>
           <div className="absolute -bottom-4 left-4 md:-bottom-6 md:left-6 bg-background/90 backdrop-blur px-4 py-2 border border-border">
             <p className="text-[10px] uppercase tracking-[0.32em] text-brass">
-              N° P03 · Walnut
+              {c.badge}
             </p>
           </div>
         </div>
 
         <div className="md:col-span-6 md:col-start-7 space-y-8">
-          <p className="eyebrow">— Vol. 01 · The Quiet Collection · MMXXIV</p>
-          <h2 className="font-display text-5xl md:text-7xl leading-[0.95] text-ink">
-            Objects shaped <em className="text-brass">slowly,</em>
-            <br />
-            for the room <em>that listens.</em>
-          </h2>
+          <p className="eyebrow">{c.eyebrow}</p>
+          <h2
+            className="font-display text-5xl md:text-7xl leading-[0.95] text-ink [&_em]:text-brass"
+            dangerouslySetInnerHTML={{ __html: c.title_html }}
+          />
           <div className="space-y-5 text-muted-foreground leading-relaxed max-w-xl">
-            <p>
-              A small atelier on the edge of Saharanpur, devoted to the slow art of turning
-              heritage timber into vessels, candle stands, trays and tables — each one
-              numbered, signed, and made by a single pair of hands.
-            </p>
-            <p>
-              We work in editions of nine. Once a piece is gone, the form retires with it.
-              Nothing here is restocked, nothing repeated. What remains is what was meant
-              to remain.
-            </p>
+            <p>{c.body_1}</p>
+            <p>{c.body_2}</p>
           </div>
 
           <div className="flex flex-wrap items-center gap-x-8 gap-y-4 pt-4">
@@ -228,11 +176,7 @@ function Manifesto() {
           <div className="hairline mt-10" />
 
           <ul className="grid sm:grid-cols-3 gap-6 pt-2">
-            {[
-              "Single-billet construction",
-              "Hand-finished, never lacquered",
-              "Numbered & signed by maker",
-            ].map((line, i) => (
+            {[c.bullet_1, c.bullet_2, c.bullet_3].map((line, i) => (
               <li key={i} className="space-y-1.5">
                 <span className="text-[10px] uppercase tracking-[0.32em] text-brass">
                   0{i + 1}
@@ -248,66 +192,52 @@ function Manifesto() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* Collection (with category tabs)                                            */
+/* Collection — categories only                                               */
 /* -------------------------------------------------------------------------- */
 
 function Collection({
   categories,
-  products,
+  productCount,
 }: {
   categories: Category[];
-  products: Product[];
+  productCount: number;
 }) {
-  const [active, setActive] = useState<string>("all");
-
-  const visible = useMemo(() => {
-    if (active === "all") return products;
-    const cat = categories.find((c) => c.slug === active);
-    if (!cat) return products;
-    return products.filter((p) => p.category_id === cat.id);
-  }, [active, categories, products]);
+  const c = useSiteContent("home.collection");
 
   return (
     <section className="relative py-24 md:py-40 bg-walnut" id="collection">
       <div className="mx-auto max-w-[1480px] px-6 md:px-10">
         <div className="text-center max-w-3xl mx-auto">
-          <p className="eyebrow">— The Collection</p>
-          <h2 className="mt-5 font-display text-5xl md:text-7xl leading-[0.95] text-ink">
-            Eight objects, conceived <em className="text-brass">in shadow.</em>
-          </h2>
-          <p className="mt-6 text-muted-foreground leading-relaxed">
-            Bowls and vases turned on the lathe. Candle stands and trays carved by gouge.
-            Tables and live-edge tops shaped from a single billet. Each piece exists in an
-            edition of nine — never repeated, never restocked.
-          </p>
+          <p className="eyebrow">{c.eyebrow}</p>
+          <h2
+            className="mt-5 font-display text-5xl md:text-7xl leading-[0.95] text-ink [&_em]:text-brass"
+            dangerouslySetInnerHTML={{ __html: c.title_html }}
+          />
+          <p className="mt-6 text-muted-foreground leading-relaxed">{c.body}</p>
         </div>
 
-        {/* Category tabs */}
-        <div className="mt-14 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 border-y border-border py-5">
-          <CategoryTab label="All" slug="all" active={active} onClick={setActive} />
-          {categories.map((c) => (
-            <CategoryTab
-              key={c.id}
-              label={c.name}
-              slug={c.slug}
-              active={active}
-              onClick={setActive}
+        <div className="mt-16 md:mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {/* All Products card */}
+          <CategoryCard
+            to="/shop"
+            search={{}}
+            name="All Products"
+            description={`Browse every piece — ${productCount} in the atelier.`}
+            image={categories[0]?.image_url || null}
+            featured
+          />
+
+          {categories.map((cat) => (
+            <CategoryCard
+              key={cat.id}
+              to="/shop"
+              search={{ category: cat.slug }}
+              name={cat.name}
+              description={cat.description}
+              image={cat.image_url}
             />
           ))}
         </div>
-
-        {/* Product grid */}
-        {visible.length === 0 ? (
-          <div className="py-32 text-center text-sm text-muted-foreground">
-            No pieces in this category yet.
-          </div>
-        ) : (
-          <div className="mt-16 md:mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-20">
-            {visible.map((p, i) => (
-              <ProductCard key={p.id} p={p} index={i} categories={categories} />
-            ))}
-          </div>
-        )}
 
         <div className="mt-20 text-center">
           <Link
@@ -322,71 +252,61 @@ function Collection({
   );
 }
 
-function CategoryTab({
-  label,
-  slug,
-  active,
-  onClick,
+function CategoryCard({
+  to,
+  search,
+  name,
+  description,
+  image,
+  featured = false,
 }: {
-  label: string;
-  slug: string;
-  active: string;
-  onClick: (slug: string) => void;
+  to: "/shop";
+  search: { category?: string };
+  name: string;
+  description: string | null;
+  image: string | null;
+  featured?: boolean;
 }) {
-  const isActive = slug === active;
-  return (
-    <button
-      onClick={() => onClick(slug)}
-      className={`text-[11px] uppercase tracking-[0.32em] transition-colors duration-300 ${
-        isActive ? "text-brass" : "text-ink/60 hover:text-ink"
-      }`}
-    >
-      {label}
-    </button>
-  );
-}
-
-function ProductCard({
-  p,
-  index,
-  categories,
-}: {
-  p: Product;
-  index: number;
-  categories: Category[];
-}) {
-  const cat = categories.find((c) => c.id === p.category_id);
   return (
     <Link
-      to="/shop/$slug"
-      params={{ slug: p.slug }}
-      className="group block"
-      style={{ animationDelay: `${index * 60}ms` }}
+      to={to}
+      search={search}
+      className="group relative block aspect-[4/5] overflow-hidden rounded-sm bg-ink/60"
     >
-      <div className="aspect-[4/5] bg-walnut overflow-hidden mb-5 rounded-sm">
-        {p.images?.[0] ? (
-          <img
-            src={p.images[0]}
-            alt={p.name}
-            loading="lazy"
-            className="w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.06]"
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center text-ink/30 font-display text-7xl">
-            ⵘ
-          </div>
+      {image ? (
+        <img
+          src={image}
+          alt={name}
+          loading="lazy"
+          className="absolute inset-0 w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.06]"
+        />
+      ) : (
+        <div className="absolute inset-0 bg-walnut flex items-center justify-center text-ink/30 font-display text-7xl">
+          ⵘ
+        </div>
+      )}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(180deg, transparent 35%, color-mix(in oklab, var(--ink) 70%, transparent) 100%)",
+        }}
+      />
+      <div className="absolute inset-x-0 bottom-0 p-7 md:p-8 z-10">
+        {featured && (
+          <p className="text-[10px] uppercase tracking-[0.32em] text-brass mb-2">
+            The whole catalogue
+          </p>
         )}
-      </div>
-      <div className="space-y-1.5">
-        {cat && (
-          <p className="text-[10px] uppercase tracking-[0.32em] text-brass">{cat.name}</p>
-        )}
-        <h3 className="font-display text-xl text-ink group-hover:text-brass transition-colors duration-500">
-          {p.name}
+        <h3 className="font-display text-3xl md:text-4xl text-cream leading-tight group-hover:text-brass transition-colors duration-500">
+          {name}
         </h3>
-        <p className="text-sm text-ink/70 pt-1">
-          {formatPrice(p.price_cents, p.currency)}
-        </p>
+        {description && (
+          <p className="mt-2 text-sm text-cream/75 max-w-xs">{description}</p>
+        )}
+        <span className="mt-4 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.32em] text-cream/85 group-hover:text-brass transition-colors">
+          Explore <ArrowRight className="w-3.5 h-3.5" />
+        </span>
       </div>
     </Link>
   );
@@ -397,14 +317,15 @@ function ProductCard({
 /* -------------------------------------------------------------------------- */
 
 function Craft() {
+  const c = useSiteContent("home.craft");
   return (
     <section className="relative py-32 md:py-48 overflow-hidden">
       <div className="mx-auto max-w-[1480px] px-6 md:px-10 grid md:grid-cols-12 gap-12 md:gap-20 items-center">
         <div className="md:col-span-7 md:col-start-1 order-2 md:order-1">
           <div className="aspect-[16/11] overflow-hidden rounded-sm bg-walnut">
             <img
-              src={CRAFT_IMG}
-              alt="Artisan hands carving dark walnut at The Woods atelier"
+              src={c.image}
+              alt="Artisan hands at The Woods atelier"
               loading="lazy"
               className="w-full h-full object-cover ken-burns"
             />
@@ -412,26 +333,18 @@ function Craft() {
         </div>
 
         <div className="md:col-span-5 md:col-start-8 order-1 md:order-2 space-y-8">
-          <p className="eyebrow">— Craft</p>
-          <h2 className="font-display text-5xl md:text-6xl leading-[0.95] text-ink">
-            Eighty hours,
-            <br />
-            <em className="text-brass">one pair of hands.</em>
-          </h2>
-          <p className="text-muted-foreground leading-relaxed max-w-md">
-            Each object passes through a single maker, from raw billet to final wax. There
-            are no production runs — only sequences. We work in editions of nine, never
-            more.
-          </p>
-          <p className="text-muted-foreground leading-relaxed max-w-md">
-            The grain is read before it is cut. The form is found, not imposed. What
-            remains is the wood at its quietest.
-          </p>
+          <p className="eyebrow">{c.eyebrow}</p>
+          <h2
+            className="font-display text-5xl md:text-6xl leading-[0.95] text-ink [&_em]:text-brass"
+            dangerouslySetInnerHTML={{ __html: c.title_html }}
+          />
+          <p className="text-muted-foreground leading-relaxed max-w-md">{c.body_1}</p>
+          <p className="text-muted-foreground leading-relaxed max-w-md">{c.body_2}</p>
 
           <div className="grid grid-cols-3 gap-6 pt-6 border-t border-border">
-            <Stat n="09" label="per edition" />
-            <Stat n="80h" label="per object" />
-            <Stat n="01" label="maker" />
+            <Stat n={c.stat_1_n} label={c.stat_1_l} />
+            <Stat n={c.stat_2_n} label={c.stat_2_l} />
+            <Stat n={c.stat_3_n} label={c.stat_3_l} />
           </div>
         </div>
       </div>
@@ -451,27 +364,27 @@ function Stat({ n, label }: { n: string; label: string }) {
 }
 
 /* -------------------------------------------------------------------------- */
-/* Atelier — Saharanpur mention                                               */
+/* Atelier                                                                    */
 /* -------------------------------------------------------------------------- */
 
 function Atelier() {
+  const c = useSiteContent("home.atelier");
   return (
     <section className="relative py-32 md:py-48 bg-walnut">
       <div className="mx-auto max-w-[1480px] px-6 md:px-10">
         <div className="text-center max-w-3xl mx-auto mb-16 md:mb-24">
-          <p className="eyebrow">— The Atelier</p>
-          <h2 className="mt-5 font-display text-5xl md:text-7xl leading-[0.95] text-ink">
-            A studio of <em>two,</em>
-            <br />
-            a forest of <em className="text-brass">memory.</em>
-          </h2>
+          <p className="eyebrow">{c.eyebrow}</p>
+          <h2
+            className="mt-5 font-display text-5xl md:text-7xl leading-[0.95] text-ink [&_em]:text-brass"
+            dangerouslySetInnerHTML={{ __html: c.title_html }}
+          />
         </div>
 
         <div className="grid md:grid-cols-12 gap-12 md:gap-16 items-center">
           <div className="md:col-span-7">
             <div className="aspect-[4/3] overflow-hidden rounded-sm bg-walnut">
               <img
-                src={ATELIER_IMG}
+                src={c.image}
                 alt="The Woods atelier interior in Saharanpur"
                 loading="lazy"
                 className="w-full h-full object-cover ken-burns"
@@ -480,23 +393,9 @@ function Atelier() {
           </div>
 
           <div className="md:col-span-5 space-y-6 text-muted-foreground leading-relaxed">
-            <p>
-              <span className="text-ink">The Woods</span> is a Saharanpur-based wooden
-              handicraft brand, founded in a converted granary at the edge of the old
-              timber market — where India&rsquo;s finest woodcarvers have worked for
-              generations.
-            </p>
-            <p>
-              We source only from fallen and reclaimed timber — sheesham from family
-              groves, walnut from the Kashmir valley, teak rescued from century-old
-              havelis. Every piece carries the history of the tree it once was. Nothing is
-              repeated. Nothing is hurried.
-            </p>
-            <p>
-              Our objects are held in private collections from Kyoto to Copenhagen. They
-              are not sold in stores. They are commissioned, numbered, and delivered by
-              hand.
-            </p>
+            <p>{c.body_1}</p>
+            <p>{c.body_2}</p>
+            <p>{c.body_3}</p>
 
             <Link
               to="/about"
@@ -512,104 +411,35 @@ function Atelier() {
 }
 
 /* -------------------------------------------------------------------------- */
-/* Journal                                                                    */
-/* -------------------------------------------------------------------------- */
-
-function Journal() {
-  return (
-    <section className="relative py-32 md:py-48">
-      <div className="mx-auto max-w-[1480px] px-6 md:px-10">
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16 md:mb-20">
-          <div className="max-w-2xl">
-            <p className="eyebrow">— The Journal</p>
-            <h2 className="mt-5 font-display text-5xl md:text-7xl leading-[0.95] text-ink">
-              Field notes from <em className="text-brass">the atelier.</em>
-            </h2>
-            <p className="mt-6 text-muted-foreground leading-relaxed">
-              Slow writing on timber, tools, and the rooms our objects come to live in.
-              Published quarterly. Never sponsored.
-            </p>
-          </div>
-          <Link
-            to="/contact"
-            className="text-[11px] uppercase tracking-[0.32em] text-ink/70 luxe-link hover:text-brass shrink-0"
-          >
-            Subscribe by post →
-          </Link>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-x-8 gap-y-16">
-          {journalEntries.map((j, i) => (
-            <article key={i} className="group cursor-pointer">
-              <div className="aspect-[4/5] overflow-hidden rounded-sm bg-walnut mb-6">
-                <img
-                  src={j.img}
-                  alt={j.title}
-                  loading="lazy"
-                  className="w-full h-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.06]"
-                />
-              </div>
-              <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.32em] text-ink/55 mb-3">
-                <span className="text-brass">{j.chapter}</span>
-                <span>
-                  {j.tag} <span className="mx-1.5">·</span> {j.minutes}
-                </span>
-              </div>
-              <h3 className="font-display text-2xl md:text-3xl text-ink group-hover:text-brass transition-colors duration-500">
-                {j.title}
-              </h3>
-              <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-                {j.excerpt}
-              </p>
-              <div className="mt-5 flex items-center justify-between text-[10px] uppercase tracking-[0.32em] text-ink/45">
-                <span>{j.date}</span>
-                <span className="text-brass">Read →</span>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* -------------------------------------------------------------------------- */
 /* Correspondence                                                             */
 /* -------------------------------------------------------------------------- */
 
 function Correspondence() {
+  const c = useSiteContent("home.correspondence");
+  const addressLines = c.address_lines.split("\n").filter(Boolean);
+
   return (
     <section className="relative py-32 md:py-48 bg-card border-t border-border">
       <div className="mx-auto max-w-[1480px] px-6 md:px-10 grid md:grid-cols-12 gap-12 md:gap-20">
         <div className="md:col-span-5 space-y-8">
-          <p className="eyebrow">— Correspondence</p>
-          <h2 className="font-display text-5xl md:text-6xl leading-[0.95] text-ink">
-            For commissions
-            <br />
-            &amp; <em className="text-brass">private viewings.</em>
-          </h2>
+          <p className="eyebrow">{c.eyebrow}</p>
+          <h2
+            className="font-display text-5xl md:text-6xl leading-[0.95] text-ink [&_em]:text-brass"
+            dangerouslySetInnerHTML={{ __html: c.title_html }}
+          />
 
           <div className="space-y-6 pt-4">
-            <InfoBlock
-              label="Atelier"
-              lines={["Nakhasa Bazar", "Saharanpur · Uttar Pradesh · India"]}
-            />
-            <InfoBlock label="Write" lines={["mohumar20052004@gmail.com"]} />
-            <InfoBlock label="Telephone" lines={["+91 70557 62173"]} />
-            <InfoBlock
-              label="By appointment"
-              lines={["Thursday — Saturday"]}
-            />
+            <InfoBlock label="Atelier" lines={addressLines} />
+            <InfoBlock label="Write" lines={[c.email]} />
+            <InfoBlock label="Telephone" lines={[c.phone]} />
+            <InfoBlock label="By appointment" lines={[c.appointment]} />
           </div>
         </div>
 
         <div className="md:col-span-7">
           <div className="border border-border bg-background/40 backdrop-blur p-8 md:p-12">
             <p className="eyebrow mb-8">Begin a conversation</p>
-            <p className="text-ink/80 leading-relaxed mb-8">
-              Tell us about the room you have in mind, the tree you remember, or the
-              piece you would like to commission. Every enquiry is read by the maker.
-            </p>
+            <p className="text-ink/80 leading-relaxed mb-8">{c.cta_body}</p>
             <Link
               to="/contact"
               className="group inline-flex items-center gap-3 px-7 py-4 bg-ink text-cream text-[11px] uppercase tracking-[0.32em] hover:bg-brass transition-colors duration-500"

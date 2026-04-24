@@ -3,19 +3,40 @@ import { useEffect, useState } from "react";
 import { Menu, X, ShoppingBag, User } from "lucide-react";
 import { useCart } from "@/hooks/use-cart";
 import { useCustomerAuth } from "@/hooks/use-customer-auth";
-
-const navLinks = [
-  { to: "/shop", label: "Collection" },
-  { to: "/about", label: "Atelier" },
-  { to: "/journal", label: "Journal" },
-  { to: "/contact", label: "Contact" },
-];
+import { useSiteContent } from "@/hooks/use-site-content";
+import { supabase } from "@/integrations/supabase/client";
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const { count } = useCart();
   const { user } = useCustomerAuth();
+  const h = useSiteContent("site.header");
+  const [extraPages, setExtraPages] = useState<{ slug: string; title: string }[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await supabase
+        .from("custom_pages")
+        .select("slug, title")
+        .eq("is_published", true)
+        .eq("show_in_nav", true)
+        .order("sort_order");
+      if (data) setExtraPages(data as { slug: string; title: string }[]);
+    })();
+  }, []);
+
+  const navLinks: { to: any; params?: any; label: string }[] = [
+    { to: "/shop", label: h.nav_collection },
+    { to: "/about", label: h.nav_atelier },
+    { to: "/journal", label: h.nav_journal },
+    { to: "/contact", label: h.nav_contact },
+    ...extraPages.map((p) => ({
+      to: "/p/$slug",
+      params: { slug: p.slug },
+      label: p.title,
+    })),
+  ];
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -40,18 +61,19 @@ export function SiteHeader() {
             onClick={() => setOpen(false)}
           >
             <span className="font-display text-2xl md:text-[1.75rem] tracking-tight">
-              The Woods
+              {h.brand}
             </span>
             <span className="hidden sm:inline text-[10px] uppercase tracking-[0.32em] text-ink/55">
-              Est. MMXXIV
+              {h.tagline}
             </span>
           </Link>
 
           <nav className="hidden md:flex items-center gap-10">
             {navLinks.map((link) => (
               <Link
-                key={link.to}
+                key={`${link.to}${link.params?.slug ?? ""}`}
                 to={link.to}
+                params={link.params}
                 className="text-[11px] uppercase tracking-[0.32em] text-ink/75 hover:text-brass luxe-link transition-colors duration-500"
                 activeProps={{ className: "text-brass" }}
               >
@@ -96,8 +118,9 @@ export function SiteHeader() {
         <nav className="flex flex-col gap-2 px-6 py-8">
           {navLinks.map((link) => (
             <Link
-              key={link.to}
+              key={`m-${link.to}${link.params?.slug ?? ""}`}
               to={link.to}
+              params={link.params}
               onClick={() => setOpen(false)}
               className="py-3 text-sm uppercase tracking-[0.32em] text-ink/80 border-b border-border last:border-0"
               activeProps={{ className: "text-brass" }}

@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, useNavigate, useLocation } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { LayoutDashboard, Package, Tag, MessageSquare, LogOut, Loader2 } from "lucide-react";
+import { LayoutDashboard, Package, Tag, MessageSquare, LogOut, Loader2, FileText, Layers } from "lucide-react";
 import { useAdminAuth } from "@/hooks/use-admin-auth";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -18,6 +18,8 @@ const links = [
   { to: "/admin", label: "Overview", icon: LayoutDashboard, exact: true },
   { to: "/admin/products", label: "Products", icon: Package },
   { to: "/admin/categories", label: "Categories", icon: Tag },
+  { to: "/admin/content", label: "Site content", icon: Layers },
+  { to: "/admin/pages", label: "Custom pages", icon: FileText },
   { to: "/admin/inquiries", label: "Inquiries", icon: MessageSquare },
 ];
 

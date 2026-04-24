@@ -10,7 +10,7 @@ import {
 } from "@/hooks/use-site-content";
 
 export const Route = createFileRoute("/admin/content")({
-  component: AdminContent;
+  component: AdminContent,
 });
 
 type Section = {

@@ -4,6 +4,7 @@ import { z } from "zod";
 import { CheckCircle2, Loader2, Mail, MapPin, Phone } from "lucide-react";
 import { SiteShell } from "@/components/site/SiteShell";
 import { supabase } from "@/integrations/supabase/client";
+import { useSiteContent } from "@/hooks/use-site-content";
 
 const inquirySchema = z.object({
   name: z.string().trim().min(1, "Your name").max(120),
@@ -32,6 +33,8 @@ export const Route = createFileRoute("/contact")({
 });
 
 function ContactPage() {
+  const info = useSiteContent("contact.info");
+  const addressLines = info.address_lines.split("\n").filter(Boolean);
   const [form, setForm] = useState({
     name: "",
     email: "",
@@ -100,14 +103,11 @@ function ContactPage() {
       <section className="py-20 md:py-28">
         <div className="mx-auto max-w-[1480px] px-6 md:px-10 grid lg:grid-cols-12 gap-16">
           <div className="lg:col-span-4 space-y-10">
-            <Info icon={MapPin} title="The atelier" lines={["The Woods Atelier", "Nakhasa Bazar, Saharanpur", "Uttar Pradesh, India · By appointment"]} />
-            <Info icon={Mail} title="Email" lines={["mohdumar20052004@gmail.com"]} />
-            <Info icon={Phone} title="Telephone" lines={["+91 70557 62173"]} />
+            <Info icon={MapPin} title="The atelier" lines={addressLines} />
+            <Info icon={Mail} title="Email" lines={[info.email]} />
+            <Info icon={Phone} title="Telephone" lines={[info.phone]} />
             <div className="hairline" />
-            <p className="text-xs text-muted-foreground leading-relaxed">
-              Studio hours are Tuesday through Saturday, 10am – 5pm. Visits are by
-              appointment only — we keep our space quiet for the work.
-            </p>
+            <p className="text-xs text-muted-foreground leading-relaxed">{info.hours}</p>
           </div>
 
           <div className="lg:col-span-8">

@@ -226,7 +226,7 @@ function Collection({
 
         <div className="mt-16 md:mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 scroll-reveal">
           {/* All Products card — admin can hide / rename / re-image */}
-          {all.enabled && (
+          {String((all as any).enabled) !== "false" && (
             <CategoryCard
               to="/shop"
               search={{}}

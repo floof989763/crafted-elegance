@@ -4,6 +4,7 @@ import { z } from "zod";
 import { SiteShell } from "@/components/site/SiteShell";
 import { supabase } from "@/integrations/supabase/client";
 import { formatPrice } from "@/lib/format";
+import { useSiteContent } from "@/hooks/use-site-content";
 
 const searchSchema = z.object({
   category: z.string().optional(),
@@ -58,6 +59,7 @@ function ShopRouteBoundary() {
 
 function ShopPage() {
   const { category } = Route.useSearch();
+  const h = useSiteContent("shop.header");
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -92,11 +94,11 @@ function ShopPage() {
     <SiteShell>
       <section className="pt-40 md:pt-48 pb-16 border-b border-border">
         <div className="mx-auto max-w-[1480px] px-6 md:px-10">
-          <p className="eyebrow">The Collection</p>
-          <h1 className="mt-4 font-display text-6xl md:text-8xl text-ink leading-[0.92]">
-            Every piece,<br />
-            <em className="text-brass">numbered.</em>
-          </h1>
+          <p className="eyebrow">{h.eyebrow}</p>
+          <h1
+            className="mt-4 font-display text-6xl md:text-8xl text-ink leading-[0.92] [&_em]:text-brass"
+            dangerouslySetInnerHTML={{ __html: h.title_html }}
+          />
         </div>
       </section>
 
@@ -109,7 +111,7 @@ function ShopPage() {
               !category ? "text-brass" : "text-ink/70 hover:text-ink"
             }`}
           >
-            All
+            {h.all_label}
           </Link>
           {categories.map((c) => (
             <Link
@@ -132,10 +134,8 @@ function ShopPage() {
             <div className="text-center py-32 text-muted-foreground text-sm">Loading…</div>
           ) : products.length === 0 ? (
             <div className="text-center py-32">
-              <p className="font-display text-3xl text-ink">Nothing here yet.</p>
-              <p className="mt-3 text-sm text-muted-foreground">
-                The atelier is preparing the next pieces.
-              </p>
+              <p className="font-display text-3xl text-ink">{h.empty_title}</p>
+              <p className="mt-3 text-sm text-muted-foreground">{h.empty_body}</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-24">

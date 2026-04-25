@@ -43,6 +43,15 @@ export const SITE_CONTENT_DEFAULTS = {
     description: "Browse every piece — {count} in the atelier.",
     image: "",
   },
+  "home.quiet": {
+    enabled: true,
+    eyebrow: "— The Quiet Collection",
+    title_html: "A few <em>chosen</em> pieces.",
+    body:
+      "A small, rotating selection — the most quiet of our work. Hand-picked from the atelier, never more than a handful at a time.",
+    cta_label: "View the full collection",
+    max_items: 4,
+  },
   "home.craft": {
     eyebrow: "— Craft",
     title_html: "Eighty hours,<br/><em>one pair of hands.</em>",

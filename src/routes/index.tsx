@@ -4,6 +4,7 @@ import { ArrowRight, ChevronDown } from "lucide-react";
 import { SiteShell } from "@/components/site/SiteShell";
 import { supabase } from "@/integrations/supabase/client";
 import { useSiteContent } from "@/hooks/use-site-content";
+import { formatPrice } from "@/lib/format";
 import heroCraftVideo from "@/assets/hero-craft.mp4.asset.json";
 
 const FALLBACK_HERO_VIDEO = heroCraftVideo.url;

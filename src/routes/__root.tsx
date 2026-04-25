@@ -1,4 +1,5 @@
 import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { useEffect } from "react";
 
 import appCss from "../styles.css?url";
 import { CartProvider } from "@/hooks/use-cart";
@@ -70,6 +71,41 @@ function RootShell({ children }: { children: React.ReactNode }) {
 }
 
 function RootComponent() {
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (!("IntersectionObserver" in window)) {
+      // Fallback: reveal everything immediately on very old browsers
+      document
+        .querySelectorAll(".scroll-reveal")
+        .forEach((el) => el.classList.add("is-visible"));
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" },
+    );
+    const observe = () => {
+      document
+        .querySelectorAll(".scroll-reveal:not(.is-visible)")
+        .forEach((el) => io.observe(el));
+    };
+    observe();
+    // Re-scan when route content changes (TanStack Router swaps DOM)
+    const mo = new MutationObserver(observe);
+    mo.observe(document.body, { childList: true, subtree: true });
+    return () => {
+      io.disconnect();
+      mo.disconnect();
+    };
+  }, []);
+
   return (
     <CartProvider>
       <Outlet />

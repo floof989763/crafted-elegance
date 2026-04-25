@@ -218,7 +218,7 @@ function AdminProducts() {
                           p.is_active ? "text-brass" : "text-muted-foreground"
                         }`}
                       >
-                        {p.is_active ? (p.is_featured ? "Featured" : "Live") : "Hidden"}
+                        {p.is_active ? (p.is_featured ? "In Quiet Collection" : "Live") : "Hidden"}
                       </span>
                     </td>
                     <td className="px-6 py-4 text-right">
@@ -366,7 +366,7 @@ function AdminProducts() {
                     checked={editing.is_featured}
                     onChange={(e) => setEditing({ ...editing, is_featured: e.target.checked })}
                   />
-                  Featured on home
+                  Show in Quiet Collection (homepage)
                 </label>
               </div>
 

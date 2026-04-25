@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Trash2, Loader2, ChevronRight } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { useSiteContent } from "@/hooks/use-site-content";
 
 type Inquiry = {
   id: string;
@@ -21,6 +22,7 @@ export const Route = createFileRoute("/admin/inquiries")({
 });
 
 function AdminInquiries() {
+  const t = useSiteContent("inquiries.page");
   const [items, setItems] = useState<Inquiry[]>([]);
   const [loading, setLoading] = useState(true);
   const [active, setActive] = useState<Inquiry | null>(null);
@@ -58,8 +60,8 @@ function AdminInquiries() {
   return (
     <div className="p-10 space-y-8">
       <header>
-        <p className="eyebrow">Letters</p>
-        <h1 className="mt-3 font-display text-5xl text-ink">Inquiries</h1>
+        <p className="eyebrow">{t.eyebrow}</p>
+        <h1 className="mt-3 font-display text-5xl text-ink">{t.title}</h1>
       </header>
 
       <div className="flex gap-6 border-b border-border">
@@ -80,7 +82,7 @@ function AdminInquiries() {
         <Loader2 className="w-5 h-5 animate-spin text-brass mx-auto" />
       ) : filtered.length === 0 ? (
         <div className="border border-border rounded-sm p-16 text-center text-muted-foreground text-sm">
-          No inquiries here.
+          {t.empty}
         </div>
       ) : (
         <div className="grid md:grid-cols-12 gap-6">
@@ -170,7 +172,7 @@ function AdminInquiries() {
               </div>
             ) : (
               <div className="border border-border rounded-sm p-16 text-center text-muted-foreground text-sm">
-                Select a letter to read.
+                {t.select_prompt}
               </div>
             )}
           </div>

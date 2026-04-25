@@ -73,6 +73,20 @@ const SECTIONS: Section[] = [
     ],
   },
   {
+    key: "home.quiet",
+    title: "Home · Quiet Collection",
+    description:
+      "A curated, premium row on the homepage. To choose which pieces appear here, edit a product and turn ON 'Show in Quiet Collection' (the Featured toggle). Set 'Max items' to limit how many are shown.",
+    fields: [
+      { name: "enabled", label: "Show this section (true / false)", type: "text" },
+      { name: "eyebrow", label: "Eyebrow", type: "text" },
+      { name: "title_html", label: "Title (use <em> for italic)", type: "textarea" },
+      { name: "body", label: "Body", type: "textarea" },
+      { name: "cta_label", label: "Bottom link label", type: "text" },
+      { name: "max_items", label: "Max items to show (number)", type: "text" },
+    ],
+  },
+  {
     key: "home.craft",
     title: "Home · Craft",
     description: "The 'Eighty hours' section.",

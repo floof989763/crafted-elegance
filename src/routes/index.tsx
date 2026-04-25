@@ -4,6 +4,7 @@ import { ArrowRight, ChevronDown } from "lucide-react";
 import { SiteShell } from "@/components/site/SiteShell";
 import { supabase } from "@/integrations/supabase/client";
 import { useSiteContent } from "@/hooks/use-site-content";
+import { formatPrice } from "@/lib/format";
 import heroCraftVideo from "@/assets/hero-craft.mp4.asset.json";
 
 const FALLBACK_HERO_VIDEO = heroCraftVideo.url;
@@ -15,6 +16,16 @@ type Category = {
   name: string;
   description: string | null;
   image_url: string | null;
+};
+
+type QuietProduct = {
+  id: string;
+  slug: string;
+  name: string;
+  short_description: string | null;
+  price_cents: number;
+  currency: string;
+  images: string[];
 };
 
 export const Route = createFileRoute("/")({
@@ -41,10 +52,13 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [productCount, setProductCount] = useState(0);
+  const [quietProducts, setQuietProducts] = useState<QuietProduct[]>([]);
+  const quiet = useSiteContent("home.quiet");
+  const maxItems = Math.max(1, Math.min(12, parseInt(String(quiet.max_items)) || 4));
 
   useEffect(() => {
     (async () => {
-      const [{ data: cats }, { count }] = await Promise.all([
+      const [{ data: cats }, { count }, { data: featured }] = await Promise.all([
         supabase
           .from("categories")
           .select("id, slug, name, description, image_url")
@@ -53,17 +67,28 @@ function HomePage() {
           .from("products")
           .select("id", { count: "exact", head: true })
           .eq("is_active", true),
+        supabase
+          .from("products")
+          .select("id, slug, name, short_description, price_cents, currency, images")
+          .eq("is_active", true)
+          .eq("is_featured", true)
+          .order("created_at", { ascending: false })
+          .limit(maxItems),
       ]);
       if (cats) setCategories(cats as Category[]);
       if (typeof count === "number") setProductCount(count);
+      if (featured) setQuietProducts(featured as QuietProduct[]);
     })();
-  }, []);
+  }, [maxItems]);
 
   return (
     <SiteShell>
       <Hero />
       <Manifesto />
       <Collection categories={categories} productCount={productCount} />
+      {String((quiet as any).enabled) !== "false" && quietProducts.length > 0 && (
+        <QuietCollection products={quietProducts} />
+      )}
       <Craft />
       <Atelier />
       <Correspondence />
@@ -330,6 +355,72 @@ function CategoryCard({
 /* -------------------------------------------------------------------------- */
 
 function Craft() {
+  return CraftBody();
+}
+
+function QuietCollection({ products }: { products: QuietProduct[] }) {
+  const c = useSiteContent("home.quiet");
+  return (
+    <section className="relative py-24 md:py-36 bg-background">
+      <div className="mx-auto max-w-[1480px] px-6 md:px-10">
+        <div className="text-center max-w-3xl mx-auto scroll-reveal">
+          <p className="eyebrow">{c.eyebrow}</p>
+          <h2
+            className="mt-5 font-display text-4xl md:text-6xl leading-[0.95] text-ink [&_em]:text-brass"
+            dangerouslySetInnerHTML={{ __html: c.title_html }}
+          />
+          <p className="mt-6 text-muted-foreground leading-relaxed">{c.body}</p>
+        </div>
+
+        <div className="mt-14 md:mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16 scroll-reveal">
+          {products.map((p) => (
+            <Link
+              key={p.id}
+              to="/shop/$slug"
+              params={{ slug: p.slug }}
+              className="group block"
+            >
+              <div className="aspect-[4/5] bg-walnut overflow-hidden mb-5 rounded-sm">
+                {p.images?.[0] ? (
+                  <img
+                    src={p.images[0]}
+                    alt={p.name}
+                    loading="lazy"
+                    className="w-full h-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-ink/30 font-display text-7xl">
+                    ⵘ
+                  </div>
+                )}
+              </div>
+              <h3 className="font-display text-xl text-ink group-hover:text-brass transition-colors duration-500">
+                {p.name}
+              </h3>
+              {p.short_description && (
+                <p className="mt-1 text-xs text-muted-foreground">{p.short_description}</p>
+              )}
+              <p className="mt-2 text-sm text-ink/80">
+                {formatPrice(p.price_cents, p.currency)}
+              </p>
+            </Link>
+          ))}
+        </div>
+
+        <div className="mt-16 text-center">
+          <Link
+            to="/shop"
+            className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.32em] text-ink/80 luxe-link hover:text-brass"
+          >
+            {c.cta_label} <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CraftBody() {
   const c = useSiteContent("home.craft");
   return (
     <section className="relative py-32 md:py-48 overflow-hidden">

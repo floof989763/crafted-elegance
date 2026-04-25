@@ -36,6 +36,13 @@ export const SITE_CONTENT_DEFAULTS = {
     body:
       "Bowls and vases turned on the lathe. Candle stands and trays carved by gouge. Tables and live-edge tops shaped from a single billet. Each piece exists in an edition of nine — never repeated, never restocked.",
   },
+  "home.collection_all": {
+    enabled: true,
+    eyebrow: "The whole catalogue",
+    name: "All Products",
+    description: "Browse every piece — {count} in the atelier.",
+    image: "",
+  },
   "home.craft": {
     eyebrow: "— Craft",
     title_html: "Eighty hours,<br/><em>one pair of hands.</em>",
@@ -104,6 +111,28 @@ export const SITE_CONTENT_DEFAULTS = {
     nav_atelier: "Atelier",
     nav_journal: "Journal",
     nav_contact: "Contact",
+  },
+  "shop.header": {
+    eyebrow: "The Collection",
+    title_html: "Every piece,<br/><em>numbered.</em>",
+    all_label: "All",
+    empty_title: "Nothing here yet.",
+    empty_body: "The atelier is preparing the next pieces.",
+    meta_title: "The Collection — The Woods",
+    meta_description:
+      "Browse hand-carved trays, decor, furniture and accessories. Numbered, signed, made slowly.",
+  },
+  "admin.labels": {
+    correspondence_phone_label: "Telephone",
+    correspondence_address_label: "Atelier",
+    correspondence_email_label: "Write",
+    correspondence_appointment_label: "By appointment",
+  },
+  "inquiries.page": {
+    eyebrow: "Letters",
+    title: "Inquiries",
+    empty: "No inquiries here.",
+    select_prompt: "Select a letter to read.",
   },
   "site.footer": {
     title_html: "Crafted from the<br/><em>forest's quiet.</em>",

@@ -60,6 +60,19 @@ const SECTIONS: Section[] = [
     ],
   },
   {
+    key: "home.collection_all",
+    title: "Home · 'All Products' tile",
+    description:
+      "The featured tile that shows all products. Toggle off to hide it. Use {count} in the description to insert the live product count.",
+    fields: [
+      { name: "enabled", label: "Show this tile (true / false)", type: "text" },
+      { name: "eyebrow", label: "Small label above name", type: "text" },
+      { name: "name", label: "Tile name", type: "text" },
+      { name: "description", label: "Description (use {count} for total)", type: "textarea" },
+      { name: "image", label: "Tile image (leave empty for auto)", type: "image" },
+    ],
+  },
+  {
     key: "home.craft",
     title: "Home · Craft",
     description: "The 'Eighty hours' section.",
@@ -102,6 +115,43 @@ const SECTIONS: Section[] = [
       { name: "phone", label: "Phone", type: "text" },
       { name: "appointment", label: "By appointment", type: "text" },
       { name: "cta_body", label: "CTA body", type: "textarea" },
+    ],
+  },
+  {
+    key: "admin.labels",
+    title: "Labels · Correspondence",
+    description:
+      "Rename the labels next to the address / email / phone / appointment blocks. Change 'Telephone' to 'Phone number' here, for example.",
+    fields: [
+      { name: "correspondence_address_label", label: "Address label", type: "text" },
+      { name: "correspondence_email_label", label: "Email label", type: "text" },
+      { name: "correspondence_phone_label", label: "Phone label", type: "text" },
+      { name: "correspondence_appointment_label", label: "Appointment label", type: "text" },
+    ],
+  },
+  {
+    key: "shop.header",
+    title: "Shop page · Header",
+    description: "Headline and labels on /shop.",
+    fields: [
+      { name: "eyebrow", label: "Eyebrow", type: "text" },
+      { name: "title_html", label: "Title (use <em> for italic, <br/> for line break)", type: "textarea" },
+      { name: "all_label", label: "'All' filter label", type: "text" },
+      { name: "empty_title", label: "Empty state title", type: "text" },
+      { name: "empty_body", label: "Empty state body", type: "text" },
+      { name: "meta_title", label: "SEO title", type: "text" },
+      { name: "meta_description", label: "SEO description", type: "textarea" },
+    ],
+  },
+  {
+    key: "inquiries.page",
+    title: "Inquiries page (admin)",
+    description: "The header copy on the admin inquiries view.",
+    fields: [
+      { name: "eyebrow", label: "Eyebrow", type: "text" },
+      { name: "title", label: "Title", type: "text" },
+      { name: "empty", label: "Empty state", type: "text" },
+      { name: "select_prompt", label: "Side panel prompt", type: "text" },
     ],
   },
   {

@@ -203,11 +203,12 @@ function Collection({
   productCount: number;
 }) {
   const c = useSiteContent("home.collection");
+  const all = useSiteContent("home.collection_all");
 
   return (
     <section className="relative py-24 md:py-40 bg-walnut" id="collection">
       <div className="mx-auto max-w-[1480px] px-6 md:px-10">
-        <div className="text-center max-w-3xl mx-auto">
+        <div className="text-center max-w-3xl mx-auto scroll-reveal">
           <p className="eyebrow">{c.eyebrow}</p>
           <h2
             className="mt-5 font-display text-5xl md:text-7xl leading-[0.95] text-ink [&_em]:text-brass"
@@ -216,16 +217,19 @@ function Collection({
           <p className="mt-6 text-muted-foreground leading-relaxed">{c.body}</p>
         </div>
 
-        <div className="mt-16 md:mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {/* All Products card */}
-          <CategoryCard
-            to="/shop"
-            search={{}}
-            name="All Products"
-            description={`Browse every piece — ${productCount} in the atelier.`}
-            image={categories[0]?.image_url || null}
-            featured
-          />
+        <div className="mt-16 md:mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 scroll-reveal">
+          {/* All Products card — admin can hide / rename / re-image */}
+          {all.enabled && (
+            <CategoryCard
+              to="/shop"
+              search={{}}
+              name={all.name}
+              description={(all.description || "").replace("{count}", String(productCount))}
+              image={all.image?.trim() ? all.image : categories[0]?.image_url || null}
+              featured
+              eyebrow={all.eyebrow}
+            />
+          )}
 
           {categories.map((cat) => (
             <CategoryCard
@@ -259,6 +263,7 @@ function CategoryCard({
   description,
   image,
   featured = false,
+  eyebrow,
 }: {
   to: "/shop";
   search: { category?: string };
@@ -266,6 +271,7 @@ function CategoryCard({
   description: string | null;
   image: string | null;
   featured?: boolean;
+  eyebrow?: string;
 }) {
   return (
     <Link
@@ -293,9 +299,9 @@ function CategoryCard({
         }}
       />
       <div className="absolute inset-x-0 bottom-0 p-7 md:p-8 z-10">
-        {featured && (
+        {featured && eyebrow && (
           <p className="text-[10px] uppercase tracking-[0.32em] text-brass mb-2">
-            The whole catalogue
+            {eyebrow}
           </p>
         )}
         <h3 className="font-display text-3xl md:text-4xl text-cream leading-tight group-hover:text-brass transition-colors duration-500">

@@ -108,7 +108,14 @@ function Hero() {
         <h1 className="mt-5 font-display text-ink text-[16vw] md:text-[10vw] leading-[0.85] reveal reveal-delay-2">
           {c.title}
         </h1>
-        <p className="mt-auto mb-24 max-w-md mx-auto font-display italic text-ink/75 text-base md:text-xl leading-snug text-center reveal reveal-delay-3 whitespace-pre-line">
+        <p
+          className="mt-auto mb-24 max-w-md mx-auto font-display italic text-base md:text-xl leading-snug text-center reveal reveal-delay-3 whitespace-pre-line"
+          style={{
+            color: "var(--brass)",
+            textShadow:
+              "0 1px 2px color-mix(in oklab, var(--ink) 55%, transparent), 0 0 18px color-mix(in oklab, var(--ink) 25%, transparent)",
+          }}
+        >
           {c.quote}
         </p>
       </div>
@@ -422,6 +429,7 @@ function Atelier() {
 
 function Correspondence() {
   const c = useSiteContent("home.correspondence");
+  const labels = useSiteContent("admin.labels");
   const addressLines = c.address_lines.split("\n").filter(Boolean);
 
   return (
@@ -435,10 +443,10 @@ function Correspondence() {
           />
 
           <div className="space-y-6 pt-4">
-            <InfoBlock label="Atelier" lines={addressLines} />
-            <InfoBlock label="Write" lines={[c.email]} />
-            <InfoBlock label="Telephone" lines={[c.phone]} />
-            <InfoBlock label="By appointment" lines={[c.appointment]} />
+            <InfoBlock label={labels.correspondence_address_label} lines={addressLines} />
+            <InfoBlock label={labels.correspondence_email_label} lines={[c.email]} />
+            <InfoBlock label={labels.correspondence_phone_label} lines={[c.phone]} />
+            <InfoBlock label={labels.correspondence_appointment_label} lines={[c.appointment]} />
           </div>
         </div>
 

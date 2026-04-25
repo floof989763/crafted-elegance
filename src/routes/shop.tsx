@@ -1,5 +1,6 @@
 import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { Search, X } from "lucide-react";
 import { z } from "zod";
 import { SiteShell } from "@/components/site/SiteShell";
 import { supabase } from "@/integrations/supabase/client";
@@ -63,6 +64,7 @@ function ShopPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -90,6 +92,16 @@ function ShopPage() {
     })();
   }, [category]);
 
+  const filtered = useMemo(() => {
+    const t = query.trim().toLowerCase();
+    if (!t) return products;
+    return products.filter(
+      (p) =>
+        p.name.toLowerCase().includes(t) ||
+        (p.short_description || "").toLowerCase().includes(t),
+    );
+  }, [products, query]);
+
   return (
     <SiteShell>
       <section className="pt-40 md:pt-48 pb-16 border-b border-border">
@@ -103,28 +115,51 @@ function ShopPage() {
       </section>
 
       <section className="py-10 border-b border-border sticky top-20 md:top-24 bg-background/85 backdrop-blur-xl z-30">
-        <div className="mx-auto max-w-[1480px] px-6 md:px-10 flex flex-wrap gap-x-8 gap-y-4">
-          <Link
-            to="/shop"
-            search={{}}
-            className={`text-xs uppercase tracking-[0.28em] luxe-link transition-colors ${
-              !category ? "text-brass" : "text-ink/70 hover:text-ink"
-            }`}
-          >
-            {h.all_label}
-          </Link>
-          {categories.map((c) => (
+        <div className="mx-auto max-w-[1480px] px-6 md:px-10 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
+          <div className="flex flex-wrap gap-x-7 gap-y-3 min-w-0">
             <Link
-              key={c.id}
               to="/shop"
-              search={{ category: c.slug }}
+              search={{}}
               className={`text-xs uppercase tracking-[0.28em] luxe-link transition-colors ${
-                category === c.slug ? "text-brass" : "text-ink/70 hover:text-ink"
+                !category ? "text-brass" : "text-ink/70 hover:text-ink"
               }`}
             >
-              {c.name}
+              {h.all_label}
             </Link>
-          ))}
+            {categories.map((c) => (
+              <Link
+                key={c.id}
+                to="/shop"
+                search={{ category: c.slug }}
+                className={`text-xs uppercase tracking-[0.28em] luxe-link transition-colors ${
+                  category === c.slug ? "text-brass" : "text-ink/70 hover:text-ink"
+                }`}
+              >
+                {c.name}
+              </Link>
+            ))}
+          </div>
+
+          <div className="relative md:w-72 shrink-0">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-ink/50" strokeWidth={1.5} />
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search the collection"
+              className="w-full bg-transparent border border-border rounded-sm pl-9 pr-9 py-2.5 text-xs uppercase tracking-[0.18em] text-ink placeholder:text-ink/40 placeholder:tracking-[0.18em] focus:outline-none focus:border-brass transition-colors"
+            />
+            {query && (
+              <button
+                type="button"
+                aria-label="Clear search"
+                onClick={() => setQuery("")}
+                className="absolute right-2 top-1/2 -translate-y-1/2 p-1 text-ink/50 hover:text-ink"
+              >
+                <X className="w-3.5 h-3.5" strokeWidth={1.5} />
+              </button>
+            )}
+          </div>
         </div>
       </section>
 
@@ -132,14 +167,18 @@ function ShopPage() {
         <div className="mx-auto max-w-[1480px] px-6 md:px-10">
           {loading ? (
             <div className="text-center py-32 text-muted-foreground text-sm">Loading…</div>
-          ) : products.length === 0 ? (
+          ) : filtered.length === 0 ? (
             <div className="text-center py-32">
-              <p className="font-display text-3xl text-ink">{h.empty_title}</p>
-              <p className="mt-3 text-sm text-muted-foreground">{h.empty_body}</p>
+              <p className="font-display text-3xl text-ink">
+                {query ? "Nothing matches that search." : h.empty_title}
+              </p>
+              <p className="mt-3 text-sm text-muted-foreground">
+                {query ? "Try a different word, or clear the search." : h.empty_body}
+              </p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-24">
-              {products.map((p) => (
+              {filtered.map((p) => (
                 <Link
                   key={p.id}
                   to="/shop/$slug"

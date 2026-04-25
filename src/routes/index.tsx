@@ -137,7 +137,7 @@ function Manifesto() {
   return (
     <section className="relative py-32 md:py-48 overflow-hidden">
       <div className="mx-auto max-w-[1480px] px-6 md:px-10 grid md:grid-cols-12 gap-12 md:gap-20 items-center">
-        <div className="md:col-span-5 md:col-start-1 relative">
+        <div className="md:col-span-5 md:col-start-1 relative scroll-reveal">
           <div className="aspect-[3/4] overflow-hidden rounded-sm bg-walnut">
             <img
               src={c.image}
@@ -153,7 +153,7 @@ function Manifesto() {
           </div>
         </div>
 
-        <div className="md:col-span-6 md:col-start-7 space-y-8">
+        <div className="md:col-span-6 md:col-start-7 space-y-8 scroll-reveal">
           <p className="eyebrow">{c.eyebrow}</p>
           <h2
             className="font-display text-5xl md:text-7xl leading-[0.95] text-ink [&_em]:text-brass"
@@ -334,7 +334,7 @@ function Craft() {
   return (
     <section className="relative py-32 md:py-48 overflow-hidden">
       <div className="mx-auto max-w-[1480px] px-6 md:px-10 grid md:grid-cols-12 gap-12 md:gap-20 items-center">
-        <div className="md:col-span-7 md:col-start-1 order-2 md:order-1">
+        <div className="md:col-span-7 md:col-start-1 order-2 md:order-1 scroll-reveal">
           <div className="aspect-[16/11] overflow-hidden rounded-sm bg-walnut">
             <img
               src={c.image}
@@ -345,7 +345,7 @@ function Craft() {
           </div>
         </div>
 
-        <div className="md:col-span-5 md:col-start-8 order-1 md:order-2 space-y-8">
+        <div className="md:col-span-5 md:col-start-8 order-1 md:order-2 space-y-8 scroll-reveal">
           <p className="eyebrow">{c.eyebrow}</p>
           <h2
             className="font-display text-5xl md:text-6xl leading-[0.95] text-ink [&_em]:text-brass"
@@ -385,7 +385,7 @@ function Atelier() {
   return (
     <section className="relative py-32 md:py-48 bg-walnut">
       <div className="mx-auto max-w-[1480px] px-6 md:px-10">
-        <div className="text-center max-w-3xl mx-auto mb-16 md:mb-24">
+        <div className="text-center max-w-3xl mx-auto mb-16 md:mb-24 scroll-reveal">
           <p className="eyebrow">{c.eyebrow}</p>
           <h2
             className="mt-5 font-display text-5xl md:text-7xl leading-[0.95] text-ink [&_em]:text-brass"
@@ -394,7 +394,7 @@ function Atelier() {
         </div>
 
         <div className="grid md:grid-cols-12 gap-12 md:gap-16 items-center">
-          <div className="md:col-span-7">
+          <div className="md:col-span-7 scroll-reveal">
             <div className="aspect-[4/3] overflow-hidden rounded-sm bg-walnut">
               <img
                 src={c.image}
@@ -405,7 +405,7 @@ function Atelier() {
             </div>
           </div>
 
-          <div className="md:col-span-5 space-y-6 text-muted-foreground leading-relaxed">
+          <div className="md:col-span-5 space-y-6 text-muted-foreground leading-relaxed scroll-reveal">
             <p>{c.body_1}</p>
             <p>{c.body_2}</p>
             <p>{c.body_3}</p>
@@ -435,7 +435,7 @@ function Correspondence() {
   return (
     <section className="relative py-32 md:py-48 bg-card border-t border-border">
       <div className="mx-auto max-w-[1480px] px-6 md:px-10 grid md:grid-cols-12 gap-12 md:gap-20">
-        <div className="md:col-span-5 space-y-8">
+        <div className="md:col-span-5 space-y-8 scroll-reveal">
           <p className="eyebrow">{c.eyebrow}</p>
           <h2
             className="font-display text-5xl md:text-6xl leading-[0.95] text-ink [&_em]:text-brass"
@@ -450,7 +450,7 @@ function Correspondence() {
           </div>
         </div>
 
-        <div className="md:col-span-7">
+        <div className="md:col-span-7 scroll-reveal">
           <div className="border border-border bg-background/40 backdrop-blur p-8 md:p-12">
             <p className="eyebrow mb-8">Begin a conversation</p>
             <p className="text-ink/80 leading-relaxed mb-8">{c.cta_body}</p>

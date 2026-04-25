@@ -227,4 +227,31 @@
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
   }
+
+  /* Scroll-triggered luxury reveal — works on mobile + desktop.
+     Elements start hidden (.scroll-reveal) and fade up smoothly when
+     they intersect the viewport (.is-visible). */
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    filter: blur(4px);
+    transition:
+      opacity 1s var(--ease-luxe),
+      transform 1s var(--ease-luxe),
+      filter 1s var(--ease-luxe);
+    will-change: opacity, transform, filter;
+  }
+  .scroll-reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+    filter: blur(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-reveal {
+      opacity: 1;
+      transform: none;
+      filter: none;
+      transition: none;
+    }
+  }
 }

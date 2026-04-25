@@ -17,6 +17,16 @@ type Category = {
   image_url: string | null;
 };
 
+type QuietProduct = {
+  id: string;
+  slug: string;
+  name: string;
+  short_description: string | null;
+  price_cents: number;
+  currency: string;
+  images: string[];
+};
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -41,10 +51,13 @@ export const Route = createFileRoute("/")({
 function HomePage() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [productCount, setProductCount] = useState(0);
+  const [quietProducts, setQuietProducts] = useState<QuietProduct[]>([]);
+  const quiet = useSiteContent("home.quiet");
+  const maxItems = Math.max(1, Math.min(12, parseInt(String(quiet.max_items)) || 4));
 
   useEffect(() => {
     (async () => {
-      const [{ data: cats }, { count }] = await Promise.all([
+      const [{ data: cats }, { count }, { data: featured }] = await Promise.all([
         supabase
           .from("categories")
           .select("id, slug, name, description, image_url")
@@ -53,17 +66,28 @@ function HomePage() {
           .from("products")
           .select("id", { count: "exact", head: true })
           .eq("is_active", true),
+        supabase
+          .from("products")
+          .select("id, slug, name, short_description, price_cents, currency, images")
+          .eq("is_active", true)
+          .eq("is_featured", true)
+          .order("created_at", { ascending: false })
+          .limit(maxItems),
       ]);
       if (cats) setCategories(cats as Category[]);
       if (typeof count === "number") setProductCount(count);
+      if (featured) setQuietProducts(featured as QuietProduct[]);
     })();
-  }, []);
+  }, [maxItems]);
 
   return (
     <SiteShell>
       <Hero />
       <Manifesto />
       <Collection categories={categories} productCount={productCount} />
+      {String((quiet as any).enabled) !== "false" && quietProducts.length > 0 && (
+        <QuietCollection products={quietProducts} />
+      )}
       <Craft />
       <Atelier />
       <Correspondence />

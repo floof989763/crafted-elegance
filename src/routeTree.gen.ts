@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ShopRouteImport } from './routes/shop'
+import { Route as QuietCollectionRouteImport } from './routes/quiet-collection'
 import { Route as OrderPlacedRouteImport } from './routes/order-placed'
 import { Route as JournalRouteImport } from './routes/journal'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -32,6 +33,11 @@ import { Route as AdminCategoriesRouteImport } from './routes/admin.categories'
 const ShopRoute = ShopRouteImport.update({
   id: '/shop',
   path: '/shop',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const QuietCollectionRoute = QuietCollectionRouteImport.update({
+  id: '/quiet-collection',
+  path: '/quiet-collection',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OrderPlacedRoute = OrderPlacedRouteImport.update({
@@ -135,6 +141,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/journal': typeof JournalRoute
   '/order-placed': typeof OrderPlacedRoute
+  '/quiet-collection': typeof QuietCollectionRoute
   '/shop': typeof ShopRouteWithChildren
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/content': typeof AdminContentRoute
@@ -155,6 +162,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/journal': typeof JournalRoute
   '/order-placed': typeof OrderPlacedRoute
+  '/quiet-collection': typeof QuietCollectionRoute
   '/shop': typeof ShopRouteWithChildren
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/content': typeof AdminContentRoute
@@ -177,6 +185,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/journal': typeof JournalRoute
   '/order-placed': typeof OrderPlacedRoute
+  '/quiet-collection': typeof QuietCollectionRoute
   '/shop': typeof ShopRouteWithChildren
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/content': typeof AdminContentRoute
@@ -200,6 +209,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/journal'
     | '/order-placed'
+    | '/quiet-collection'
     | '/shop'
     | '/admin/categories'
     | '/admin/content'
@@ -220,6 +230,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/journal'
     | '/order-placed'
+    | '/quiet-collection'
     | '/shop'
     | '/admin/categories'
     | '/admin/content'
@@ -241,6 +252,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/journal'
     | '/order-placed'
+    | '/quiet-collection'
     | '/shop'
     | '/admin/categories'
     | '/admin/content'
@@ -263,6 +275,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   JournalRoute: typeof JournalRoute
   OrderPlacedRoute: typeof OrderPlacedRoute
+  QuietCollectionRoute: typeof QuietCollectionRoute
   ShopRoute: typeof ShopRouteWithChildren
   PSlugRoute: typeof PSlugRoute
 }
@@ -274,6 +287,13 @@ declare module '@tanstack/react-router' {
       path: '/shop'
       fullPath: '/shop'
       preLoaderRoute: typeof ShopRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/quiet-collection': {
+      id: '/quiet-collection'
+      path: '/quiet-collection'
+      fullPath: '/quiet-collection'
+      preLoaderRoute: typeof QuietCollectionRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/order-placed': {
@@ -447,6 +467,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   JournalRoute: JournalRoute,
   OrderPlacedRoute: OrderPlacedRoute,
+  QuietCollectionRoute: QuietCollectionRoute,
   ShopRoute: ShopRouteWithChildren,
   PSlugRoute: PSlugRoute,
 }

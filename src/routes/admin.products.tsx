@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Plus, Pencil, Trash2, X, Loader2 } from "lucide-react";
+import { Plus, Pencil, Trash2, X, Loader2, Sparkle } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { formatPrice } from "@/lib/format";
 import { ImageUploader } from "@/components/admin/ImageUploader";
@@ -65,6 +65,7 @@ function AdminProducts() {
   const [editing, setEditing] = useState<FormState | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [filter, setFilter] = useState<"all" | "premium" | "regular" | "hidden">("all");
 
   const load = async () => {
     setLoading(true);
@@ -150,12 +151,38 @@ function AdminProducts() {
     load();
   };
 
+  const togglePremium = async (p: Product) => {
+    await supabase
+      .from("products")
+      .update({ is_featured: !p.is_featured })
+      .eq("id", p.id);
+    load();
+  };
+
+  const visible = products.filter((p) => {
+    if (filter === "premium") return p.is_featured && p.is_active;
+    if (filter === "regular") return !p.is_featured && p.is_active;
+    if (filter === "hidden") return !p.is_active;
+    return true;
+  });
+
+  const counts = {
+    all: products.length,
+    premium: products.filter((p) => p.is_featured && p.is_active).length,
+    regular: products.filter((p) => !p.is_featured && p.is_active).length,
+    hidden: products.filter((p) => !p.is_active).length,
+  };
+
   return (
     <div className="p-10 space-y-8">
       <header className="flex items-center justify-between">
         <div>
           <p className="eyebrow">Catalogue</p>
           <h1 className="mt-3 font-display text-5xl text-ink">Products</h1>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Toggle the <span className="text-brass">Premium</span> star on a piece to feature it
+            in the Quiet Collection.
+          </p>
         </div>
         <button
           onClick={startNew}
@@ -165,15 +192,36 @@ function AdminProducts() {
         </button>
       </header>
 
+      <div className="flex flex-wrap gap-2">
+        {(["all", "premium", "regular", "hidden"] as const).map((f) => (
+          <button
+            key={f}
+            onClick={() => setFilter(f)}
+            className={`px-4 py-2 text-[10px] uppercase tracking-[0.28em] border rounded-sm transition-colors ${
+              filter === f
+                ? "border-brass text-brass bg-brass/5"
+                : "border-border text-muted-foreground hover:text-ink"
+            }`}
+          >
+            {f === "all" ? "All" : f === "premium" ? "Quiet Collection" : f === "regular" ? "Regular" : "Hidden"}
+            <span className="ml-2 opacity-60">{counts[f]}</span>
+          </button>
+        ))}
+      </div>
+
       {loading ? (
         <div className="py-20 text-center">
           <Loader2 className="w-5 h-5 animate-spin text-brass mx-auto" />
         </div>
-      ) : products.length === 0 ? (
+      ) : visible.length === 0 ? (
         <div className="border border-border rounded-sm p-16 text-center">
-          <p className="font-display text-2xl text-ink">No products yet.</p>
+          <p className="font-display text-2xl text-ink">
+            {filter === "all" ? "No products yet." : "Nothing in this view."}
+          </p>
           <p className="mt-2 text-sm text-muted-foreground">
-            Add your first piece to begin the collection.
+            {filter === "all"
+              ? "Add your first piece to begin the collection."
+              : "Try a different filter, or mark a piece as Premium to populate the Quiet Collection."}
           </p>
         </div>
       ) : (
@@ -186,11 +234,12 @@ function AdminProducts() {
                 <th className="text-left px-6 py-4">Price</th>
                 <th className="text-left px-6 py-4">Stock</th>
                 <th className="text-left px-6 py-4">Status</th>
+                <th className="text-left px-6 py-4">Premium</th>
                 <th className="px-6 py-4"></th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
-              {products.map((p) => {
+              {visible.map((p) => {
                 const cat = categories.find((c) => c.id === p.category_id);
                 return (
                   <tr key={p.id} className="hover:bg-card transition-colors">
@@ -218,8 +267,22 @@ function AdminProducts() {
                           p.is_active ? "text-brass" : "text-muted-foreground"
                         }`}
                       >
-                        {p.is_active ? (p.is_featured ? "In Quiet Collection" : "Live") : "Hidden"}
+                        {p.is_active ? "Live" : "Hidden"}
                       </span>
+                    </td>
+                    <td className="px-6 py-4">
+                      <button
+                        onClick={() => togglePremium(p)}
+                        title={p.is_featured ? "Remove from Quiet Collection" : "Add to Quiet Collection"}
+                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 border text-[10px] uppercase tracking-[0.22em] rounded-sm transition-colors ${
+                          p.is_featured
+                            ? "border-brass text-brass bg-brass/5"
+                            : "border-border text-muted-foreground hover:text-brass hover:border-brass/50"
+                        }`}
+                      >
+                        <Sparkle className="w-3 h-3" strokeWidth={1.5} />
+                        {p.is_featured ? "Premium" : "Make premium"}
+                      </button>
                     </td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex justify-end gap-2">

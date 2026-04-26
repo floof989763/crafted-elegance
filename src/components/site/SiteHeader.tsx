@@ -5,6 +5,7 @@ import { useCart } from "@/hooks/use-cart";
 import { useCustomerAuth } from "@/hooks/use-customer-auth";
 import { useSiteContent } from "@/hooks/use-site-content";
 import { supabase } from "@/integrations/supabase/client";
+import { HeaderSearch } from "./HeaderSearch";
 
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
@@ -83,6 +84,7 @@ export function SiteHeader() {
           </nav>
 
           <div className="flex items-center gap-4">
+            <HeaderSearch />
             <Link
               to="/account"
               className="hidden md:inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.32em] text-ink/75 hover:text-brass transition-colors duration-500"

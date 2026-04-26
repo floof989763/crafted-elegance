@@ -380,7 +380,7 @@ function QuietCollection({ products }: { products: QuietProduct[] }) {
               params={{ slug: p.slug }}
               className="group block"
             >
-              <div className="aspect-[4/5] bg-walnut overflow-hidden mb-5 rounded-sm">
+              <div className="relative aspect-[4/5] bg-walnut overflow-hidden mb-5 rounded-sm ring-1 ring-brass/10">
                 {p.images?.[0] ? (
                   <img
                     src={p.images[0]}
@@ -393,6 +393,9 @@ function QuietCollection({ products }: { products: QuietProduct[] }) {
                     ⵘ
                   </div>
                 )}
+                <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 bg-ink/85 backdrop-blur-sm border border-brass/60 text-brass text-[9px] uppercase tracking-[0.32em] rounded-sm">
+                  Premium
+                </span>
               </div>
               <h3 className="font-display text-xl text-ink group-hover:text-brass transition-colors duration-500">
                 {p.name}
@@ -409,7 +412,7 @@ function QuietCollection({ products }: { products: QuietProduct[] }) {
 
         <div className="mt-16 text-center">
           <Link
-            to="/shop"
+            to="/quiet-collection"
             className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.32em] text-ink/80 luxe-link hover:text-brass"
           >
             {c.cta_label} <ArrowRight className="w-4 h-4" />

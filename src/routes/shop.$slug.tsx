@@ -1,6 +1,6 @@
 import { createFileRoute, Link, notFound, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { ArrowLeft, Loader2, ShoppingBag, Check } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowLeft, Loader2, ShoppingBag, Check, Sparkle } from "lucide-react";
 import { SiteShell } from "@/components/site/SiteShell";
 import { supabase } from "@/integrations/supabase/client";
 import { formatPrice } from "@/lib/format";
@@ -19,6 +19,7 @@ type Product = {
   materials: string | null;
   dimensions: string | null;
   stock: number;
+  is_featured: boolean;
 };
 
 export const Route = createFileRoute("/shop/$slug")({
@@ -44,12 +45,14 @@ export const Route = createFileRoute("/shop/$slug")({
 function ProductPage() {
   const { slug } = Route.useParams();
   const navigate = useNavigate();
-  const { add } = useCart();
+  const { add, items } = useCart();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeImg, setActiveImg] = useState(0);
   const [adding, setAdding] = useState(false);
   const [added, setAdded] = useState(false);
+  const [buying, setBuying] = useState(false);
+  const buyLockRef = useRef(false);
 
   useEffect(() => {
     (async () => {
@@ -66,6 +69,7 @@ function ProductPage() {
 
   const handleAddToCart = async () => {
     if (!product) return;
+    if (adding) return;
     setAdding(true);
     try {
       await add(
@@ -88,8 +92,37 @@ function ProductPage() {
   };
 
   const handleBuyNow = async () => {
-    await handleAddToCart();
-    navigate({ to: "/checkout" });
+    if (!product) return;
+    // Hard guard against double-clicks / repeat clicks
+    if (buyLockRef.current) return;
+    buyLockRef.current = true;
+    setBuying(true);
+    try {
+      // Only add if the product is NOT already in the cart.
+      // This prevents the quantity from stacking on repeated Buy Now clicks.
+      const alreadyInCart = items.some((i) => i.product_id === product.id);
+      if (!alreadyInCart) {
+        await add(
+          {
+            product_id: product.id,
+            name: product.name,
+            slug: product.slug,
+            price_cents: product.price_cents,
+            currency: product.currency,
+            image: product.images?.[0] ?? null,
+            stock: product.stock,
+          },
+          1,
+        );
+      }
+      navigate({ to: "/checkout" });
+    } finally {
+      // Keep the lock briefly so an immediate second click can't slip in
+      setTimeout(() => {
+        buyLockRef.current = false;
+        setBuying(false);
+      }, 600);
+    }
   };
 
   if (loading) {
@@ -157,7 +190,14 @@ function ProductPage() {
             {/* Info */}
             <div className="lg:col-span-5 lg:pt-12 space-y-8">
               <div>
-                <p className="eyebrow">Numbered piece</p>
+                <div className="flex items-center gap-3">
+                  <p className="eyebrow">Numbered piece</p>
+                  {product.is_featured && (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 border border-brass/60 text-brass text-[9px] uppercase tracking-[0.32em] rounded-sm">
+                      <Sparkle className="w-2.5 h-2.5" strokeWidth={1.5} /> Premium
+                    </span>
+                  )}
+                </div>
                 <h1 className="mt-4 font-display text-5xl md:text-6xl text-ink leading-[0.95]">
                   {product.name}
                 </h1>
@@ -219,10 +259,16 @@ function ProductPage() {
 
               <button
                 onClick={handleBuyNow}
-                disabled={adding}
+                disabled={adding || buying}
                 className="w-full px-8 py-5 border border-border text-xs uppercase tracking-[0.28em] text-ink hover:border-brass hover:text-brass transition-colors duration-500 disabled:opacity-50"
               >
-                Buy now
+                {buying ? (
+                  <span className="inline-flex items-center gap-2 justify-center">
+                    <Loader2 className="w-4 h-4 animate-spin" /> Taking you to checkout
+                  </span>
+                ) : (
+                  "Buy now"
+                )}
               </button>
 
               <Link

@@ -1,6 +1,6 @@
 import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
-import { Search, X } from "lucide-react";
+import { Search, X, Sparkle } from "lucide-react";
 import { z } from "zod";
 import { SiteShell } from "@/components/site/SiteShell";
 import { supabase } from "@/integrations/supabase/client";
@@ -20,6 +20,7 @@ type Product = {
   currency: string;
   images: string[];
   category_id: string | null;
+  is_featured: boolean;
 };
 
 type Category = {
@@ -77,7 +78,7 @@ function ShopPage() {
 
       let q = supabase
         .from("products")
-        .select("id, slug, name, short_description, price_cents, currency, images, category_id")
+        .select("id, slug, name, short_description, price_cents, currency, images, category_id, is_featured")
         .eq("is_active", true)
         .order("created_at", { ascending: false });
 
@@ -185,7 +186,7 @@ function ShopPage() {
                   params={{ slug: p.slug }}
                   className="group block"
                 >
-                  <div className="aspect-[4/5] bg-walnut overflow-hidden mb-6 rounded-sm">
+                  <div className="relative aspect-[4/5] bg-walnut overflow-hidden mb-6 rounded-sm">
                     {p.images?.[0] ? (
                       <img
                         src={p.images[0]}
@@ -197,6 +198,11 @@ function ShopPage() {
                       <div className="w-full h-full flex items-center justify-center text-ink/30 font-display text-7xl">
                         ⵘ
                       </div>
+                    )}
+                    {p.is_featured && (
+                      <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 bg-ink/85 backdrop-blur-sm border border-brass/50 text-brass text-[9px] uppercase tracking-[0.32em] rounded-sm">
+                        <Sparkle className="w-2.5 h-2.5" strokeWidth={1.5} /> Premium
+                      </span>
                     )}
                   </div>
                   <div className="space-y-2">

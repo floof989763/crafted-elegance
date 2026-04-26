@@ -49,7 +49,7 @@ export const SITE_CONTENT_DEFAULTS = {
     title_html: "A few <em>chosen</em> pieces.",
     body:
       "A small, rotating selection — the most quiet of our work. Hand-picked from the atelier, never more than a handful at a time.",
-    cta_label: "View the full collection",
+    cta_label: "Enter the Quiet Collection",
     max_items: 4,
   },
   "home.craft": {

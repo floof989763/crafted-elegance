@@ -198,8 +198,8 @@ function AdminProducts() {
           <p className="eyebrow">Catalogue</p>
           <h1 className="mt-3 font-display text-5xl text-ink">Products</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Toggle the <span className="text-brass">Premium</span> star on a piece to feature it
-            in the Quiet Collection.
+            Tag pieces with <span className="text-brass">Quiet</span> or{" "}
+            <span className="text-brass">Premium</span> to control where they appear.
           </p>
         </div>
         <button

@@ -115,7 +115,7 @@ function PremiumCollectionPage() {
                       </div>
                     )}
                     <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-3 py-1.5 bg-ink/90 backdrop-blur-sm border border-brass/60 text-brass text-[9px] uppercase tracking-[0.32em] rounded-sm">
-                      <Sparkle className="w-2.5 h-2.5" strokeWidth={1.5} /> The Quiet Collection
+                      <Sparkle className="w-2.5 h-2.5" strokeWidth={1.5} /> Premium Collection
                     </span>
                   </div>
                   <div className="space-y-2">

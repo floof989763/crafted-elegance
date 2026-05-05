@@ -19,25 +19,25 @@ type Product = {
 export const Route = createFileRoute("/premium-collection")({
   head: () => ({
     meta: [
-      { title: "The Quiet Collection — The Woods" },
+      { title: "The Premium Collection — The Woods" },
       {
         name: "description",
         content:
-          "A small, hand-picked selection of our most premium pieces — numbered, signed, and rarely available.",
+          "Our most considered work — numbered, signed, and made in extremely limited editions.",
       },
-      { property: "og:title", content: "The Quiet Collection — The Woods" },
+      { property: "og:title", content: "The Premium Collection — The Woods" },
       {
         property: "og:description",
         content:
-          "A few chosen pieces from the atelier. Premium, numbered, and made in extremely limited editions.",
+          "The Premium Collection — pieces that ask the most of the maker.",
       },
     ],
   }),
-  component: QuietCollectionPage,
+  component: PremiumCollectionPage,
 });
 
-function QuietCollectionPage() {
-  const c = useSiteContent("page.quiet");
+function PremiumCollectionPage() {
+  const c = useSiteContent("page.premium");
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -48,7 +48,7 @@ function QuietCollectionPage() {
         .from("products")
         .select("id, slug, name, short_description, price_cents, currency, images")
         .eq("is_active", true)
-        .eq("is_featured", true)
+        .eq("is_premium", true)
         .order("created_at", { ascending: false });
       setProducts((data as Product[]) || []);
       setLoading(false);

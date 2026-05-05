@@ -394,7 +394,7 @@ function QuietCollection({ products }: { products: QuietProduct[] }) {
                   </div>
                 )}
                 <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 bg-ink/85 backdrop-blur-sm border border-brass/60 text-brass text-[9px] uppercase tracking-[0.32em] rounded-sm">
-                  Premium
+                  Premium Collection
                 </span>
               </div>
               <h3 className="font-display text-xl text-ink group-hover:text-brass transition-colors duration-500">
@@ -412,7 +412,7 @@ function QuietCollection({ products }: { products: QuietProduct[] }) {
 
         <div className="mt-16 text-center">
           <Link
-            to="/quiet-collection"
+            to="/premium-collection"
             className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.32em] text-ink/80 luxe-link hover:text-brass"
           >
             {c.cta_label} <ArrowRight className="w-4 h-4" />

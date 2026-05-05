@@ -340,6 +340,7 @@ export type Database = {
           images: string[]
           is_active: boolean
           is_featured: boolean
+          is_premium: boolean
           materials: string | null
           name: string
           price_cents: number
@@ -358,6 +359,7 @@ export type Database = {
           images?: string[]
           is_active?: boolean
           is_featured?: boolean
+          is_premium?: boolean
           materials?: string | null
           name: string
           price_cents: number
@@ -376,6 +378,7 @@ export type Database = {
           images?: string[]
           is_active?: boolean
           is_featured?: boolean
+          is_premium?: boolean
           materials?: string | null
           name?: string
           price_cents?: number

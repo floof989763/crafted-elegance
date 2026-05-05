@@ -1,0 +1,2 @@
+ALTER TABLE public.products ADD COLUMN IF NOT EXISTS is_premium boolean NOT NULL DEFAULT false;
+CREATE INDEX IF NOT EXISTS idx_products_is_premium ON public.products(is_premium) WHERE is_premium = true;

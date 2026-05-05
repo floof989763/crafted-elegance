@@ -20,6 +20,7 @@ type Product = {
   dimensions: string | null;
   stock: number;
   is_featured: boolean;
+  is_premium: boolean;
 };
 
 export const Route = createFileRoute("/shop/$slug")({
@@ -194,7 +195,12 @@ function ProductPage() {
                   <p className="eyebrow">Numbered piece</p>
                   {product.is_featured && (
                     <span className="inline-flex items-center gap-1.5 px-2.5 py-1 border border-brass/60 text-brass text-[9px] uppercase tracking-[0.32em] rounded-sm">
-                      <Sparkle className="w-2.5 h-2.5" strokeWidth={1.5} /> Premium
+                      <Sparkle className="w-2.5 h-2.5" strokeWidth={1.5} /> The Quiet Collection
+                    </span>
+                  )}
+                  {product.is_premium && (
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 border border-brass/60 text-brass text-[9px] uppercase tracking-[0.32em] rounded-sm">
+                      <Sparkle className="w-2.5 h-2.5" strokeWidth={1.5} /> Premium Collection
                     </span>
                   )}
                 </div>

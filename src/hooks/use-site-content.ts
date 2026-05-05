@@ -45,12 +45,24 @@ export const SITE_CONTENT_DEFAULTS = {
   },
   "home.quiet": {
     enabled: true,
-    eyebrow: "— The Quiet Collection",
+    eyebrow: "— Chosen Pieces",
     title_html: "A few <em>chosen</em> pieces.",
     body:
-      "A small, rotating selection — the most quiet of our work. Hand-picked from the atelier, never more than a handful at a time.",
-    cta_label: "Enter the Quiet Collection",
+      "A small, rotating selection — the most refined of our work. Hand-picked from the atelier, never more than a handful at a time.",
+    cta_label: "Explore the Premium Collection",
     max_items: 4,
+  },
+  "page.quiet": {
+    eyebrow: "— The Quiet Collection",
+    title_html: "The <em>Quiet</em> Collection.",
+    body:
+      "The Quiet Collection brings together pieces defined by subtle detailing, balanced form, and a calm aesthetic. Designed for spaces that value understated presence over excess.",
+  },
+  "page.premium": {
+    eyebrow: "— The Premium Collection",
+    title_html: "The <em>Premium</em> Collection.",
+    body:
+      "Our most considered work — numbered, signed, and made in extremely limited editions. Reserved for the pieces that ask the most of the maker.",
   },
   "home.craft": {
     eyebrow: "— Craft",

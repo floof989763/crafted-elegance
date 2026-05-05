@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ShopRouteImport } from './routes/shop'
 import { Route as QuietCollectionRouteImport } from './routes/quiet-collection'
+import { Route as PremiumCollectionRouteImport } from './routes/premium-collection'
 import { Route as OrderPlacedRouteImport } from './routes/order-placed'
 import { Route as JournalRouteImport } from './routes/journal'
 import { Route as ContactRouteImport } from './routes/contact'
@@ -38,6 +39,11 @@ const ShopRoute = ShopRouteImport.update({
 const QuietCollectionRoute = QuietCollectionRouteImport.update({
   id: '/quiet-collection',
   path: '/quiet-collection',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PremiumCollectionRoute = PremiumCollectionRouteImport.update({
+  id: '/premium-collection',
+  path: '/premium-collection',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OrderPlacedRoute = OrderPlacedRouteImport.update({
@@ -141,6 +147,7 @@ export interface FileRoutesByFullPath {
   '/contact': typeof ContactRoute
   '/journal': typeof JournalRoute
   '/order-placed': typeof OrderPlacedRoute
+  '/premium-collection': typeof PremiumCollectionRoute
   '/quiet-collection': typeof QuietCollectionRoute
   '/shop': typeof ShopRouteWithChildren
   '/admin/categories': typeof AdminCategoriesRoute
@@ -162,6 +169,7 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/journal': typeof JournalRoute
   '/order-placed': typeof OrderPlacedRoute
+  '/premium-collection': typeof PremiumCollectionRoute
   '/quiet-collection': typeof QuietCollectionRoute
   '/shop': typeof ShopRouteWithChildren
   '/admin/categories': typeof AdminCategoriesRoute
@@ -185,6 +193,7 @@ export interface FileRoutesById {
   '/contact': typeof ContactRoute
   '/journal': typeof JournalRoute
   '/order-placed': typeof OrderPlacedRoute
+  '/premium-collection': typeof PremiumCollectionRoute
   '/quiet-collection': typeof QuietCollectionRoute
   '/shop': typeof ShopRouteWithChildren
   '/admin/categories': typeof AdminCategoriesRoute
@@ -209,6 +218,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/journal'
     | '/order-placed'
+    | '/premium-collection'
     | '/quiet-collection'
     | '/shop'
     | '/admin/categories'
@@ -230,6 +240,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/journal'
     | '/order-placed'
+    | '/premium-collection'
     | '/quiet-collection'
     | '/shop'
     | '/admin/categories'
@@ -252,6 +263,7 @@ export interface FileRouteTypes {
     | '/contact'
     | '/journal'
     | '/order-placed'
+    | '/premium-collection'
     | '/quiet-collection'
     | '/shop'
     | '/admin/categories'
@@ -275,6 +287,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   JournalRoute: typeof JournalRoute
   OrderPlacedRoute: typeof OrderPlacedRoute
+  PremiumCollectionRoute: typeof PremiumCollectionRoute
   QuietCollectionRoute: typeof QuietCollectionRoute
   ShopRoute: typeof ShopRouteWithChildren
   PSlugRoute: typeof PSlugRoute
@@ -294,6 +307,13 @@ declare module '@tanstack/react-router' {
       path: '/quiet-collection'
       fullPath: '/quiet-collection'
       preLoaderRoute: typeof QuietCollectionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/premium-collection': {
+      id: '/premium-collection'
+      path: '/premium-collection'
+      fullPath: '/premium-collection'
+      preLoaderRoute: typeof PremiumCollectionRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/order-placed': {
@@ -467,6 +487,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   JournalRoute: JournalRoute,
   OrderPlacedRoute: OrderPlacedRoute,
+  PremiumCollectionRoute: PremiumCollectionRoute,
   QuietCollectionRoute: QuietCollectionRoute,
   ShopRoute: ShopRouteWithChildren,
   PSlugRoute: PSlugRoute,
@@ -474,12 +495,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}

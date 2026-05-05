@@ -58,7 +58,7 @@ function HomePage() {
 
   useEffect(() => {
     (async () => {
-      const [{ data: cats }, { count }, { data: featured }] = await Promise.all([
+      const [{ data: cats }, { count }, { data: premium }] = await Promise.all([
         supabase
           .from("categories")
           .select("id, slug, name, description, image_url")
@@ -71,13 +71,13 @@ function HomePage() {
           .from("products")
           .select("id, slug, name, short_description, price_cents, currency, images")
           .eq("is_active", true)
-          .eq("is_featured", true)
+          .eq("is_premium", true)
           .order("created_at", { ascending: false })
           .limit(maxItems),
       ]);
       if (cats) setCategories(cats as Category[]);
       if (typeof count === "number") setProductCount(count);
-      if (featured) setQuietProducts(featured as QuietProduct[]);
+      if (premium) setQuietProducts(premium as QuietProduct[]);
     })();
   }, [maxItems]);
 
@@ -394,7 +394,7 @@ function QuietCollection({ products }: { products: QuietProduct[] }) {
                   </div>
                 )}
                 <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 bg-ink/85 backdrop-blur-sm border border-brass/60 text-brass text-[9px] uppercase tracking-[0.32em] rounded-sm">
-                  Premium
+                  Premium Collection
                 </span>
               </div>
               <h3 className="font-display text-xl text-ink group-hover:text-brass transition-colors duration-500">
@@ -412,7 +412,7 @@ function QuietCollection({ products }: { products: QuietProduct[] }) {
 
         <div className="mt-16 text-center">
           <Link
-            to="/quiet-collection"
+            to="/premium-collection"
             className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.32em] text-ink/80 luxe-link hover:text-brass"
           >
             {c.cta_label} <ArrowRight className="w-4 h-4" />

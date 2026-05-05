@@ -19,6 +19,7 @@ type Product = {
   dimensions: string | null;
   stock: number;
   is_featured: boolean;
+  is_premium: boolean;
   is_active: boolean;
   category_id: string | null;
 };
@@ -35,6 +36,7 @@ type FormState = {
   dimensions: string;
   stock: string;
   is_featured: boolean;
+  is_premium: boolean;
   is_active: boolean;
   category_id: string;
 };
@@ -50,6 +52,7 @@ const empty: FormState = {
   dimensions: "",
   stock: "0",
   is_featured: false,
+  is_premium: false,
   is_active: true,
   category_id: "",
 };
@@ -65,7 +68,7 @@ function AdminProducts() {
   const [editing, setEditing] = useState<FormState | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [filter, setFilter] = useState<"all" | "premium" | "regular" | "hidden">("all");
+  const [filter, setFilter] = useState<"all" | "quiet" | "premium" | "both" | "none" | "hidden">("all");
 
   const load = async () => {
     setLoading(true);
@@ -101,6 +104,7 @@ function AdminProducts() {
       dimensions: p.dimensions || "",
       stock: p.stock.toString(),
       is_featured: p.is_featured,
+      is_premium: p.is_premium,
       is_active: p.is_active,
       category_id: p.category_id || "",
     });
@@ -122,6 +126,7 @@ function AdminProducts() {
       dimensions: editing.dimensions.trim() || null,
       stock: Number(editing.stock || "0"),
       is_featured: editing.is_featured,
+      is_premium: editing.is_premium,
       is_active: editing.is_active,
       category_id: editing.category_id || null,
     };
@@ -159,17 +164,30 @@ function AdminProducts() {
     load();
   };
 
+  const togglePremiumTag = async (p: Product) => {
+    await supabase
+      .from("products")
+      .update({ is_premium: !p.is_premium })
+      .eq("id", p.id);
+    load();
+  };
+
   const visible = products.filter((p) => {
-    if (filter === "premium") return p.is_featured && p.is_active;
-    if (filter === "regular") return !p.is_featured && p.is_active;
     if (filter === "hidden") return !p.is_active;
+    if (!p.is_active) return filter === "all";
+    if (filter === "quiet") return p.is_featured;
+    if (filter === "premium") return p.is_premium;
+    if (filter === "both") return p.is_featured && p.is_premium;
+    if (filter === "none") return !p.is_featured && !p.is_premium;
     return true;
   });
 
   const counts = {
     all: products.length,
-    premium: products.filter((p) => p.is_featured && p.is_active).length,
-    regular: products.filter((p) => !p.is_featured && p.is_active).length,
+    quiet: products.filter((p) => p.is_featured && p.is_active).length,
+    premium: products.filter((p) => p.is_premium && p.is_active).length,
+    both: products.filter((p) => p.is_featured && p.is_premium && p.is_active).length,
+    none: products.filter((p) => !p.is_featured && !p.is_premium && p.is_active).length,
     hidden: products.filter((p) => !p.is_active).length,
   };
 
@@ -180,8 +198,8 @@ function AdminProducts() {
           <p className="eyebrow">Catalogue</p>
           <h1 className="mt-3 font-display text-5xl text-ink">Products</h1>
           <p className="mt-2 text-sm text-muted-foreground">
-            Toggle the <span className="text-brass">Premium</span> star on a piece to feature it
-            in the Quiet Collection.
+            Tag pieces with <span className="text-brass">Quiet</span> or{" "}
+            <span className="text-brass">Premium</span> to control where they appear.
           </p>
         </div>
         <button
@@ -193,7 +211,7 @@ function AdminProducts() {
       </header>
 
       <div className="flex flex-wrap gap-2">
-        {(["all", "premium", "regular", "hidden"] as const).map((f) => (
+        {(["all", "quiet", "premium", "both", "none", "hidden"] as const).map((f) => (
           <button
             key={f}
             onClick={() => setFilter(f)}
@@ -203,7 +221,17 @@ function AdminProducts() {
                 : "border-border text-muted-foreground hover:text-ink"
             }`}
           >
-            {f === "all" ? "All" : f === "premium" ? "Quiet Collection" : f === "regular" ? "Regular" : "Hidden"}
+            {f === "all"
+              ? "All"
+              : f === "quiet"
+              ? "Quiet"
+              : f === "premium"
+              ? "Premium"
+              : f === "both"
+              ? "Both"
+              : f === "none"
+              ? "Untagged"
+              : "Hidden"}
             <span className="ml-2 opacity-60">{counts[f]}</span>
           </button>
         ))}
@@ -234,7 +262,7 @@ function AdminProducts() {
                 <th className="text-left px-6 py-4">Price</th>
                 <th className="text-left px-6 py-4">Stock</th>
                 <th className="text-left px-6 py-4">Status</th>
-                <th className="text-left px-6 py-4">Premium</th>
+                <th className="text-left px-6 py-4">Tags</th>
                 <th className="px-6 py-4"></th>
               </tr>
             </thead>
@@ -271,18 +299,31 @@ function AdminProducts() {
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <button
-                        onClick={() => togglePremium(p)}
-                        title={p.is_featured ? "Remove from Quiet Collection" : "Add to Quiet Collection"}
-                        className={`inline-flex items-center gap-1.5 px-2.5 py-1 border text-[10px] uppercase tracking-[0.22em] rounded-sm transition-colors ${
-                          p.is_featured
-                            ? "border-brass text-brass bg-brass/5"
-                            : "border-border text-muted-foreground hover:text-brass hover:border-brass/50"
-                        }`}
-                      >
-                        <Sparkle className="w-3 h-3" strokeWidth={1.5} />
-                        {p.is_featured ? "Premium" : "Make premium"}
-                      </button>
+                      <div className="flex flex-wrap gap-1.5">
+                        <button
+                          onClick={() => togglePremium(p)}
+                          title={p.is_featured ? "Remove from Quiet Collection" : "Add to Quiet Collection"}
+                          className={`inline-flex items-center gap-1.5 px-2.5 py-1 border text-[10px] uppercase tracking-[0.22em] rounded-sm transition-colors ${
+                            p.is_featured
+                              ? "border-brass text-brass bg-brass/5"
+                              : "border-border text-muted-foreground hover:text-brass hover:border-brass/50"
+                          }`}
+                        >
+                          <Sparkle className="w-3 h-3" strokeWidth={1.5} />
+                          Quiet
+                        </button>
+                        <button
+                          onClick={() => togglePremiumTag(p)}
+                          title={p.is_premium ? "Remove from Premium Collection" : "Add to Premium Collection"}
+                          className={`inline-flex items-center gap-1.5 px-2.5 py-1 border text-[10px] uppercase tracking-[0.22em] rounded-sm transition-colors ${
+                            p.is_premium
+                              ? "border-brass text-brass bg-brass/5"
+                              : "border-border text-muted-foreground hover:text-brass hover:border-brass/50"
+                          }`}
+                        >
+                          Premium
+                        </button>
+                      </div>
                     </td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex justify-end gap-2">
@@ -429,7 +470,15 @@ function AdminProducts() {
                     checked={editing.is_featured}
                     onChange={(e) => setEditing({ ...editing, is_featured: e.target.checked })}
                   />
-                  Show in Quiet Collection (homepage)
+                  Quiet Collection
+                </label>
+                <label className="flex items-center gap-3 text-sm text-ink">
+                  <input
+                    type="checkbox"
+                    checked={editing.is_premium}
+                    onChange={(e) => setEditing({ ...editing, is_premium: e.target.checked })}
+                  />
+                  Premium Collection
                 </label>
               </div>
 

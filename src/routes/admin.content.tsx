@@ -87,6 +87,26 @@ const SECTIONS: Section[] = [
     ],
   },
   {
+    key: "page.quiet",
+    title: "Page · Quiet Collection",
+    description: "The header of the dedicated /quiet-collection page.",
+    fields: [
+      { name: "eyebrow", label: "Eyebrow", type: "text" },
+      { name: "title_html", label: "Title (use <em> for italic)", type: "textarea" },
+      { name: "body", label: "Body", type: "textarea" },
+    ],
+  },
+  {
+    key: "page.premium",
+    title: "Page · Premium Collection",
+    description: "The header of the dedicated /premium-collection page.",
+    fields: [
+      { name: "eyebrow", label: "Eyebrow", type: "text" },
+      { name: "title_html", label: "Title (use <em> for italic)", type: "textarea" },
+      { name: "body", label: "Body", type: "textarea" },
+    ],
+  },
+  {
     key: "home.craft",
     title: "Home · Craft",
     description: "The 'Eighty hours' section.",

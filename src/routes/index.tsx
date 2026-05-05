@@ -58,7 +58,7 @@ function HomePage() {
 
   useEffect(() => {
     (async () => {
-      const [{ data: cats }, { count }, { data: featured }] = await Promise.all([
+      const [{ data: cats }, { count }, { data: premium }] = await Promise.all([
         supabase
           .from("categories")
           .select("id, slug, name, description, image_url")
@@ -71,13 +71,13 @@ function HomePage() {
           .from("products")
           .select("id, slug, name, short_description, price_cents, currency, images")
           .eq("is_active", true)
-          .eq("is_featured", true)
+          .eq("is_premium", true)
           .order("created_at", { ascending: false })
           .limit(maxItems),
       ]);
       if (cats) setCategories(cats as Category[]);
       if (typeof count === "number") setProductCount(count);
-      if (featured) setQuietProducts(featured as QuietProduct[]);
+      if (premium) setQuietProducts(premium as QuietProduct[]);
     })();
   }, [maxItems]);
 

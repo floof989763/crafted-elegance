@@ -37,10 +37,9 @@ export const Route = createFileRoute("/quiet-collection")({
 });
 
 function QuietCollectionPage() {
-  const c = useSiteContent("home.quiet");
+  const c = useSiteContent("page.quiet");
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
-  const maxItems = Math.max(1, Math.min(12, parseInt(String(c.max_items)) || 6));
 
   useEffect(() => {
     (async () => {
@@ -50,12 +49,11 @@ function QuietCollectionPage() {
         .select("id, slug, name, short_description, price_cents, currency, images")
         .eq("is_active", true)
         .eq("is_featured", true)
-        .order("created_at", { ascending: false })
-        .limit(maxItems);
+        .order("created_at", { ascending: false });
       setProducts((data as Product[]) || []);
       setLoading(false);
     })();
-  }, [maxItems]);
+  }, []);
 
   return (
     <SiteShell>
@@ -117,7 +115,7 @@ function QuietCollectionPage() {
                       </div>
                     )}
                     <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-3 py-1.5 bg-ink/90 backdrop-blur-sm border border-brass/60 text-brass text-[9px] uppercase tracking-[0.32em] rounded-sm">
-                      <Sparkle className="w-2.5 h-2.5" strokeWidth={1.5} /> Premium
+                      <Sparkle className="w-2.5 h-2.5" strokeWidth={1.5} /> The Quiet Collection
                     </span>
                   </div>
                   <div className="space-y-2">

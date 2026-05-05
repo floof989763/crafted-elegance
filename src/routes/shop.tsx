@@ -21,6 +21,7 @@ type Product = {
   images: string[];
   category_id: string | null;
   is_featured: boolean;
+  is_premium: boolean;
 };
 
 type Category = {
@@ -78,7 +79,7 @@ function ShopPage() {
 
       let q = supabase
         .from("products")
-        .select("id, slug, name, short_description, price_cents, currency, images, category_id, is_featured")
+        .select("id, slug, name, short_description, price_cents, currency, images, category_id, is_featured, is_premium")
         .eq("is_active", true)
         .order("created_at", { ascending: false });
 
@@ -199,9 +200,14 @@ function ShopPage() {
                         ⵘ
                       </div>
                     )}
-                    {p.is_featured && (
+                    {(p.is_featured || p.is_premium) && (
                       <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 bg-ink/85 backdrop-blur-sm border border-brass/50 text-brass text-[9px] uppercase tracking-[0.32em] rounded-sm">
-                        <Sparkle className="w-2.5 h-2.5" strokeWidth={1.5} /> Premium
+                        <Sparkle className="w-2.5 h-2.5" strokeWidth={1.5} />
+                        {p.is_premium && p.is_featured
+                          ? "Premium · Quiet"
+                          : p.is_premium
+                          ? "Premium Collection"
+                          : "The Quiet Collection"}
                       </span>
                     )}
                   </div>

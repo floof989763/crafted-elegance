@@ -18,6 +18,7 @@ type Product = {
   materials: string | null;
   dimensions: string | null;
   stock: number;
+  collection_tags: string[];
   is_featured: boolean;
   is_premium: boolean;
   is_active: boolean;
@@ -35,11 +36,24 @@ type FormState = {
   materials: string;
   dimensions: string;
   stock: string;
-  is_featured: boolean;
-  is_premium: boolean;
+  collection_tags: string[];
   is_active: boolean;
   category_id: string;
 };
+
+const QUIET_TAG = "quiet";
+const PREMIUM_TAG = "premium";
+
+function hasCollectionTag(product: Pick<Product, "collection_tags">, tag: string) {
+  return product.collection_tags?.includes(tag) ?? false;
+}
+
+function setCollectionTag(tags: string[], tag: string, enabled: boolean) {
+  const next = new Set(tags.filter(Boolean));
+  if (enabled) next.add(tag);
+  else next.delete(tag);
+  return Array.from(next);
+}
 
 const empty: FormState = {
   slug: "",
@@ -51,8 +65,7 @@ const empty: FormState = {
   materials: "",
   dimensions: "",
   stock: "0",
-  is_featured: false,
-  is_premium: false,
+  collection_tags: [],
   is_active: true,
   category_id: "",
 };
@@ -103,8 +116,7 @@ function AdminProducts() {
       materials: p.materials || "",
       dimensions: p.dimensions || "",
       stock: p.stock.toString(),
-      is_featured: p.is_featured,
-      is_premium: p.is_premium,
+      collection_tags: p.collection_tags || [],
       is_active: p.is_active,
       category_id: p.category_id || "",
     });
@@ -125,8 +137,9 @@ function AdminProducts() {
       materials: editing.materials.trim() || null,
       dimensions: editing.dimensions.trim() || null,
       stock: Number(editing.stock || "0"),
-      is_featured: editing.is_featured,
-      is_premium: editing.is_premium,
+      collection_tags: editing.collection_tags,
+      is_featured: editing.collection_tags.includes(QUIET_TAG),
+      is_premium: editing.collection_tags.includes(PREMIUM_TAG),
       is_active: editing.is_active,
       category_id: editing.category_id || null,
     };

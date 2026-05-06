@@ -490,16 +490,26 @@ function AdminProducts() {
                 <label className="flex items-center gap-3 text-sm text-ink">
                   <input
                     type="checkbox"
-                    checked={editing.is_featured}
-                    onChange={(e) => setEditing({ ...editing, is_featured: e.target.checked })}
+                    checked={editing.collection_tags.includes(QUIET_TAG)}
+                    onChange={(e) =>
+                      setEditing({
+                        ...editing,
+                        collection_tags: setCollectionTag(editing.collection_tags, QUIET_TAG, e.target.checked),
+                      })
+                    }
                   />
                   Quiet Collection
                 </label>
                 <label className="flex items-center gap-3 text-sm text-ink">
                   <input
                     type="checkbox"
-                    checked={editing.is_premium}
-                    onChange={(e) => setEditing({ ...editing, is_premium: e.target.checked })}
+                    checked={editing.collection_tags.includes(PREMIUM_TAG)}
+                    onChange={(e) =>
+                      setEditing({
+                        ...editing,
+                        collection_tags: setCollectionTag(editing.collection_tags, PREMIUM_TAG, e.target.checked),
+                      })
+                    }
                   />
                   Premium Collection
                 </label>

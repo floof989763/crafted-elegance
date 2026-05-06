@@ -272,7 +272,7 @@ function AdminProducts() {
           <p className="mt-2 text-sm text-muted-foreground">
             {filter === "all"
               ? "Add your first piece to begin the collection."
-              : "Try a different filter, or mark a piece as Premium to populate the Quiet Collection."}
+              : "Try a different filter, or assign the matching collection tag to a piece."}
           </p>
         </div>
       ) : (

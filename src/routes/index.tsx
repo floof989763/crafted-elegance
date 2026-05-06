@@ -26,6 +26,7 @@ type QuietProduct = {
   price_cents: number;
   currency: string;
   images: string[];
+  collection_tags: string[];
 };
 
 export const Route = createFileRoute("/")({
@@ -69,9 +70,9 @@ function HomePage() {
           .eq("is_active", true),
         supabase
           .from("products")
-          .select("id, slug, name, short_description, price_cents, currency, images")
+          .select("id, slug, name, short_description, price_cents, currency, images, collection_tags")
           .eq("is_active", true)
-          .eq("is_premium", true)
+          .contains("collection_tags", ["premium"])
           .order("created_at", { ascending: false })
           .limit(maxItems),
       ]);
@@ -415,7 +416,7 @@ function QuietCollection({ products }: { products: QuietProduct[] }) {
             to="/premium-collection"
             className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.32em] text-ink/80 luxe-link hover:text-brass"
           >
-            {c.cta_label} <ArrowRight className="w-4 h-4" />
+            Explore Premium Collection <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
       </div>

@@ -332,6 +332,7 @@ export type Database = {
       products: {
         Row: {
           category_id: string | null
+          collection_tags: string[]
           created_at: string
           currency: string
           description: string | null
@@ -351,6 +352,7 @@ export type Database = {
         }
         Insert: {
           category_id?: string | null
+          collection_tags?: string[]
           created_at?: string
           currency?: string
           description?: string | null
@@ -370,6 +372,7 @@ export type Database = {
         }
         Update: {
           category_id?: string | null
+          collection_tags?: string[]
           created_at?: string
           currency?: string
           description?: string | null

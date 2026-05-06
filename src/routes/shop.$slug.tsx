@@ -19,8 +19,7 @@ type Product = {
   materials: string | null;
   dimensions: string | null;
   stock: number;
-  is_featured: boolean;
-  is_premium: boolean;
+  collection_tags: string[];
 };
 
 export const Route = createFileRoute("/shop/$slug")({
@@ -193,12 +192,12 @@ function ProductPage() {
               <div>
                 <div className="flex items-center gap-3">
                   <p className="eyebrow">Numbered piece</p>
-                  {product.is_featured && (
+                  {product.collection_tags?.includes("quiet") && (
                     <span className="inline-flex items-center gap-1.5 px-2.5 py-1 border border-brass/60 text-brass text-[9px] uppercase tracking-[0.32em] rounded-sm">
                       <Sparkle className="w-2.5 h-2.5" strokeWidth={1.5} /> The Quiet Collection
                     </span>
                   )}
-                  {product.is_premium && (
+                  {product.collection_tags?.includes("premium") && (
                     <span className="inline-flex items-center gap-1.5 px-2.5 py-1 border border-brass/60 text-brass text-[9px] uppercase tracking-[0.32em] rounded-sm">
                       <Sparkle className="w-2.5 h-2.5" strokeWidth={1.5} /> Premium Collection
                     </span>

@@ -169,18 +169,28 @@ function AdminProducts() {
     load();
   };
 
-  const togglePremium = async (p: Product) => {
+  const toggleQuietTag = async (p: Product) => {
+    const collection_tags = setCollectionTag(
+      p.collection_tags || [],
+      QUIET_TAG,
+      !hasCollectionTag(p, QUIET_TAG),
+    );
     await supabase
       .from("products")
-      .update({ is_featured: !p.is_featured })
+      .update({ collection_tags, is_featured: collection_tags.includes(QUIET_TAG) })
       .eq("id", p.id);
     load();
   };
 
   const togglePremiumTag = async (p: Product) => {
+    const collection_tags = setCollectionTag(
+      p.collection_tags || [],
+      PREMIUM_TAG,
+      !hasCollectionTag(p, PREMIUM_TAG),
+    );
     await supabase
       .from("products")
-      .update({ is_premium: !p.is_premium })
+      .update({ collection_tags, is_premium: collection_tags.includes(PREMIUM_TAG) })
       .eq("id", p.id);
     load();
   };
@@ -188,19 +198,19 @@ function AdminProducts() {
   const visible = products.filter((p) => {
     if (filter === "hidden") return !p.is_active;
     if (!p.is_active) return filter === "all";
-    if (filter === "quiet") return p.is_featured;
-    if (filter === "premium") return p.is_premium;
-    if (filter === "both") return p.is_featured && p.is_premium;
-    if (filter === "none") return !p.is_featured && !p.is_premium;
+    if (filter === "quiet") return hasCollectionTag(p, QUIET_TAG);
+    if (filter === "premium") return hasCollectionTag(p, PREMIUM_TAG);
+    if (filter === "both") return hasCollectionTag(p, QUIET_TAG) && hasCollectionTag(p, PREMIUM_TAG);
+    if (filter === "none") return !hasCollectionTag(p, QUIET_TAG) && !hasCollectionTag(p, PREMIUM_TAG);
     return true;
   });
 
   const counts = {
     all: products.length,
-    quiet: products.filter((p) => p.is_featured && p.is_active).length,
-    premium: products.filter((p) => p.is_premium && p.is_active).length,
-    both: products.filter((p) => p.is_featured && p.is_premium && p.is_active).length,
-    none: products.filter((p) => !p.is_featured && !p.is_premium && p.is_active).length,
+    quiet: products.filter((p) => hasCollectionTag(p, QUIET_TAG) && p.is_active).length,
+    premium: products.filter((p) => hasCollectionTag(p, PREMIUM_TAG) && p.is_active).length,
+    both: products.filter((p) => hasCollectionTag(p, QUIET_TAG) && hasCollectionTag(p, PREMIUM_TAG) && p.is_active).length,
+    none: products.filter((p) => !hasCollectionTag(p, QUIET_TAG) && !hasCollectionTag(p, PREMIUM_TAG) && p.is_active).length,
     hidden: products.filter((p) => !p.is_active).length,
   };
 

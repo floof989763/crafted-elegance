@@ -324,10 +324,10 @@ function AdminProducts() {
                     <td className="px-6 py-4">
                       <div className="flex flex-wrap gap-1.5">
                         <button
-                          onClick={() => togglePremium(p)}
-                          title={p.is_featured ? "Remove from Quiet Collection" : "Add to Quiet Collection"}
+                          onClick={() => toggleQuietTag(p)}
+                          title={hasCollectionTag(p, QUIET_TAG) ? "Remove from Quiet Collection" : "Add to Quiet Collection"}
                           className={`inline-flex items-center gap-1.5 px-2.5 py-1 border text-[10px] uppercase tracking-[0.22em] rounded-sm transition-colors ${
-                            p.is_featured
+                            hasCollectionTag(p, QUIET_TAG)
                               ? "border-brass text-brass bg-brass/5"
                               : "border-border text-muted-foreground hover:text-brass hover:border-brass/50"
                           }`}
@@ -337,9 +337,9 @@ function AdminProducts() {
                         </button>
                         <button
                           onClick={() => togglePremiumTag(p)}
-                          title={p.is_premium ? "Remove from Premium Collection" : "Add to Premium Collection"}
+                          title={hasCollectionTag(p, PREMIUM_TAG) ? "Remove from Premium Collection" : "Add to Premium Collection"}
                           className={`inline-flex items-center gap-1.5 px-2.5 py-1 border text-[10px] uppercase tracking-[0.22em] rounded-sm transition-colors ${
-                            p.is_premium
+                            hasCollectionTag(p, PREMIUM_TAG)
                               ? "border-brass text-brass bg-brass/5"
                               : "border-border text-muted-foreground hover:text-brass hover:border-brass/50"
                           }`}

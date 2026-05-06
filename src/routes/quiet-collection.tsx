@@ -48,7 +48,7 @@ function QuietCollectionPage() {
         .from("products")
         .select("id, slug, name, short_description, price_cents, currency, images")
         .eq("is_active", true)
-        .eq("is_featured", true)
+        .contains("collection_tags", ["quiet"])
         .order("created_at", { ascending: false });
       setProducts((data as Product[]) || []);
       setLoading(false);

@@ -18,6 +18,7 @@ type Product = {
   materials: string | null;
   dimensions: string | null;
   stock: number;
+  collection_tags: string[];
   is_featured: boolean;
   is_premium: boolean;
   is_active: boolean;
@@ -35,11 +36,24 @@ type FormState = {
   materials: string;
   dimensions: string;
   stock: string;
-  is_featured: boolean;
-  is_premium: boolean;
+  collection_tags: string[];
   is_active: boolean;
   category_id: string;
 };
+
+const QUIET_TAG = "quiet";
+const PREMIUM_TAG = "premium";
+
+function hasCollectionTag(product: Pick<Product, "collection_tags">, tag: string) {
+  return product.collection_tags?.includes(tag) ?? false;
+}
+
+function setCollectionTag(tags: string[], tag: string, enabled: boolean) {
+  const next = new Set(tags.filter(Boolean));
+  if (enabled) next.add(tag);
+  else next.delete(tag);
+  return Array.from(next);
+}
 
 const empty: FormState = {
   slug: "",
@@ -51,8 +65,7 @@ const empty: FormState = {
   materials: "",
   dimensions: "",
   stock: "0",
-  is_featured: false,
-  is_premium: false,
+  collection_tags: [],
   is_active: true,
   category_id: "",
 };
@@ -103,8 +116,7 @@ function AdminProducts() {
       materials: p.materials || "",
       dimensions: p.dimensions || "",
       stock: p.stock.toString(),
-      is_featured: p.is_featured,
-      is_premium: p.is_premium,
+      collection_tags: p.collection_tags || [],
       is_active: p.is_active,
       category_id: p.category_id || "",
     });
@@ -125,8 +137,9 @@ function AdminProducts() {
       materials: editing.materials.trim() || null,
       dimensions: editing.dimensions.trim() || null,
       stock: Number(editing.stock || "0"),
-      is_featured: editing.is_featured,
-      is_premium: editing.is_premium,
+      collection_tags: editing.collection_tags,
+      is_featured: editing.collection_tags.includes(QUIET_TAG),
+      is_premium: editing.collection_tags.includes(PREMIUM_TAG),
       is_active: editing.is_active,
       category_id: editing.category_id || null,
     };
@@ -156,18 +169,28 @@ function AdminProducts() {
     load();
   };
 
-  const togglePremium = async (p: Product) => {
+  const toggleQuietTag = async (p: Product) => {
+    const collection_tags = setCollectionTag(
+      p.collection_tags || [],
+      QUIET_TAG,
+      !hasCollectionTag(p, QUIET_TAG),
+    );
     await supabase
       .from("products")
-      .update({ is_featured: !p.is_featured })
+      .update({ collection_tags, is_featured: collection_tags.includes(QUIET_TAG) })
       .eq("id", p.id);
     load();
   };
 
   const togglePremiumTag = async (p: Product) => {
+    const collection_tags = setCollectionTag(
+      p.collection_tags || [],
+      PREMIUM_TAG,
+      !hasCollectionTag(p, PREMIUM_TAG),
+    );
     await supabase
       .from("products")
-      .update({ is_premium: !p.is_premium })
+      .update({ collection_tags, is_premium: collection_tags.includes(PREMIUM_TAG) })
       .eq("id", p.id);
     load();
   };
@@ -175,19 +198,19 @@ function AdminProducts() {
   const visible = products.filter((p) => {
     if (filter === "hidden") return !p.is_active;
     if (!p.is_active) return filter === "all";
-    if (filter === "quiet") return p.is_featured;
-    if (filter === "premium") return p.is_premium;
-    if (filter === "both") return p.is_featured && p.is_premium;
-    if (filter === "none") return !p.is_featured && !p.is_premium;
+    if (filter === "quiet") return hasCollectionTag(p, QUIET_TAG);
+    if (filter === "premium") return hasCollectionTag(p, PREMIUM_TAG);
+    if (filter === "both") return hasCollectionTag(p, QUIET_TAG) && hasCollectionTag(p, PREMIUM_TAG);
+    if (filter === "none") return !hasCollectionTag(p, QUIET_TAG) && !hasCollectionTag(p, PREMIUM_TAG);
     return true;
   });
 
   const counts = {
     all: products.length,
-    quiet: products.filter((p) => p.is_featured && p.is_active).length,
-    premium: products.filter((p) => p.is_premium && p.is_active).length,
-    both: products.filter((p) => p.is_featured && p.is_premium && p.is_active).length,
-    none: products.filter((p) => !p.is_featured && !p.is_premium && p.is_active).length,
+    quiet: products.filter((p) => hasCollectionTag(p, QUIET_TAG) && p.is_active).length,
+    premium: products.filter((p) => hasCollectionTag(p, PREMIUM_TAG) && p.is_active).length,
+    both: products.filter((p) => hasCollectionTag(p, QUIET_TAG) && hasCollectionTag(p, PREMIUM_TAG) && p.is_active).length,
+    none: products.filter((p) => !hasCollectionTag(p, QUIET_TAG) && !hasCollectionTag(p, PREMIUM_TAG) && p.is_active).length,
     hidden: products.filter((p) => !p.is_active).length,
   };
 
@@ -249,7 +272,7 @@ function AdminProducts() {
           <p className="mt-2 text-sm text-muted-foreground">
             {filter === "all"
               ? "Add your first piece to begin the collection."
-              : "Try a different filter, or mark a piece as Premium to populate the Quiet Collection."}
+              : "Try a different filter, or assign the matching collection tag to a piece."}
           </p>
         </div>
       ) : (
@@ -301,10 +324,10 @@ function AdminProducts() {
                     <td className="px-6 py-4">
                       <div className="flex flex-wrap gap-1.5">
                         <button
-                          onClick={() => togglePremium(p)}
-                          title={p.is_featured ? "Remove from Quiet Collection" : "Add to Quiet Collection"}
+                          onClick={() => toggleQuietTag(p)}
+                          title={hasCollectionTag(p, QUIET_TAG) ? "Remove from Quiet Collection" : "Add to Quiet Collection"}
                           className={`inline-flex items-center gap-1.5 px-2.5 py-1 border text-[10px] uppercase tracking-[0.22em] rounded-sm transition-colors ${
-                            p.is_featured
+                            hasCollectionTag(p, QUIET_TAG)
                               ? "border-brass text-brass bg-brass/5"
                               : "border-border text-muted-foreground hover:text-brass hover:border-brass/50"
                           }`}
@@ -314,9 +337,9 @@ function AdminProducts() {
                         </button>
                         <button
                           onClick={() => togglePremiumTag(p)}
-                          title={p.is_premium ? "Remove from Premium Collection" : "Add to Premium Collection"}
+                          title={hasCollectionTag(p, PREMIUM_TAG) ? "Remove from Premium Collection" : "Add to Premium Collection"}
                           className={`inline-flex items-center gap-1.5 px-2.5 py-1 border text-[10px] uppercase tracking-[0.22em] rounded-sm transition-colors ${
-                            p.is_premium
+                            hasCollectionTag(p, PREMIUM_TAG)
                               ? "border-brass text-brass bg-brass/5"
                               : "border-border text-muted-foreground hover:text-brass hover:border-brass/50"
                           }`}
@@ -467,16 +490,26 @@ function AdminProducts() {
                 <label className="flex items-center gap-3 text-sm text-ink">
                   <input
                     type="checkbox"
-                    checked={editing.is_featured}
-                    onChange={(e) => setEditing({ ...editing, is_featured: e.target.checked })}
+                    checked={editing.collection_tags.includes(QUIET_TAG)}
+                    onChange={(e) =>
+                      setEditing({
+                        ...editing,
+                        collection_tags: setCollectionTag(editing.collection_tags, QUIET_TAG, e.target.checked),
+                      })
+                    }
                   />
                   Quiet Collection
                 </label>
                 <label className="flex items-center gap-3 text-sm text-ink">
                   <input
                     type="checkbox"
-                    checked={editing.is_premium}
-                    onChange={(e) => setEditing({ ...editing, is_premium: e.target.checked })}
+                    checked={editing.collection_tags.includes(PREMIUM_TAG)}
+                    onChange={(e) =>
+                      setEditing({
+                        ...editing,
+                        collection_tags: setCollectionTag(editing.collection_tags, PREMIUM_TAG, e.target.checked),
+                      })
+                    }
                   />
                   Premium Collection
                 </label>

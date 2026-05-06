@@ -48,7 +48,7 @@ function PremiumCollectionPage() {
         .from("products")
         .select("id, slug, name, short_description, price_cents, currency, images")
         .eq("is_active", true)
-        .eq("is_premium", true)
+        .contains("collection_tags", ["premium"])
         .order("created_at", { ascending: false });
       setProducts((data as Product[]) || []);
       setLoading(false);
@@ -86,7 +86,7 @@ function PremiumCollectionPage() {
           ) : products.length === 0 ? (
             <div className="text-center py-32">
               <p className="font-display text-3xl text-ink">
-                The Quiet Collection is resting.
+                The Premium Collection is resting.
               </p>
               <p className="mt-3 text-sm text-muted-foreground">
                 New premium pieces will be added soon.

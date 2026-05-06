@@ -74,9 +74,9 @@ const SECTIONS: Section[] = [
   },
   {
     key: "home.quiet",
-    title: "Home · Quiet Collection",
+    title: "Home · Premium Collection",
     description:
-      "A curated, premium row on the homepage. To choose which pieces appear here, edit a product and turn ON 'Show in Quiet Collection' (the Featured toggle). Set 'Max items' to limit how many are shown.",
+      "A curated, premium row on the homepage. To choose which pieces appear here, edit a product and turn ON 'Premium Collection'. Set 'Max items' to limit how many are shown.",
     fields: [
       { name: "enabled", label: "Show this section (true / false)", type: "text" },
       { name: "eyebrow", label: "Eyebrow", type: "text" },

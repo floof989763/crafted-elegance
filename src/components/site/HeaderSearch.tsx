@@ -12,7 +12,7 @@ type Hit = {
   price_cents: number;
   currency: string;
   images: string[];
-  is_featured: boolean;
+  collection_tags: string[];
 };
 
 /**
@@ -67,10 +67,10 @@ export function HeaderSearch({ compact = false }: { compact?: boolean }) {
     const timer = setTimeout(async () => {
       const { data } = await supabase
         .from("products")
-        .select("id, slug, name, short_description, price_cents, currency, images, is_featured")
+        .select("id, slug, name, short_description, price_cents, currency, images, collection_tags")
         .eq("is_active", true)
         .or(`name.ilike.%${t}%,short_description.ilike.%${t}%`)
-        .order("is_featured", { ascending: false })
+        .order("created_at", { ascending: false })
         .limit(8);
       setHits((data as Hit[]) || []);
       setLoading(false);
@@ -175,7 +175,7 @@ export function HeaderSearch({ compact = false }: { compact?: boolean }) {
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-2">
                           <p className="text-sm text-ink truncate">{h.name}</p>
-                          {h.is_featured && (
+                          {h.collection_tags?.includes("premium") && (
                             <span className="text-[8px] uppercase tracking-[0.28em] text-brass border border-brass/50 px-1.5 py-0.5 rounded-sm">
                               Premium
                             </span>

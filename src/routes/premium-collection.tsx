@@ -5,6 +5,7 @@ import { SiteShell } from "@/components/site/SiteShell";
 import { supabase } from "@/integrations/supabase/client";
 import { useSiteContent } from "@/hooks/use-site-content";
 import { formatPrice } from "@/lib/format";
+import { StockIndicator } from "@/components/site/StockIndicator";
 
 type Product = {
   id: string;
@@ -14,6 +15,7 @@ type Product = {
   price_cents: number;
   currency: string;
   images: string[];
+  stock: number;
 };
 
 export const Route = createFileRoute("/premium-collection")({
@@ -46,7 +48,7 @@ function PremiumCollectionPage() {
       setLoading(true);
       const { data } = await supabase
         .from("products")
-        .select("id, slug, name, short_description, price_cents, currency, images")
+        .select("id, slug, name, short_description, price_cents, currency, images, stock")
         .eq("is_active", true)
         .contains("collection_tags", ["premium"])
         .order("created_at", { ascending: false });
@@ -128,6 +130,7 @@ function PremiumCollectionPage() {
                     <p className="text-sm text-ink/80 pt-2">
                       {formatPrice(p.price_cents, p.currency)}
                     </p>
+                    <StockIndicator stock={p.stock} className="pt-1" />
                   </div>
                 </Link>
               ))}

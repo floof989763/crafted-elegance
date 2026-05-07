@@ -6,6 +6,7 @@ import { SiteShell } from "@/components/site/SiteShell";
 import { supabase } from "@/integrations/supabase/client";
 import { formatPrice } from "@/lib/format";
 import { useSiteContent } from "@/hooks/use-site-content";
+import { StockIndicator } from "@/components/site/StockIndicator";
 
 const searchSchema = z.object({
   category: z.string().optional(),
@@ -21,6 +22,7 @@ type Product = {
   images: string[];
   category_id: string | null;
   collection_tags: string[];
+  stock: number;
 };
 
 const hasTag = (product: Pick<Product, "collection_tags">, tag: string) =>
@@ -81,7 +83,7 @@ function ShopPage() {
 
       let q = supabase
         .from("products")
-        .select("id, slug, name, short_description, price_cents, currency, images, category_id, collection_tags")
+        .select("id, slug, name, short_description, price_cents, currency, images, category_id, collection_tags, stock")
         .eq("is_active", true)
         .order("created_at", { ascending: false });
 
@@ -223,6 +225,7 @@ function ShopPage() {
                     <p className="text-sm text-ink/80 pt-2">
                       {formatPrice(p.price_cents, p.currency)}
                     </p>
+                    <StockIndicator stock={p.stock} className="pt-1" />
                   </div>
                 </Link>
               ))}

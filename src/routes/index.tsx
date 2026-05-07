@@ -6,6 +6,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useSiteContent } from "@/hooks/use-site-content";
 import { formatPrice } from "@/lib/format";
 import heroCraftVideo from "@/assets/hero-craft.mp4.asset.json";
+import { StockIndicator } from "@/components/site/StockIndicator";
 
 const FALLBACK_HERO_VIDEO = heroCraftVideo.url;
 const FALLBACK_HERO_POSTER = "/images/products/bowl-01-walnut.jpg";
@@ -27,6 +28,7 @@ type QuietProduct = {
   currency: string;
   images: string[];
   collection_tags: string[];
+  stock: number;
 };
 
 export const Route = createFileRoute("/")({
@@ -70,7 +72,7 @@ function HomePage() {
           .eq("is_active", true),
         supabase
           .from("products")
-          .select("id, slug, name, short_description, price_cents, currency, images, collection_tags")
+          .select("id, slug, name, short_description, price_cents, currency, images, collection_tags, stock")
           .eq("is_active", true)
           .contains("collection_tags", ["premium"])
           .order("created_at", { ascending: false })
@@ -407,6 +409,7 @@ function QuietCollection({ products }: { products: QuietProduct[] }) {
               <p className="mt-2 text-sm text-ink/80">
                 {formatPrice(p.price_cents, p.currency)}
               </p>
+              <StockIndicator stock={p.stock} className="mt-1" />
             </Link>
           ))}
         </div>

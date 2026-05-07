@@ -209,6 +209,16 @@ function ProductPage() {
                 {product.short_description && (
                   <p className="mt-4 text-muted-foreground">{product.short_description}</p>
                 )}
+                {(product.stock ?? 0) > 0 && (product.stock ?? 0) <= 10 && (
+                  <p className="mt-3 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.28em] text-brass/90">
+                    <span className="inline-block w-1 h-1 rounded-full bg-brass/70" />
+                    {product.stock <= 3
+                      ? `Only ${product.stock} left in stock`
+                      : product.stock <= 6
+                      ? `Low stock — ${product.stock} remaining`
+                      : "Selling fast"}
+                  </p>
+                )}
               </div>
 
               <div className="hairline" />

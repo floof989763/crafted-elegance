@@ -192,7 +192,7 @@ function Manifesto() {
 
           <div className="flex flex-wrap items-center gap-x-8 gap-y-4 pt-4">
             <Link
-              to="/shop"
+              to="/quiet-collection"
               className="group inline-flex items-center gap-3 px-7 py-4 bg-ink text-cream text-[11px] uppercase tracking-[0.32em] hover:bg-brass transition-colors duration-500"
             >
               View the Collection

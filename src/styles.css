@@ -254,4 +254,34 @@
       transition: none;
     }
   }
+
+  /* Touch devices: trigger hover-style zoom and color shifts on tap so
+     mobile users get the same cinematic feedback as desktop hover. */
+  @media (hover: none) {
+    .group:active img.object-cover {
+      transform: scale(1.05);
+      transition: transform 700ms var(--ease-luxe);
+    }
+    .group:active .group-hover\:text-brass {
+      color: var(--brass);
+    }
+    a, button {
+      -webkit-tap-highlight-color: transparent;
+    }
+    a:active, button:active {
+      transform: translateY(1px);
+      transition: transform 200ms var(--ease-luxe);
+    }
+  }
+
+  /* Subtle floating motion for hero/banner imagery on mobile to add life. */
+  @media (max-width: 767px) {
+    .mobile-float {
+      animation: mobile-float 9s var(--ease-luxe) infinite alternate;
+    }
+  }
+  @keyframes mobile-float {
+    from { transform: scale(1.02) translateY(0); }
+    to { transform: scale(1.06) translateY(-1.5%); }
+  }
 }

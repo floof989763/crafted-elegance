@@ -109,7 +109,7 @@ function Hero() {
   const poster = c.poster_image?.trim() ? c.poster_image : FALLBACK_HERO_POSTER;
 
   return (
-    <section className="relative h-[100svh] min-h-[640px] w-full overflow-hidden bg-cream">
+    <section className="relative h-[86svh] min-h-[560px] md:h-[100svh] md:min-h-[640px] w-full overflow-hidden bg-cream">
       <video
         key={videoSrc}
         autoPlay
@@ -131,13 +131,13 @@ function Hero() {
       />
       <div className="absolute inset-0 grain pointer-events-none" />
 
-      <div className="relative z-10 h-full flex flex-col items-center px-6 pt-[14vh] md:pt-[12vh]">
+      <div className="relative z-10 h-full flex flex-col items-center px-6 pt-[10vh] md:pt-[12vh]">
         <p className="eyebrow reveal reveal-delay-1">{c.eyebrow}</p>
-        <h1 className="mt-5 font-display text-ink text-[16vw] md:text-[10vw] leading-[0.85] reveal reveal-delay-2">
+        <h1 className="mt-4 md:mt-5 font-display text-ink text-[13vw] md:text-[10vw] leading-[0.85] reveal reveal-delay-2">
           {c.title}
         </h1>
         <p
-          className="mt-auto mb-24 max-w-md mx-auto font-display italic text-base md:text-xl leading-snug text-center reveal reveal-delay-3 whitespace-pre-line"
+          className="mt-auto mb-16 md:mb-24 max-w-md mx-auto font-display italic text-base md:text-xl leading-snug text-center reveal reveal-delay-3 whitespace-pre-line"
           style={{
             color: "var(--brass)",
             textShadow:
@@ -163,7 +163,7 @@ function Hero() {
 function Manifesto() {
   const c = useSiteContent("home.manifesto");
   return (
-    <section className="relative py-32 md:py-48 overflow-hidden">
+    <section className="relative py-20 md:py-48 overflow-hidden">
       <div className="mx-auto max-w-[1480px] px-6 md:px-10 grid md:grid-cols-12 gap-12 md:gap-20 items-center">
         <div className="md:col-span-5 md:col-start-1 relative scroll-reveal">
           <div className="aspect-[3/4] overflow-hidden rounded-sm bg-walnut">
@@ -184,7 +184,7 @@ function Manifesto() {
         <div className="md:col-span-6 md:col-start-7 space-y-8 scroll-reveal">
           <p className="eyebrow">{c.eyebrow}</p>
           <h2
-            className="font-display text-5xl md:text-7xl leading-[0.95] text-ink [&_em]:text-brass"
+            className="font-display text-4xl md:text-7xl leading-[0.95] text-ink [&_em]:text-brass"
             dangerouslySetInnerHTML={{ __html: c.title_html }}
           />
           <div className="space-y-5 text-muted-foreground leading-relaxed max-w-xl">
@@ -241,18 +241,18 @@ function Collection({
   const all = useSiteContent("home.collection_all");
 
   return (
-    <section className="relative py-24 md:py-40 bg-walnut" id="collection">
+    <section className="relative py-16 md:py-40 bg-walnut" id="collection">
       <div className="mx-auto max-w-[1480px] px-6 md:px-10">
         <div className="text-center max-w-3xl mx-auto scroll-reveal">
           <p className="eyebrow">{c.eyebrow}</p>
           <h2
-            className="mt-5 font-display text-5xl md:text-7xl leading-[0.95] text-ink [&_em]:text-brass"
+            className="mt-5 font-display text-4xl md:text-7xl leading-[0.95] text-ink [&_em]:text-brass"
             dangerouslySetInnerHTML={{ __html: c.title_html }}
           />
           <p className="mt-6 text-muted-foreground leading-relaxed">{c.body}</p>
         </div>
 
-        <div className="mt-16 md:mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 scroll-reveal">
+        <div className="mt-10 md:mt-20 grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8 scroll-reveal">
           {/* All Products card — admin can hide / rename / re-image */}
           {String((all as any).enabled) !== "false" && (
             <CategoryCard
@@ -278,7 +278,7 @@ function Collection({
           ))}
         </div>
 
-        <div className="mt-20 text-center">
+        <div className="mt-12 md:mt-20 text-center">
           <Link
             to="/shop"
             className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.32em] text-ink/80 luxe-link hover:text-brass"
@@ -333,19 +333,19 @@ function CategoryCard({
             "linear-gradient(180deg, transparent 35%, color-mix(in oklab, var(--ink) 70%, transparent) 100%)",
         }}
       />
-      <div className="absolute inset-x-0 bottom-0 p-7 md:p-8 z-10">
+      <div className="absolute inset-x-0 bottom-0 p-4 md:p-8 z-10">
         {featured && eyebrow && (
-          <p className="text-[10px] uppercase tracking-[0.32em] text-brass mb-2">
+          <p className="text-[9px] md:text-[10px] uppercase tracking-[0.32em] text-brass mb-1.5 md:mb-2">
             {eyebrow}
           </p>
         )}
-        <h3 className="font-display text-3xl md:text-4xl text-cream leading-tight group-hover:text-brass transition-colors duration-500">
+        <h3 className="font-display text-xl md:text-4xl text-cream leading-tight group-hover:text-brass transition-colors duration-500">
           {name}
         </h3>
         {description && (
-          <p className="mt-2 text-sm text-cream/75 max-w-xs">{description}</p>
+          <p className="mt-1.5 md:mt-2 text-[11px] md:text-sm text-cream/75 max-w-xs line-clamp-2 md:line-clamp-none">{description}</p>
         )}
-        <span className="mt-4 inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.32em] text-cream/85 group-hover:text-brass transition-colors">
+        <span className="mt-3 md:mt-4 inline-flex items-center gap-2 text-[9px] md:text-[10px] uppercase tracking-[0.32em] text-cream/85 group-hover:text-brass transition-colors">
           Explore <ArrowRight className="w-3.5 h-3.5" />
         </span>
       </div>
@@ -364,18 +364,18 @@ function Craft() {
 function QuietCollection({ products }: { products: QuietProduct[] }) {
   const c = useSiteContent("home.quiet");
   return (
-    <section className="relative py-24 md:py-36 bg-background">
+    <section className="relative py-16 md:py-36 bg-background">
       <div className="mx-auto max-w-[1480px] px-6 md:px-10">
         <div className="text-center max-w-3xl mx-auto scroll-reveal">
           <p className="eyebrow">{c.eyebrow}</p>
           <h2
-            className="mt-5 font-display text-4xl md:text-6xl leading-[0.95] text-ink [&_em]:text-brass"
+            className="mt-5 font-display text-3xl md:text-6xl leading-[0.95] text-ink [&_em]:text-brass"
             dangerouslySetInnerHTML={{ __html: c.title_html }}
           />
           <p className="mt-6 text-muted-foreground leading-relaxed">{c.body}</p>
         </div>
 
-        <div className="mt-14 md:mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16 scroll-reveal">
+        <div className="mt-10 md:mt-20 grid grid-cols-2 lg:grid-cols-4 gap-x-4 md:gap-x-8 gap-y-10 md:gap-y-16 scroll-reveal">
           {products.map((p) => (
             <Link
               key={p.id}
@@ -383,7 +383,7 @@ function QuietCollection({ products }: { products: QuietProduct[] }) {
               params={{ slug: p.slug }}
               className="group block"
             >
-              <div className="relative aspect-[4/5] bg-walnut overflow-hidden mb-5 rounded-sm ring-1 ring-brass/10">
+              <div className="relative aspect-[4/5] bg-walnut overflow-hidden mb-3 md:mb-5 rounded-sm ring-1 ring-brass/10">
                 {p.images?.[0] ? (
                   <img
                     src={p.images[0]}
@@ -396,17 +396,17 @@ function QuietCollection({ products }: { products: QuietProduct[] }) {
                     ⵘ
                   </div>
                 )}
-                <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 bg-ink/85 backdrop-blur-sm border border-brass/60 text-brass text-[9px] uppercase tracking-[0.32em] rounded-sm">
-                  Premium Collection
+                <span className="absolute top-2 left-2 md:top-3 md:left-3 inline-flex items-center gap-1.5 px-2 py-0.5 md:px-2.5 md:py-1 bg-ink/85 backdrop-blur-sm border border-brass/60 text-brass text-[8px] md:text-[9px] uppercase tracking-[0.28em] md:tracking-[0.32em] rounded-sm">
+                  Premium
                 </span>
               </div>
-              <h3 className="font-display text-xl text-ink group-hover:text-brass transition-colors duration-500">
+              <h3 className="font-display text-base md:text-xl text-ink group-hover:text-brass transition-colors duration-500">
                 {p.name}
               </h3>
               {p.short_description && (
-                <p className="mt-1 text-xs text-muted-foreground">{p.short_description}</p>
+                <p className="mt-1 text-[11px] md:text-xs text-muted-foreground line-clamp-2">{p.short_description}</p>
               )}
-              <p className="mt-2 text-sm text-ink/80">
+              <p className="mt-2 text-xs md:text-sm text-ink/80">
                 {formatPrice(p.price_cents, p.currency)}
               </p>
               <StockIndicator stock={p.stock} className="mt-1" />
@@ -414,7 +414,7 @@ function QuietCollection({ products }: { products: QuietProduct[] }) {
           ))}
         </div>
 
-        <div className="mt-16 text-center">
+        <div className="mt-10 md:mt-16 text-center">
           <Link
             to="/premium-collection"
             className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.32em] text-ink/80 luxe-link hover:text-brass"
@@ -430,7 +430,7 @@ function QuietCollection({ products }: { products: QuietProduct[] }) {
 function CraftBody() {
   const c = useSiteContent("home.craft");
   return (
-    <section className="relative py-32 md:py-48 overflow-hidden">
+    <section className="relative py-20 md:py-48 overflow-hidden">
       <div className="mx-auto max-w-[1480px] px-6 md:px-10 grid md:grid-cols-12 gap-12 md:gap-20 items-center">
         <div className="md:col-span-7 md:col-start-1 order-2 md:order-1 scroll-reveal">
           <div className="aspect-[16/11] overflow-hidden rounded-sm bg-walnut">
@@ -446,7 +446,7 @@ function CraftBody() {
         <div className="md:col-span-5 md:col-start-8 order-1 md:order-2 space-y-8 scroll-reveal">
           <p className="eyebrow">{c.eyebrow}</p>
           <h2
-            className="font-display text-5xl md:text-6xl leading-[0.95] text-ink [&_em]:text-brass"
+            className="font-display text-4xl md:text-6xl leading-[0.95] text-ink [&_em]:text-brass"
             dangerouslySetInnerHTML={{ __html: c.title_html }}
           />
           <p className="text-muted-foreground leading-relaxed max-w-md">{c.body_1}</p>
@@ -481,12 +481,12 @@ function Stat({ n, label }: { n: string; label: string }) {
 function Atelier() {
   const c = useSiteContent("home.atelier");
   return (
-    <section className="relative py-32 md:py-48 bg-walnut">
+    <section className="relative py-20 md:py-48 bg-walnut">
       <div className="mx-auto max-w-[1480px] px-6 md:px-10">
-        <div className="text-center max-w-3xl mx-auto mb-16 md:mb-24 scroll-reveal">
+        <div className="text-center max-w-3xl mx-auto mb-10 md:mb-24 scroll-reveal">
           <p className="eyebrow">{c.eyebrow}</p>
           <h2
-            className="mt-5 font-display text-5xl md:text-7xl leading-[0.95] text-ink [&_em]:text-brass"
+            className="mt-5 font-display text-4xl md:text-7xl leading-[0.95] text-ink [&_em]:text-brass"
             dangerouslySetInnerHTML={{ __html: c.title_html }}
           />
         </div>
@@ -531,12 +531,12 @@ function Correspondence() {
   const addressLines = c.address_lines.split("\n").filter(Boolean);
 
   return (
-    <section className="relative py-32 md:py-48 bg-card border-t border-border">
+    <section className="relative py-20 md:py-48 bg-card border-t border-border">
       <div className="mx-auto max-w-[1480px] px-6 md:px-10 grid md:grid-cols-12 gap-12 md:gap-20">
         <div className="md:col-span-5 space-y-8 scroll-reveal">
           <p className="eyebrow">{c.eyebrow}</p>
           <h2
-            className="font-display text-5xl md:text-6xl leading-[0.95] text-ink [&_em]:text-brass"
+            className="font-display text-4xl md:text-6xl leading-[0.95] text-ink [&_em]:text-brass"
             dangerouslySetInnerHTML={{ __html: c.title_html }}
           />
 

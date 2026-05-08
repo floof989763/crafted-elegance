@@ -60,11 +60,11 @@ function PremiumCollectionPage() {
   return (
     <SiteShell>
       {/* Header */}
-      <section className="pt-40 md:pt-48 pb-16 border-b border-border bg-card">
+      <section className="pt-28 md:pt-48 pb-10 md:pb-16 border-b border-border bg-card">
         <div className="mx-auto max-w-[1480px] px-6 md:px-10">
           <Link
             to="/"
-            className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.28em] text-muted-foreground hover:text-brass transition-colors mb-10"
+            className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.28em] text-muted-foreground hover:text-brass transition-colors mb-6 md:mb-10"
           >
             <ArrowLeft className="w-4 h-4" /> Back to The Woods
           </Link>
@@ -73,15 +73,15 @@ function PremiumCollectionPage() {
             {c.eyebrow}
           </p>
           <h1
-            className="mt-4 font-display text-6xl md:text-8xl text-ink leading-[0.92] [&_em]:text-brass max-w-4xl"
+            className="mt-4 font-display text-4xl md:text-8xl text-ink leading-[0.92] [&_em]:text-brass max-w-4xl"
             dangerouslySetInnerHTML={{ __html: c.title_html }}
           />
-          <p className="mt-8 max-w-xl text-muted-foreground leading-relaxed">{c.body}</p>
+          <p className="mt-5 md:mt-8 max-w-xl text-muted-foreground leading-relaxed text-sm md:text-base">{c.body}</p>
         </div>
       </section>
 
       {/* Grid */}
-      <section className="py-20 md:py-28 bg-background">
+      <section className="py-12 md:py-28 bg-background">
         <div className="mx-auto max-w-[1480px] px-6 md:px-10">
           {loading ? (
             <div className="text-center py-32 text-muted-foreground text-sm">Loading…</div>
@@ -95,7 +95,7 @@ function PremiumCollectionPage() {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-24">
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-x-4 md:gap-x-10 gap-y-12 md:gap-y-24">
               {products.map((p) => (
                 <Link
                   key={p.id}
@@ -103,7 +103,7 @@ function PremiumCollectionPage() {
                   params={{ slug: p.slug }}
                   className="group block"
                 >
-                  <div className="relative aspect-[4/5] bg-walnut overflow-hidden mb-6 rounded-sm ring-1 ring-brass/15">
+                  <div className="relative aspect-[4/5] bg-walnut overflow-hidden mb-3 md:mb-6 rounded-sm ring-1 ring-brass/15">
                     {p.images?.[0] ? (
                       <img
                         src={p.images[0]}
@@ -116,18 +116,20 @@ function PremiumCollectionPage() {
                         ⵘ
                       </div>
                     )}
-                    <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-3 py-1.5 bg-ink/90 backdrop-blur-sm border border-brass/60 text-brass text-[9px] uppercase tracking-[0.32em] rounded-sm">
-                      <Sparkle className="w-2.5 h-2.5" strokeWidth={1.5} /> Premium Collection
+                    <span className="absolute top-2 left-2 md:top-3 md:left-3 inline-flex items-center gap-1 md:gap-1.5 px-2 py-0.5 md:px-3 md:py-1.5 bg-ink/90 backdrop-blur-sm border border-brass/60 text-brass text-[8px] md:text-[9px] uppercase tracking-[0.28em] md:tracking-[0.32em] rounded-sm">
+                      <Sparkle className="w-2 h-2 md:w-2.5 md:h-2.5" strokeWidth={1.5} />
+                      <span className="hidden md:inline">Premium Collection</span>
+                      <span className="md:hidden">Premium</span>
                     </span>
                   </div>
-                  <div className="space-y-2">
-                    <h3 className="font-display text-2xl text-ink group-hover:text-brass transition-colors duration-500">
+                  <div className="space-y-1.5 md:space-y-2">
+                    <h3 className="font-display text-base md:text-2xl text-ink group-hover:text-brass transition-colors duration-500">
                       {p.name}
                     </h3>
                     {p.short_description && (
-                      <p className="text-xs text-muted-foreground">{p.short_description}</p>
+                      <p className="text-[11px] md:text-xs text-muted-foreground line-clamp-2">{p.short_description}</p>
                     )}
-                    <p className="text-sm text-ink/80 pt-2">
+                    <p className="text-xs md:text-sm text-ink/80 pt-1 md:pt-2">
                       {formatPrice(p.price_cents, p.currency)}
                     </p>
                     <StockIndicator stock={p.stock} className="pt-1" />
@@ -137,7 +139,7 @@ function PremiumCollectionPage() {
             </div>
           )}
 
-          <div className="mt-20 text-center">
+          <div className="mt-12 md:mt-20 text-center">
             <Link
               to="/shop"
               className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.32em] text-ink/80 luxe-link hover:text-brass"

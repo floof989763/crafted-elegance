@@ -110,17 +110,17 @@ function ShopPage() {
 
   return (
     <SiteShell>
-      <section className="pt-40 md:pt-48 pb-16 border-b border-border">
+      <section className="pt-28 md:pt-48 pb-10 md:pb-16 border-b border-border">
         <div className="mx-auto max-w-[1480px] px-6 md:px-10">
           <p className="eyebrow">{h.eyebrow}</p>
           <h1
-            className="mt-4 font-display text-6xl md:text-8xl text-ink leading-[0.92] [&_em]:text-brass"
+            className="mt-4 font-display text-4xl md:text-8xl text-ink leading-[0.92] [&_em]:text-brass"
             dangerouslySetInnerHTML={{ __html: h.title_html }}
           />
         </div>
       </section>
 
-      <section className="py-10 border-b border-border sticky top-20 md:top-24 bg-background/85 backdrop-blur-xl z-30">
+      <section className="py-5 md:py-10 border-b border-border sticky top-20 md:top-24 bg-background/85 backdrop-blur-xl z-30">
         <div className="mx-auto max-w-[1480px] px-6 md:px-10 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
           <div className="flex flex-wrap gap-x-7 gap-y-3 min-w-0">
             <Link
@@ -169,7 +169,7 @@ function ShopPage() {
         </div>
       </section>
 
-      <section className="py-20 md:py-28">
+      <section className="py-12 md:py-28">
         <div className="mx-auto max-w-[1480px] px-6 md:px-10">
           {loading ? (
             <div className="text-center py-32 text-muted-foreground text-sm">Loading…</div>
@@ -183,7 +183,7 @@ function ShopPage() {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-24">
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-x-4 md:gap-x-10 gap-y-12 md:gap-y-24">
               {filtered.map((p) => (
                 <Link
                   key={p.id}
@@ -191,7 +191,7 @@ function ShopPage() {
                   params={{ slug: p.slug }}
                   className="group block"
                 >
-                  <div className="relative aspect-[4/5] bg-walnut overflow-hidden mb-6 rounded-sm">
+                  <div className="relative aspect-[4/5] bg-walnut overflow-hidden mb-3 md:mb-6 rounded-sm">
                     {p.images?.[0] ? (
                       <img
                         src={p.images[0]}
@@ -205,24 +205,29 @@ function ShopPage() {
                       </div>
                     )}
                     {(hasTag(p, "quiet") || hasTag(p, "premium")) && (
-                      <span className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 bg-ink/85 backdrop-blur-sm border border-brass/50 text-brass text-[9px] uppercase tracking-[0.32em] rounded-sm">
-                        <Sparkle className="w-2.5 h-2.5" strokeWidth={1.5} />
-                        {hasTag(p, "premium") && hasTag(p, "quiet")
-                          ? "Premium · Quiet"
-                          : hasTag(p, "premium")
-                          ? "Premium Collection"
-                          : "The Quiet Collection"}
+                      <span className="absolute top-2 left-2 md:top-3 md:left-3 inline-flex items-center gap-1 md:gap-1.5 px-2 py-0.5 md:px-2.5 md:py-1 bg-ink/85 backdrop-blur-sm border border-brass/50 text-brass text-[8px] md:text-[9px] uppercase tracking-[0.28em] md:tracking-[0.32em] rounded-sm">
+                        <Sparkle className="w-2 h-2 md:w-2.5 md:h-2.5" strokeWidth={1.5} />
+                        <span className="hidden md:inline">
+                          {hasTag(p, "premium") && hasTag(p, "quiet")
+                            ? "Premium · Quiet"
+                            : hasTag(p, "premium")
+                            ? "Premium Collection"
+                            : "The Quiet Collection"}
+                        </span>
+                        <span className="md:hidden">
+                          {hasTag(p, "premium") ? "Premium" : "Quiet"}
+                        </span>
                       </span>
                     )}
                   </div>
-                  <div className="space-y-2">
-                    <h3 className="font-display text-2xl text-ink group-hover:text-brass transition-colors duration-500">
+                  <div className="space-y-1.5 md:space-y-2">
+                    <h3 className="font-display text-base md:text-2xl text-ink group-hover:text-brass transition-colors duration-500">
                       {p.name}
                     </h3>
                     {p.short_description && (
-                      <p className="text-xs text-muted-foreground">{p.short_description}</p>
+                      <p className="text-[11px] md:text-xs text-muted-foreground line-clamp-2">{p.short_description}</p>
                     )}
-                    <p className="text-sm text-ink/80 pt-2">
+                    <p className="text-xs md:text-sm text-ink/80 pt-1 md:pt-2">
                       {formatPrice(p.price_cents, p.currency)}
                     </p>
                     <StockIndicator stock={p.stock} className="pt-1" />

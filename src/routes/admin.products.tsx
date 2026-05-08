@@ -133,6 +133,7 @@ function AdminProducts() {
       short_description: editing.short_description.trim() || null,
       description: editing.description.trim() || null,
       price_cents: Math.round(Number(editing.price || "0") * 100),
+      currency: "inr",
       images: editing.images.map((s) => s.trim()).filter(Boolean),
       materials: editing.materials.trim() || null,
       dimensions: editing.dimensions.trim() || null,

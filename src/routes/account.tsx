@@ -5,6 +5,7 @@ import { z } from "zod";
 import { SiteShell } from "@/components/site/SiteShell";
 import { supabase } from "@/integrations/supabase/client";
 import { useCustomerAuth } from "@/hooks/use-customer-auth";
+import { statusLabel } from "@/lib/order-status";
 
 const searchSchema = z.object({
   redirect: z.string().optional(),
@@ -124,7 +125,12 @@ function AccountPage() {
               ) : (
                 <ul className="divide-y divide-border">
                   {orders.map((o) => (
-                    <li key={o.id} className="px-6 py-4 flex items-center justify-between gap-4">
+                    <Link
+                      key={o.id}
+                      to="/account/orders/$id"
+                      params={{ id: o.id }}
+                      className="px-6 py-4 flex items-center justify-between gap-4 hover:bg-walnut/40 transition-colors"
+                    >
                       <div className="min-w-0">
                         <p className="text-ink text-sm font-medium">
                           Order #{o.id.slice(0, 8).toUpperCase()}
@@ -138,9 +144,9 @@ function AccountPage() {
                         <p className="text-ink text-sm">
                           ₹ {(o.total_cents / 100).toLocaleString("en-IN")}
                         </p>
-                        <p className="text-xs uppercase tracking-[0.2em] text-brass">{o.status}</p>
+                        <p className="text-xs uppercase tracking-[0.2em] text-brass">{statusLabel(o.status)}</p>
                       </div>
-                    </li>
+                    </Link>
                   ))}
                 </ul>
               )}

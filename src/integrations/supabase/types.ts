@@ -274,16 +274,19 @@ export type Database = {
       }
       orders: {
         Row: {
+          courier_name: string | null
           created_at: string
           currency: string
           customer_name: string | null
           customer_phone: string | null
           email: string
+          estimated_delivery: string | null
           id: string
           notes: string | null
           payment_method: string
           shipping_address: Json | null
           status: string
+          status_history: Json
           stripe_payment_intent: string | null
           stripe_session_id: string | null
           total_cents: number
@@ -292,16 +295,19 @@ export type Database = {
           user_id: string | null
         }
         Insert: {
+          courier_name?: string | null
           created_at?: string
           currency?: string
           customer_name?: string | null
           customer_phone?: string | null
           email: string
+          estimated_delivery?: string | null
           id?: string
           notes?: string | null
           payment_method?: string
           shipping_address?: Json | null
           status?: string
+          status_history?: Json
           stripe_payment_intent?: string | null
           stripe_session_id?: string | null
           total_cents?: number
@@ -310,16 +316,19 @@ export type Database = {
           user_id?: string | null
         }
         Update: {
+          courier_name?: string | null
           created_at?: string
           currency?: string
           customer_name?: string | null
           customer_phone?: string | null
           email?: string
+          estimated_delivery?: string | null
           id?: string
           notes?: string | null
           payment_method?: string
           shipping_address?: Json | null
           status?: string
+          status_history?: Json
           stripe_payment_intent?: string | null
           stripe_session_id?: string | null
           total_cents?: number

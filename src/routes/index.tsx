@@ -137,10 +137,10 @@ function Hero() {
           {c.title}
         </h1>
         <p
-          className="mt-auto mb-16 md:mb-24 max-w-md mx-auto font-display italic text-base md:text-xl leading-snug text-center reveal reveal-delay-3 whitespace-pre-line text-ink md:text-brass"
+          className="mt-auto mb-16 md:mb-24 max-w-md mx-auto font-display italic text-base md:text-xl leading-snug text-center reveal reveal-delay-3 whitespace-pre-line text-brass"
           style={{
             textShadow:
-              "0 1px 2px color-mix(in oklab, var(--cream) 70%, transparent), 0 0 14px color-mix(in oklab, var(--cream) 50%, transparent)",
+              "0 1px 2px color-mix(in oklab, var(--cream) 85%, transparent), 0 0 18px color-mix(in oklab, var(--cream) 70%, transparent), 0 1px 0 color-mix(in oklab, var(--cream) 60%, transparent)",
           }}
         >
           {c.quote}

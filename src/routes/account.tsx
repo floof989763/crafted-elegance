@@ -123,7 +123,7 @@ function AccountPage() {
                   .
                 </p>
               ) : (
-                <ul className="divide-y divide-border">
+                <div className="divide-y divide-border">
                   {orders.map((o) => (
                     <Link
                       key={o.id}
@@ -148,7 +148,7 @@ function AccountPage() {
                       </div>
                     </Link>
                   ))}
-                </ul>
+                </div>
               )}
             </section>
 

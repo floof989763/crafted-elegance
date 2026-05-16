@@ -18,6 +18,7 @@ type Product = {
   materials: string | null;
   dimensions: string | null;
   stock: number;
+  low_stock_threshold: number;
   collection_tags: string[];
   is_featured: boolean;
   is_premium: boolean;
@@ -36,6 +37,7 @@ type FormState = {
   materials: string;
   dimensions: string;
   stock: string;
+  low_stock_threshold: string;
   collection_tags: string[];
   is_active: boolean;
   category_id: string;
@@ -65,6 +67,7 @@ const empty: FormState = {
   materials: "",
   dimensions: "",
   stock: "0",
+  low_stock_threshold: "3",
   collection_tags: [],
   is_active: true,
   category_id: "",
@@ -116,6 +119,7 @@ function AdminProducts() {
       materials: p.materials || "",
       dimensions: p.dimensions || "",
       stock: p.stock.toString(),
+      low_stock_threshold: (p.low_stock_threshold ?? 3).toString(),
       collection_tags: p.collection_tags || [],
       is_active: p.is_active,
       category_id: p.category_id || "",
@@ -138,6 +142,7 @@ function AdminProducts() {
       materials: editing.materials.trim() || null,
       dimensions: editing.dimensions.trim() || null,
       stock: Number(editing.stock || "0"),
+      low_stock_threshold: Math.max(0, Number(editing.low_stock_threshold || "0")),
       collection_tags: editing.collection_tags,
       is_featured: editing.collection_tags.includes(QUIET_TAG),
       is_premium: editing.collection_tags.includes(PREMIUM_TAG),
@@ -312,7 +317,20 @@ function AdminProducts() {
                     <td className="px-6 py-4 text-ink/70">
                       {formatPrice(p.price_cents, p.currency)}
                     </td>
-                    <td className="px-6 py-4 text-ink/70">{p.stock}</td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-2">
+                        <span className="text-ink/70">{p.stock}</span>
+                        {p.stock === 0 ? (
+                          <span className="text-[10px] uppercase tracking-[0.22em] px-2 py-0.5 rounded-sm border border-destructive text-destructive">
+                            Out
+                          </span>
+                        ) : p.stock <= (p.low_stock_threshold ?? 3) ? (
+                          <span className="text-[10px] uppercase tracking-[0.22em] px-2 py-0.5 rounded-sm border border-brass text-brass">
+                            Low
+                          </span>
+                        ) : null}
+                      </div>
+                    </td>
                     <td className="px-6 py-4">
                       <span
                         className={`text-xs uppercase tracking-[0.2em] ${
@@ -478,6 +496,19 @@ function AdminProducts() {
                   />
                 </Field>
               </div>
+
+              <Field label="Low-stock alert threshold">
+                <input
+                  type="number"
+                  min="0"
+                  value={editing.low_stock_threshold}
+                  onChange={(e) => setEditing({ ...editing, low_stock_threshold: e.target.value })}
+                  className="admin-input max-w-[160px]"
+                />
+                <span className="block text-xs text-muted-foreground mt-2">
+                  Show a "Low stock" badge when remaining stock falls to or below this number.
+                </span>
+              </Field>
 
               <div className="flex gap-8 pt-2">
                 <label className="flex items-center gap-3 text-sm text-ink">

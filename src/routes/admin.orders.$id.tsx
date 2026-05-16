@@ -25,6 +25,10 @@ type Order = {
   tracking_number: string | null;
   courier_name: string | null;
   estimated_delivery: string | null;
+  dispatched_at: string | null;
+  delivered_at: string | null;
+  stripe_session_id: string | null;
+  stripe_payment_intent: string | null;
   status_history: { status: string; at: string }[] | null;
 };
 
@@ -36,10 +40,13 @@ type Item = {
   unit_price_cents: number;
 };
 
+type ProductThumb = { id: string; images: string[]; slug: string };
+
 function AdminOrderDetail() {
   const { id } = Route.useParams();
   const [order, setOrder] = useState<Order | null>(null);
   const [items, setItems] = useState<Item[]>([]);
+  const [thumbs, setThumbs] = useState<Record<string, ProductThumb>>({});
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
@@ -65,7 +72,18 @@ function AdminOrderDetail() {
       setCourier(o.courier_name || "");
       setEta(o.estimated_delivery || "");
     }
-    setItems((it as Item[]) || []);
+    const itemList = (it as Item[]) || [];
+    setItems(itemList);
+    const productIds = itemList.map((i) => i.product_id).filter((x): x is string => !!x);
+    if (productIds.length) {
+      const { data: prods } = await supabase
+        .from("products")
+        .select("id, slug, images")
+        .in("id", productIds);
+      const map: Record<string, ProductThumb> = {};
+      ((prods as ProductThumb[]) || []).forEach((p) => (map[p.id] = p));
+      setThumbs(map);
+    }
     setLoading(false);
   };
 
@@ -144,6 +162,16 @@ function AdminOrderDetail() {
           <p className="text-sm text-ink capitalize">
             {order.payment_method === "cod" ? "Cash on delivery" : order.payment_method}
           </p>
+        {order.stripe_session_id && (
+          <p className="text-xs text-muted-foreground break-all">
+            Session: <span className="font-mono">{order.stripe_session_id}</span>
+          </p>
+        )}
+        {order.stripe_payment_intent && (
+          <p className="text-xs text-muted-foreground break-all">
+            Payment intent: <span className="font-mono">{order.stripe_payment_intent}</span>
+          </p>
+        )}
           <p className="text-sm text-muted-foreground">
             {order.notes || "No order notes."}
           </p>
@@ -166,7 +194,20 @@ function AdminOrderDetail() {
           <tbody className="divide-y divide-border">
             {items.map((i) => (
               <tr key={i.id}>
-                <td className="px-6 py-3 text-ink">{i.product_name}</td>
+                <td className="px-6 py-3 text-ink">
+                  <div className="flex items-center gap-3">
+                    <div className="w-12 h-12 bg-walnut rounded-sm overflow-hidden shrink-0">
+                      {i.product_id && thumbs[i.product_id]?.images?.[0] && (
+                        <img
+                          src={thumbs[i.product_id].images[0]}
+                          alt=""
+                          className="w-full h-full object-cover"
+                        />
+                      )}
+                    </div>
+                    <span>{i.product_name}</span>
+                  </div>
+                </td>
                 <td className="px-6 py-3 text-right text-ink">× {i.quantity}</td>
                 <td className="px-6 py-3 text-right text-muted-foreground">
                   {formatPrice(i.unit_price_cents, order.currency)}
@@ -190,6 +231,21 @@ function AdminOrderDetail() {
             </tr>
           </tfoot>
         </table>
+      </section>
+
+      <section className="border border-border rounded-sm p-6 grid sm:grid-cols-2 gap-4">
+        <div>
+          <p className="eyebrow">Dispatched</p>
+          <p className="mt-2 text-sm text-ink">
+            {order.dispatched_at ? new Date(order.dispatched_at).toLocaleString() : "Not yet dispatched"}
+          </p>
+        </div>
+        <div>
+          <p className="eyebrow">Delivered</p>
+          <p className="mt-2 text-sm text-ink">
+            {order.delivered_at ? new Date(order.delivered_at).toLocaleString() : "Not yet delivered"}
+          </p>
+        </div>
       </section>
 
       <section className="border border-border rounded-sm p-6 space-y-5">

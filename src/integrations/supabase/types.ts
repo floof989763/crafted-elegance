@@ -279,6 +279,8 @@ export type Database = {
           currency: string
           customer_name: string | null
           customer_phone: string | null
+          delivered_at: string | null
+          dispatched_at: string | null
           email: string
           estimated_delivery: string | null
           id: string
@@ -300,6 +302,8 @@ export type Database = {
           currency?: string
           customer_name?: string | null
           customer_phone?: string | null
+          delivered_at?: string | null
+          dispatched_at?: string | null
           email: string
           estimated_delivery?: string | null
           id?: string
@@ -321,6 +325,8 @@ export type Database = {
           currency?: string
           customer_name?: string | null
           customer_phone?: string | null
+          delivered_at?: string | null
+          dispatched_at?: string | null
           email?: string
           estimated_delivery?: string | null
           id?: string
@@ -351,6 +357,7 @@ export type Database = {
           is_active: boolean
           is_featured: boolean
           is_premium: boolean
+          low_stock_threshold: number
           materials: string | null
           name: string
           price_cents: number
@@ -371,6 +378,7 @@ export type Database = {
           is_active?: boolean
           is_featured?: boolean
           is_premium?: boolean
+          low_stock_threshold?: number
           materials?: string | null
           name: string
           price_cents: number
@@ -391,6 +399,7 @@ export type Database = {
           is_active?: boolean
           is_featured?: boolean
           is_premium?: boolean
+          low_stock_threshold?: number
           materials?: string | null
           name?: string
           price_cents?: number

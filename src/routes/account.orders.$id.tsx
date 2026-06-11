@@ -152,6 +152,9 @@ function CustomerOrderDetail() {
               <p className="text-muted-foreground">{addr.line1}{addr.line2 ? `, ${addr.line2}` : ""}</p>
               <p className="text-muted-foreground">{[addr.city, addr.state, addr.postal_code].filter(Boolean).join(", ")}</p>
               <p className="text-muted-foreground">{addr.country}</p>
+              {addr.landmark && (
+                <p className="text-muted-foreground text-xs pt-1">Landmark: {addr.landmark}</p>
+              )}
             </div>
             <div className="border border-border rounded-sm p-6 text-sm space-y-1">
               <h3 className="eyebrow mb-2">Contact</h3>

@@ -1,4 +1,4 @@
-import { Link } from "@tanstack/react-router";
+import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X, ShoppingBag, User } from "lucide-react";
 import { useCart } from "@/hooks/use-cart";
@@ -14,6 +14,21 @@ export function SiteHeader() {
   const { user } = useCustomerAuth();
   const h = useSiteContent("site.header");
   const [extraPages, setExtraPages] = useState<{ slug: string; title: string }[]>([]);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  const scrollToCollections = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setOpen(false);
+    if (location.pathname === "/") {
+      const el = document.getElementById("collection");
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+    }
+    navigate({ to: "/", hash: "collection" });
+  };
 
   useEffect(() => {
     (async () => {
@@ -27,8 +42,9 @@ export function SiteHeader() {
     })();
   }, []);
 
-  const navLinks: { to: any; params?: any; label: string }[] = [
-    { to: "/shop", label: h.nav_collection },
+  const navLinks: { to: any; params?: any; label: string; onClick?: (e: React.MouseEvent) => void }[] = [
+    { to: "/", label: h.nav_collection, onClick: scrollToCollections },
+    { to: "/shop", label: "Shop" },
     { to: "/about", label: h.nav_atelier },
     { to: "/journal", label: h.nav_journal },
     { to: "/contact", label: h.nav_contact },

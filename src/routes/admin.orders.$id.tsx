@@ -155,12 +155,27 @@ function AdminOrderDetail() {
             {[addr.city, addr.state, addr.postal_code].filter(Boolean).join(", ")}
           </p>
           <p className="text-sm text-muted-foreground">{addr.country}</p>
+          {addr.landmark && (
+            <p className="text-xs text-muted-foreground pt-1">
+              <span className="text-ink">Landmark:</span> {addr.landmark}
+            </p>
+          )}
         </section>
 
         <section className="border border-border rounded-sm p-6 space-y-2">
-          <h2 className="eyebrow">Payment & notes</h2>
+          <h2 className="eyebrow">Payment</h2>
           <p className="text-sm text-ink capitalize">
             {order.payment_method === "cod" ? "Cash on delivery" : order.payment_method}
+          </p>
+          <p className="text-xs text-muted-foreground">
+            Status:{" "}
+            <span className="text-ink">
+              {order.status === "awaiting_payment"
+                ? "Awaiting payment"
+                : order.payment_method === "cod"
+                ? "Collect on delivery"
+                : "Paid"}
+            </span>
           </p>
         {order.stripe_session_id && (
           <p className="text-xs text-muted-foreground break-all">
@@ -172,11 +187,15 @@ function AdminOrderDetail() {
             Payment intent: <span className="font-mono">{order.stripe_payment_intent}</span>
           </p>
         )}
-          <p className="text-sm text-muted-foreground">
-            {order.notes || "No order notes."}
-          </p>
         </section>
       </div>
+
+      {order.notes && (
+        <section className="border border-border rounded-sm p-6 space-y-2">
+          <h2 className="eyebrow">Customer notes</h2>
+          <p className="text-sm text-ink whitespace-pre-line">{order.notes}</p>
+        </section>
+      )}
 
       <section className="border border-border rounded-sm">
         <div className="px-6 py-4 border-b border-border">

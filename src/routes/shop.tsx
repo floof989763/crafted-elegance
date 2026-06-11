@@ -110,23 +110,23 @@ function ShopPage() {
 
   return (
     <SiteShell>
-      <section className="pt-28 md:pt-48 pb-10 md:pb-16 border-b border-border">
+      <section className="pt-24 md:pt-36 pb-6 md:pb-10 border-b border-border">
         <div className="mx-auto max-w-[1480px] px-6 md:px-10">
           <p className="eyebrow">{h.eyebrow}</p>
           <h1
-            className="mt-4 font-display text-4xl md:text-8xl text-ink leading-[0.92] [&_em]:text-brass"
+            className="mt-3 font-display text-3xl md:text-6xl text-ink leading-[0.92] [&_em]:text-brass"
             dangerouslySetInnerHTML={{ __html: h.title_html }}
           />
         </div>
       </section>
 
-      <section className="py-5 md:py-10 border-b border-border sticky top-20 md:top-24 bg-background/85 backdrop-blur-xl z-30">
-        <div className="mx-auto max-w-[1480px] px-6 md:px-10 flex flex-col md:flex-row md:items-center md:justify-between gap-5">
-          <div className="flex flex-wrap gap-x-7 gap-y-3 min-w-0">
+      <section className="py-2.5 md:py-3 border-b border-border sticky top-14 md:top-16 bg-background/90 backdrop-blur-xl z-30">
+        <div className="mx-auto max-w-[1480px] px-6 md:px-10 flex flex-row items-center justify-between gap-3 md:gap-5">
+          <div className="flex flex-nowrap md:flex-wrap gap-x-5 md:gap-x-7 gap-y-2 min-w-0 overflow-x-auto scrollbar-none">
             <Link
               to="/shop"
               search={{}}
-              className={`text-xs uppercase tracking-[0.28em] luxe-link transition-colors ${
+              className={`shrink-0 text-[10px] md:text-xs uppercase tracking-[0.24em] md:tracking-[0.28em] luxe-link transition-colors ${
                 !category ? "text-brass" : "text-ink/70 hover:text-ink"
               }`}
             >
@@ -137,7 +137,7 @@ function ShopPage() {
                 key={c.id}
                 to="/shop"
                 search={{ category: c.slug }}
-                className={`text-xs uppercase tracking-[0.28em] luxe-link transition-colors ${
+                className={`shrink-0 text-[10px] md:text-xs uppercase tracking-[0.24em] md:tracking-[0.28em] luxe-link transition-colors ${
                   category === c.slug ? "text-brass" : "text-ink/70 hover:text-ink"
                 }`}
               >
@@ -146,14 +146,14 @@ function ShopPage() {
             ))}
           </div>
 
-          <div className="relative md:w-72 shrink-0">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-ink/50" strokeWidth={1.5} />
+          <div className="relative w-32 sm:w-48 md:w-72 shrink-0">
+            <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-ink/50" strokeWidth={1.5} />
             <input
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search the collection"
-              className="w-full bg-transparent border border-border rounded-sm pl-9 pr-9 py-2.5 text-xs uppercase tracking-[0.18em] text-ink placeholder:text-ink/40 placeholder:tracking-[0.18em] focus:outline-none focus:border-brass transition-colors"
+              placeholder="Search"
+              className="w-full bg-transparent border border-border rounded-sm pl-8 pr-8 py-1.5 md:py-2 text-[11px] md:text-xs uppercase tracking-[0.18em] text-ink placeholder:text-ink/40 placeholder:tracking-[0.18em] focus:outline-none focus:border-brass transition-colors"
             />
             {query && (
               <button
@@ -169,7 +169,7 @@ function ShopPage() {
         </div>
       </section>
 
-      <section className="py-12 md:py-28">
+      <section className="py-8 md:py-20">
         <div className="mx-auto max-w-[1480px] px-6 md:px-10">
           {loading ? (
             <div className="text-center py-32 text-muted-foreground text-sm">Loading…</div>

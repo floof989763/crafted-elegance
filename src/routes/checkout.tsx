@@ -28,6 +28,7 @@ const checkoutSchema = z.object({
   state: z.string().trim().min(2).max(80),
   postal_code: z.string().trim().min(4).max(12),
   country: z.string().trim().min(2).max(80),
+  landmark: z.string().trim().max(150).optional(),
   notes: z.string().trim().max(500).optional(),
 });
 
@@ -50,6 +51,7 @@ function CheckoutPage() {
     state: "",
     postal_code: "",
     country: "India",
+    landmark: "",
     notes: "",
   });
 
@@ -90,6 +92,7 @@ function CheckoutPage() {
         shipping_address: {
           line1: parsed.data.address_line1,
           line2: parsed.data.address_line2 || null,
+          landmark: parsed.data.landmark || null,
           city: parsed.data.city,
           state: parsed.data.state,
           postal_code: parsed.data.postal_code,
@@ -186,6 +189,9 @@ function CheckoutPage() {
                     <input className="checkout-input" value={form.country} onChange={update("country")} required />
                   </Field>
                 </div>
+                <Field label="Landmark (optional)">
+                  <input className="checkout-input" value={form.landmark || ""} onChange={update("landmark")} placeholder="Nearby landmark to help our courier" />
+                </Field>
                 <Field label="Order notes (optional)">
                   <textarea
                     className="checkout-input min-h-24"

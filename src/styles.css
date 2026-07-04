@@ -8,9 +8,8 @@
  * The Woods — luxury wooden handicraft brand
  * Editorial dark palette: deep walnut + warm cream + brass accent
  * Display: Cormorant Garamond (serif). Body: Inter.
+ * (Google Fonts loaded via <link> in src/routes/__root.tsx)
  */
-
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap");
 
 @theme inline {
   --font-display: "Cormorant Garamond", ui-serif, Georgia, serif;

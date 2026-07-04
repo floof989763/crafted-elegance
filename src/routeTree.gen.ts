@@ -13,6 +13,7 @@ import { Route as ShopRouteImport } from './routes/shop'
 import { Route as QuietCollectionRouteImport } from './routes/quiet-collection'
 import { Route as PremiumCollectionRouteImport } from './routes/premium-collection'
 import { Route as OrderPlacedRouteImport } from './routes/order-placed'
+import { Route as McpRouteImport } from './routes/mcp'
 import { Route as JournalRouteImport } from './routes/journal'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CheckoutRouteImport } from './routes/checkout'
@@ -31,8 +32,11 @@ import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AdminInquiriesRouteImport } from './routes/admin.inquiries'
 import { Route as AdminContentRouteImport } from './routes/admin.content'
 import { Route as AdminCategoriesRouteImport } from './routes/admin.categories'
+import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
+import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
 import { Route as AdminOrdersIdRouteImport } from './routes/admin.orders.$id'
 import { Route as AccountOrdersIdRouteImport } from './routes/account.orders.$id'
+import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
 
 const ShopRoute = ShopRouteImport.update({
   id: '/shop',
@@ -52,6 +56,11 @@ const PremiumCollectionRoute = PremiumCollectionRouteImport.update({
 const OrderPlacedRoute = OrderPlacedRouteImport.update({
   id: '/order-placed',
   path: '/order-placed',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
   getParentRoute: () => rootRouteImport,
 } as any)
 const JournalRoute = JournalRouteImport.update({
@@ -144,6 +153,18 @@ const AdminCategoriesRoute = AdminCategoriesRouteImport.update({
   path: '/categories',
   getParentRoute: () => AdminRoute,
 } as any)
+const Char91DotwellKnownChar93OauthProtectedResourceRoute =
+  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
+    id: '/.well-known/oauth-protected-resource',
+    path: '/.well-known/oauth-protected-resource',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Char91DotmcpChar93ListToolsRoute =
+  Char91DotmcpChar93ListToolsRouteImport.update({
+    id: '/.mcp/list-tools',
+    path: '/.mcp/list-tools',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const AdminOrdersIdRoute = AdminOrdersIdRouteImport.update({
   id: '/$id',
   path: '/$id',
@@ -154,6 +175,12 @@ const AccountOrdersIdRoute = AccountOrdersIdRouteImport.update({
   path: '/orders/$id',
   getParentRoute: () => AccountRoute,
 } as any)
+const Char91DotmcpChar93InvokeToolToolRoute =
+  Char91DotmcpChar93InvokeToolToolRouteImport.update({
+    id: '/.mcp/invoke-tool/$tool',
+    path: '/.mcp/invoke-tool/$tool',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -164,10 +191,13 @@ export interface FileRoutesByFullPath {
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/journal': typeof JournalRoute
+  '/mcp': typeof McpRoute
   '/order-placed': typeof OrderPlacedRoute
   '/premium-collection': typeof PremiumCollectionRoute
   '/quiet-collection': typeof QuietCollectionRoute
   '/shop': typeof ShopRouteWithChildren
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/content': typeof AdminContentRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
@@ -178,6 +208,7 @@ export interface FileRoutesByFullPath {
   '/p/$slug': typeof PSlugRoute
   '/shop/$slug': typeof ShopSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/account/orders/$id': typeof AccountOrdersIdRoute
   '/admin/orders/$id': typeof AdminOrdersIdRoute
 }
@@ -189,10 +220,13 @@ export interface FileRoutesByTo {
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/journal': typeof JournalRoute
+  '/mcp': typeof McpRoute
   '/order-placed': typeof OrderPlacedRoute
   '/premium-collection': typeof PremiumCollectionRoute
   '/quiet-collection': typeof QuietCollectionRoute
   '/shop': typeof ShopRouteWithChildren
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/content': typeof AdminContentRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
@@ -203,6 +237,7 @@ export interface FileRoutesByTo {
   '/p/$slug': typeof PSlugRoute
   '/shop/$slug': typeof ShopSlugRoute
   '/admin': typeof AdminIndexRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/account/orders/$id': typeof AccountOrdersIdRoute
   '/admin/orders/$id': typeof AdminOrdersIdRoute
 }
@@ -216,10 +251,13 @@ export interface FileRoutesById {
   '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/journal': typeof JournalRoute
+  '/mcp': typeof McpRoute
   '/order-placed': typeof OrderPlacedRoute
   '/premium-collection': typeof PremiumCollectionRoute
   '/quiet-collection': typeof QuietCollectionRoute
   '/shop': typeof ShopRouteWithChildren
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/categories': typeof AdminCategoriesRoute
   '/admin/content': typeof AdminContentRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
@@ -230,6 +268,7 @@ export interface FileRoutesById {
   '/p/$slug': typeof PSlugRoute
   '/shop/$slug': typeof ShopSlugRoute
   '/admin/': typeof AdminIndexRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/account/orders/$id': typeof AccountOrdersIdRoute
   '/admin/orders/$id': typeof AdminOrdersIdRoute
 }
@@ -244,10 +283,13 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/contact'
     | '/journal'
+    | '/mcp'
     | '/order-placed'
     | '/premium-collection'
     | '/quiet-collection'
     | '/shop'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/admin/categories'
     | '/admin/content'
     | '/admin/inquiries'
@@ -258,6 +300,7 @@ export interface FileRouteTypes {
     | '/p/$slug'
     | '/shop/$slug'
     | '/admin/'
+    | '/.mcp/invoke-tool/$tool'
     | '/account/orders/$id'
     | '/admin/orders/$id'
   fileRoutesByTo: FileRoutesByTo
@@ -269,10 +312,13 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/contact'
     | '/journal'
+    | '/mcp'
     | '/order-placed'
     | '/premium-collection'
     | '/quiet-collection'
     | '/shop'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/admin/categories'
     | '/admin/content'
     | '/admin/inquiries'
@@ -283,6 +329,7 @@ export interface FileRouteTypes {
     | '/p/$slug'
     | '/shop/$slug'
     | '/admin'
+    | '/.mcp/invoke-tool/$tool'
     | '/account/orders/$id'
     | '/admin/orders/$id'
   id:
@@ -295,10 +342,13 @@ export interface FileRouteTypes {
     | '/checkout'
     | '/contact'
     | '/journal'
+    | '/mcp'
     | '/order-placed'
     | '/premium-collection'
     | '/quiet-collection'
     | '/shop'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/admin/categories'
     | '/admin/content'
     | '/admin/inquiries'
@@ -309,6 +359,7 @@ export interface FileRouteTypes {
     | '/p/$slug'
     | '/shop/$slug'
     | '/admin/'
+    | '/.mcp/invoke-tool/$tool'
     | '/account/orders/$id'
     | '/admin/orders/$id'
   fileRoutesById: FileRoutesById
@@ -322,11 +373,15 @@ export interface RootRouteChildren {
   CheckoutRoute: typeof CheckoutRoute
   ContactRoute: typeof ContactRoute
   JournalRoute: typeof JournalRoute
+  McpRoute: typeof McpRoute
   OrderPlacedRoute: typeof OrderPlacedRoute
   PremiumCollectionRoute: typeof PremiumCollectionRoute
   QuietCollectionRoute: typeof QuietCollectionRoute
   ShopRoute: typeof ShopRouteWithChildren
+  Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
+  Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   PSlugRoute: typeof PSlugRoute
+  Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -357,6 +412,13 @@ declare module '@tanstack/react-router' {
       path: '/order-placed'
       fullPath: '/order-placed'
       preLoaderRoute: typeof OrderPlacedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/journal': {
@@ -485,6 +547,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminCategoriesRouteImport
       parentRoute: typeof AdminRoute
     }
+    '/.well-known/oauth-protected-resource': {
+      id: '/.well-known/oauth-protected-resource'
+      path: '/.well-known/oauth-protected-resource'
+      fullPath: '/.well-known/oauth-protected-resource'
+      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.mcp/list-tools': {
+      id: '/.mcp/list-tools'
+      path: '/.mcp/list-tools'
+      fullPath: '/.mcp/list-tools'
+      preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/orders/$id': {
       id: '/admin/orders/$id'
       path: '/$id'
@@ -498,6 +574,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/account/orders/$id'
       preLoaderRoute: typeof AccountOrdersIdRouteImport
       parentRoute: typeof AccountRoute
+    }
+    '/.mcp/invoke-tool/$tool': {
+      id: '/.mcp/invoke-tool/$tool'
+      path: '/.mcp/invoke-tool/$tool'
+      fullPath: '/.mcp/invoke-tool/$tool'
+      preLoaderRoute: typeof Char91DotmcpChar93InvokeToolToolRouteImport
+      parentRoute: typeof rootRouteImport
     }
   }
 }
@@ -568,12 +651,26 @@ const rootRouteChildren: RootRouteChildren = {
   CheckoutRoute: CheckoutRoute,
   ContactRoute: ContactRoute,
   JournalRoute: JournalRoute,
+  McpRoute: McpRoute,
   OrderPlacedRoute: OrderPlacedRoute,
   PremiumCollectionRoute: PremiumCollectionRoute,
   QuietCollectionRoute: QuietCollectionRoute,
   ShopRoute: ShopRouteWithChildren,
+  Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
+  Char91DotwellKnownChar93OauthProtectedResourceRoute:
+    Char91DotwellKnownChar93OauthProtectedResourceRoute,
   PSlugRoute: PSlugRoute,
+  Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { createStart } from '@tanstack/react-start'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+  }
+}

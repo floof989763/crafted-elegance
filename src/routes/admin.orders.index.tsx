@@ -5,7 +5,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { formatPrice } from "@/lib/format";
 import { ORDER_STATUSES, statusLabel } from "@/lib/order-status";
 
-export const Route = createFileRoute("/admin/orders")({
+export const Route = createFileRoute("/admin/orders/")({
   component: AdminOrdersList,
 });
 

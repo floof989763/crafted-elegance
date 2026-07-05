@@ -27,13 +27,13 @@ import { Route as ShopSlugRouteImport } from './routes/shop.$slug'
 import { Route as PSlugRouteImport } from './routes/p.$slug'
 import { Route as AdminProductsRouteImport } from './routes/admin.products'
 import { Route as AdminPagesRouteImport } from './routes/admin.pages'
-import { Route as AdminOrdersRouteImport } from './routes/admin.orders'
 import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AdminInquiriesRouteImport } from './routes/admin.inquiries'
 import { Route as AdminContentRouteImport } from './routes/admin.content'
 import { Route as AdminCategoriesRouteImport } from './routes/admin.categories'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
 import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
+import { Route as AdminOrdersIndexRouteImport } from './routes/admin.orders.index'
 import { Route as AdminOrdersIdRouteImport } from './routes/admin.orders.$id'
 import { Route as AccountOrdersIdRouteImport } from './routes/account.orders.$id'
 import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
@@ -128,11 +128,6 @@ const AdminPagesRoute = AdminPagesRouteImport.update({
   path: '/pages',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminOrdersRoute = AdminOrdersRouteImport.update({
-  id: '/orders',
-  path: '/orders',
-  getParentRoute: () => AdminRoute,
-} as any)
 const AdminLoginRoute = AdminLoginRouteImport.update({
   id: '/login',
   path: '/login',
@@ -165,10 +160,15 @@ const Char91DotmcpChar93ListToolsRoute =
     path: '/.mcp/list-tools',
     getParentRoute: () => rootRouteImport,
   } as any)
+const AdminOrdersIndexRoute = AdminOrdersIndexRouteImport.update({
+  id: '/orders/',
+  path: '/orders/',
+  getParentRoute: () => AdminRoute,
+} as any)
 const AdminOrdersIdRoute = AdminOrdersIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => AdminOrdersRoute,
+  id: '/orders/$id',
+  path: '/orders/$id',
+  getParentRoute: () => AdminRoute,
 } as any)
 const AccountOrdersIdRoute = AccountOrdersIdRouteImport.update({
   id: '/orders/$id',
@@ -202,7 +202,6 @@ export interface FileRoutesByFullPath {
   '/admin/content': typeof AdminContentRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
   '/admin/login': typeof AdminLoginRoute
-  '/admin/orders': typeof AdminOrdersRouteWithChildren
   '/admin/pages': typeof AdminPagesRoute
   '/admin/products': typeof AdminProductsRoute
   '/p/$slug': typeof PSlugRoute
@@ -211,6 +210,7 @@ export interface FileRoutesByFullPath {
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/account/orders/$id': typeof AccountOrdersIdRoute
   '/admin/orders/$id': typeof AdminOrdersIdRoute
+  '/admin/orders/': typeof AdminOrdersIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -231,7 +231,6 @@ export interface FileRoutesByTo {
   '/admin/content': typeof AdminContentRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
   '/admin/login': typeof AdminLoginRoute
-  '/admin/orders': typeof AdminOrdersRouteWithChildren
   '/admin/pages': typeof AdminPagesRoute
   '/admin/products': typeof AdminProductsRoute
   '/p/$slug': typeof PSlugRoute
@@ -240,6 +239,7 @@ export interface FileRoutesByTo {
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/account/orders/$id': typeof AccountOrdersIdRoute
   '/admin/orders/$id': typeof AdminOrdersIdRoute
+  '/admin/orders': typeof AdminOrdersIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -262,7 +262,6 @@ export interface FileRoutesById {
   '/admin/content': typeof AdminContentRoute
   '/admin/inquiries': typeof AdminInquiriesRoute
   '/admin/login': typeof AdminLoginRoute
-  '/admin/orders': typeof AdminOrdersRouteWithChildren
   '/admin/pages': typeof AdminPagesRoute
   '/admin/products': typeof AdminProductsRoute
   '/p/$slug': typeof PSlugRoute
@@ -271,6 +270,7 @@ export interface FileRoutesById {
   '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
   '/account/orders/$id': typeof AccountOrdersIdRoute
   '/admin/orders/$id': typeof AdminOrdersIdRoute
+  '/admin/orders/': typeof AdminOrdersIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -294,7 +294,6 @@ export interface FileRouteTypes {
     | '/admin/content'
     | '/admin/inquiries'
     | '/admin/login'
-    | '/admin/orders'
     | '/admin/pages'
     | '/admin/products'
     | '/p/$slug'
@@ -303,6 +302,7 @@ export interface FileRouteTypes {
     | '/.mcp/invoke-tool/$tool'
     | '/account/orders/$id'
     | '/admin/orders/$id'
+    | '/admin/orders/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -323,7 +323,6 @@ export interface FileRouteTypes {
     | '/admin/content'
     | '/admin/inquiries'
     | '/admin/login'
-    | '/admin/orders'
     | '/admin/pages'
     | '/admin/products'
     | '/p/$slug'
@@ -332,6 +331,7 @@ export interface FileRouteTypes {
     | '/.mcp/invoke-tool/$tool'
     | '/account/orders/$id'
     | '/admin/orders/$id'
+    | '/admin/orders'
   id:
     | '__root__'
     | '/'
@@ -353,7 +353,6 @@ export interface FileRouteTypes {
     | '/admin/content'
     | '/admin/inquiries'
     | '/admin/login'
-    | '/admin/orders'
     | '/admin/pages'
     | '/admin/products'
     | '/p/$slug'
@@ -362,6 +361,7 @@ export interface FileRouteTypes {
     | '/.mcp/invoke-tool/$tool'
     | '/account/orders/$id'
     | '/admin/orders/$id'
+    | '/admin/orders/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -512,13 +512,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminPagesRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/orders': {
-      id: '/admin/orders'
-      path: '/orders'
-      fullPath: '/admin/orders'
-      preLoaderRoute: typeof AdminOrdersRouteImport
-      parentRoute: typeof AdminRoute
-    }
     '/admin/login': {
       id: '/admin/login'
       path: '/login'
@@ -561,12 +554,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/orders/': {
+      id: '/admin/orders/'
+      path: '/orders'
+      fullPath: '/admin/orders/'
+      preLoaderRoute: typeof AdminOrdersIndexRouteImport
+      parentRoute: typeof AdminRoute
+    }
     '/admin/orders/$id': {
       id: '/admin/orders/$id'
-      path: '/$id'
+      path: '/orders/$id'
       fullPath: '/admin/orders/$id'
       preLoaderRoute: typeof AdminOrdersIdRouteImport
-      parentRoute: typeof AdminOrdersRoute
+      parentRoute: typeof AdminRoute
     }
     '/account/orders/$id': {
       id: '/account/orders/$id'
@@ -596,27 +596,16 @@ const AccountRouteChildren: AccountRouteChildren = {
 const AccountRouteWithChildren =
   AccountRoute._addFileChildren(AccountRouteChildren)
 
-interface AdminOrdersRouteChildren {
-  AdminOrdersIdRoute: typeof AdminOrdersIdRoute
-}
-
-const AdminOrdersRouteChildren: AdminOrdersRouteChildren = {
-  AdminOrdersIdRoute: AdminOrdersIdRoute,
-}
-
-const AdminOrdersRouteWithChildren = AdminOrdersRoute._addFileChildren(
-  AdminOrdersRouteChildren,
-)
-
 interface AdminRouteChildren {
   AdminCategoriesRoute: typeof AdminCategoriesRoute
   AdminContentRoute: typeof AdminContentRoute
   AdminInquiriesRoute: typeof AdminInquiriesRoute
   AdminLoginRoute: typeof AdminLoginRoute
-  AdminOrdersRoute: typeof AdminOrdersRouteWithChildren
   AdminPagesRoute: typeof AdminPagesRoute
   AdminProductsRoute: typeof AdminProductsRoute
   AdminIndexRoute: typeof AdminIndexRoute
+  AdminOrdersIdRoute: typeof AdminOrdersIdRoute
+  AdminOrdersIndexRoute: typeof AdminOrdersIndexRoute
 }
 
 const AdminRouteChildren: AdminRouteChildren = {
@@ -624,10 +613,11 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminContentRoute: AdminContentRoute,
   AdminInquiriesRoute: AdminInquiriesRoute,
   AdminLoginRoute: AdminLoginRoute,
-  AdminOrdersRoute: AdminOrdersRouteWithChildren,
   AdminPagesRoute: AdminPagesRoute,
   AdminProductsRoute: AdminProductsRoute,
   AdminIndexRoute: AdminIndexRoute,
+  AdminOrdersIdRoute: AdminOrdersIdRoute,
+  AdminOrdersIndexRoute: AdminOrdersIndexRoute,
 }
 
 const AdminRouteWithChildren = AdminRoute._addFileChildren(AdminRouteChildren)

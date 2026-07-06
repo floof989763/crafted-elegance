@@ -1,6 +1,24 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { ArrowRight, ChevronDown } from "lucide-react";
+import {
+  ArrowRight,
+  ChevronDown,
+  Hammer,
+  TreePine,
+  Leaf,
+  ShieldCheck,
+  Truck,
+  Package,
+  Star,
+  Quote,
+} from "lucide-react";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 import { SiteShell } from "@/components/site/SiteShell";
 import { supabase } from "@/integrations/supabase/client";
 import { useSiteContent } from "@/hooks/use-site-content";
@@ -87,6 +105,7 @@ function HomePage() {
   return (
     <SiteShell>
       <Hero />
+      <TrustStrip />
       <Manifesto />
       <Collection categories={categories} productCount={productCount} />
       {String((quiet as any).enabled) !== "false" && quietProducts.length > 0 && (
@@ -94,6 +113,7 @@ function HomePage() {
       )}
       <Craft />
       <Atelier />
+      <Testimonials />
       <Correspondence />
     </SiteShell>
   );

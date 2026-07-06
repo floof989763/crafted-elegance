@@ -600,3 +600,143 @@ function InfoBlock({ label, lines }: { label: string; lines: string[] }) {
     </div>
   );
 }
+
+/* -------------------------------------------------------------------------- */
+/* Trust strip                                                                */
+/* -------------------------------------------------------------------------- */
+
+const TRUST_ITEMS = [
+  { Icon: Hammer, title: "Handmade by Artisans", body: "Carved by hand in our Saharanpur atelier." },
+  { Icon: TreePine, title: "Premium Solid Wood", body: "Walnut, oak and ash — no veneers, no shortcuts." },
+  { Icon: Leaf, title: "Sustainably Sourced", body: "Responsibly harvested, kiln-dried timber." },
+  { Icon: ShieldCheck, title: "Secure Payments", body: "Encrypted checkout with trusted gateways." },
+  { Icon: Truck, title: "Pan-India Delivery", body: "Insured shipping to every pincode." },
+  { Icon: Package, title: "Carefully Packed", body: "Cradled in custom-cut protective packaging." },
+];
+
+function TrustStrip() {
+  return (
+    <section
+      aria-label="Why shop with The Woods"
+      className="relative border-y border-border bg-cream/60 py-10 md:py-14"
+    >
+      <div className="mx-auto max-w-[1480px] px-6 md:px-10">
+        <ul className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-x-4 gap-y-8 md:gap-8">
+          {TRUST_ITEMS.map(({ Icon, title, body }, i) => (
+            <li
+              key={title}
+              className="group flex flex-col items-center text-center scroll-reveal"
+              style={{ transitionDelay: `${i * 60}ms` }}
+            >
+              <span className="flex h-11 w-11 items-center justify-center rounded-full border border-brass/40 text-brass transition-transform duration-500 group-hover:-translate-y-0.5">
+                <Icon className="h-5 w-5" strokeWidth={1.4} aria-hidden="true" />
+              </span>
+              <p className="mt-3 text-[11px] uppercase tracking-[0.28em] text-ink">{title}</p>
+              <p className="mt-1.5 text-xs text-muted-foreground max-w-[16ch] leading-relaxed">
+                {body}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+/* -------------------------------------------------------------------------- */
+/* Testimonials                                                               */
+/* -------------------------------------------------------------------------- */
+
+const TESTIMONIALS = [
+  {
+    quote:
+      "The walnut bowl arrived like a small heirloom — weight, grain and finish beyond anything I expected. It has become the centrepiece of our dining table.",
+    name: "Ananya Rao",
+    where: "Bengaluru",
+  },
+  {
+    quote:
+      "You can feel the hours of work in every curve. Packaging was as considered as the piece itself. A rare kind of care in Indian craft today.",
+    name: "Rohan Mehta",
+    where: "Mumbai",
+  },
+  {
+    quote:
+      "Ordered the oak tray as a wedding gift. The couple wrote back to say it felt like something passed down, not something bought. Exactly what I hoped for.",
+    name: "Priya Sharma",
+    where: "New Delhi",
+  },
+  {
+    quote:
+      "Communication was warm and unhurried. The vase is quieter and more beautiful in person — the photographs don't quite do the finish justice.",
+    name: "Ishaan Verma",
+    where: "Pune",
+  },
+];
+
+function Testimonials() {
+  return (
+    <section
+      aria-label="What our patrons say"
+      className="relative py-20 md:py-36 bg-background"
+    >
+      <div className="mx-auto max-w-[1200px] px-6 md:px-10">
+        <div className="text-center max-w-2xl mx-auto scroll-reveal">
+          <p className="eyebrow">Words from our patrons</p>
+          <h2 className="mt-5 font-display text-3xl md:text-5xl leading-[0.95] text-ink">
+            Kept, gifted, <em className="text-brass">passed down</em>.
+          </h2>
+        </div>
+
+        <Carousel
+          opts={{ align: "start", loop: true }}
+          className="mt-12 md:mt-16 scroll-reveal"
+        >
+          <CarouselContent className="-ml-4 md:-ml-6">
+            {TESTIMONIALS.map((t) => (
+              <CarouselItem
+                key={t.name}
+                className="pl-4 md:pl-6 md:basis-1/2"
+              >
+                <figure className="h-full border border-border bg-card/60 backdrop-blur p-8 md:p-10 rounded-sm relative">
+                  <Quote
+                    className="absolute top-6 right-6 h-6 w-6 text-brass/30"
+                    strokeWidth={1.2}
+                    aria-hidden="true"
+                  />
+                  <div
+                    className="flex gap-0.5 text-brass"
+                    aria-label="5 out of 5 stars"
+                  >
+                    {[0, 1, 2, 3, 4].map((i) => (
+                      <Star key={i} className="h-3.5 w-3.5 fill-current" aria-hidden="true" />
+                    ))}
+                  </div>
+                  <blockquote className="mt-5 font-display italic text-lg md:text-xl leading-relaxed text-ink/90">
+                    “{t.quote}”
+                  </blockquote>
+                  <figcaption className="mt-6 pt-5 border-t border-border">
+                    <p className="text-sm text-ink">{t.name}</p>
+                    <p className="text-[10px] uppercase tracking-[0.32em] text-brass mt-1">
+                      {t.where}
+                    </p>
+                  </figcaption>
+                </figure>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <div className="mt-8 flex items-center justify-center gap-3">
+            <CarouselPrevious
+              className="static translate-y-0 border-brass/40 text-ink hover:bg-ink hover:text-cream"
+              aria-label="Previous testimonial"
+            />
+            <CarouselNext
+              className="static translate-y-0 border-brass/40 text-ink hover:bg-ink hover:text-cream"
+              aria-label="Next testimonial"
+            />
+          </div>
+        </Carousel>
+      </div>
+    </section>
+  );
+}
